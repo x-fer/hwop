@@ -13,27 +13,31 @@ Kako se to odnosi na nas?
 
 Promatrajmo sljedeća dva programa:
 
-  lang=c
-  int main() {
-    int a[1000][1000], i, j, k;
-    for (k = 0; k < 100; ++k)
-      for (i = 0; i < 1000; ++i)
-        for (j = 0; j < 1000; ++j)
-          a[i][j] = i * j;
-    return 0;
-  }
+```
+lang=c
+int main() {
+  int a[1000][1000], i, j, k;
+  for (k = 0; k < 100; ++k)
+    for (i = 0; i < 1000; ++i)
+      for (j = 0; j < 1000; ++j)
+        a[i][j] = i * j;
+  return 0;
+}
+```
 
 
 
-  lang=c
-  int main() {
-    int a[1000][1000], i, j, k;
-    for (k = 0; k < 100; ++k)
-      for (i = 0; i < 1000; ++i)
-        for (j = 0; j < 1000; ++j)
-          a[j][i] = i * j;
-    return 0;
-  }
+```
+lang=c
+int main() {
+  int a[1000][1000], i, j, k;
+  for (k = 0; k < 100; ++k)
+    for (i = 0; i < 1000; ++i)
+      for (j = 0; j < 1000; ++j)
+        a[j][i] = i * j;
+  return 0;
+}
+```
 
 Oba programa obave točno $100 * 1000 * 1000 = 10^8$ operacija što na modernom računalu traje otprilike 1 sekundu. No prvi program memoriju obilazi u redosljedu redaka, dok drugi program memoriju obilazi po stupcima. Što mislite kako se odnose vremena izvršavanja ovih programa?
 
