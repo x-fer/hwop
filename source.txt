@@ -20,6 +20,12 @@ Stranice posvećene temama iz informatike i programiranja. Čitatelj može naći
 - [[ternarno_pretrazivanje|Ternarno pretraživanje]]
 - [[sweep_line|Sweep line]]
 
+== Mogu li i ja napisati članak? ==
+
+Da! Repozitorij s izvorišnim datotekama nalazi se na github-u:
+
+- https://github.com/agrbin/hwop/
+
 
 !!!
 2013 Alen Rakipović, Anton Grbin, Bruno Rahle, Dino Šantl,
