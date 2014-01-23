@@ -1,0 +1,78 @@
+= Matrice =
+
+U rješavanju raznih problema često nam je potrebno u memoriji računala zapamtiti matricu i raditi razne manipulacije. Kao i u matematici, u informatici također matricu predstavljamo kao objekt.
+
+Najčešće operacije koje nam trebaju pri rješavanju problema:
+
+- konstruiranje matrica
+- pristup određenom elementu matrice
+- zbrajanje matrica
+- množenje matrica
+- potenciranje matrica
+
+Slijedi implementacija u programskom jeziku C++ razreda Matrica. Primjetite da je ova implementacija vrlo siromasna i lijena, no za natjecateljske zadatke obicno koristimo takve :)
+
+Nedostatci ove implementacije su:
+
+- losa enkapsulacija
+- sporo potenciranje (vidi [[matematika/logpow|Logaritamsko potenciranje]])
+- nedostatak predloska (uvijek je tip `int`)
+- staticka alokacija memorije
+
+```
+const int maxn = 100;
+
+struct Matrica {
+  int n, elem[maxn][maxn];
+
+  Matrica(int n, bool ones = 0);
+
+  Matrica operator+ (const Matrica &rhs) const;
+  Matrica operator- (const Matrica &rhs) const;
+  Matrica operator* (const Matrica &rhs) const;
+  Matrica operator^ (const int p) const;
+};
+
+Matrica::Matrica(int _n, bool ones) {
+  n = _n;
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      elem[i][j] = (i == j ? ones : 0);
+}
+
+Matrica Matrica::operator+ (const Matrica &rhs) const {
+  Matrica sol(n);
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      sol.elem[i][j] = elem[i][j] + rhs.elem[i][j];
+  return sol;
+}
+
+Matrica Matrica::operator- (const Matrica &rhs) const {
+  Matrica sol(n);
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      sol.elem[i][j] = elem[i][j] - rhs.elem[i][j];
+  return sol;
+}
+
+Matrica Matrica::operator* (const Matrica &rhs) const {
+  Matrica sol(n);
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      for (int k = 0; k < n; ++k)
+        sol.elem[i][j] += elem[i][k] * rhs.elem[k][j];
+  return sol;
+}
+
+Matrica Matrica::operator^ (const int p) const {
+  Matrica sol(n, 1);
+  for (int j = 0; j < p; ++j)
+    sol = sol * (*this);
+  return sol;
+}
+```
+
+!!!
+2013 Anton Grbin
+!!!

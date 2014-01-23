@@ -1,0 +1,150 @@
+= Logaritamska struktura - tutorial =
+
+
+U ovom tutorijalu ćemo promatrati logaritamsku strukturu koja pamti sumu. Takva struktura podržava sljedeće operacije:
+
+- Stvaranje strukture sa **N** mjesta numeriranih od **1 do N** sa vrijednostima **0**,
+- Povećavanje vrijednosti broja na mjestu **x** za **v**,
+- Zbrajanje svih brojeva u strukturi na i lijevo od mjesta **x**
+
+[[strukture/logaritamska_tutorial/simulacija|Simulacija za pojašnjenje operacija logaritamske strukture]]
+
+[[strukture/logaritamska_tutorial/brute|Spora implementacija]] je rješenje koje nam vjerojatno odmah pada napamet: pamtiti vrijednosti brojeva na svim mjestima i zbroj izračunati obilazeći sva mjesta do **x**. 
+
+Brzinu operacije `zbroj` možemo poboljšati tako da ne pamtimo vrijednosti brojeva na svim mjestima, već da na svakom mjestu pamtimo sumu svih vrijednosti do mjesta **1**. No u [[strukture/logaritamska_tutorial/brute2|ovoj implementaciji]] operacija `dodaj` je puno sporija.
+
+Primjetite da su dvije navedene implementacije u nekim slučajevima i dobre:
+
+- ako imamo puno puno više operacija dodavanja, koristimo prvu implementaciju
+- ako imamo puno više operacija zbrajanja, koristimo drugu implementaciju
+
+No, ako imamo mnogo operacija obje vrsti, potrebno će biti naći kompromis između ove dvije krajnosti.
+
+== Logaritamska struktura ==
+
+Svako mjesto u logaritamskoj strukturi pamti sumu vrijednosti na sebi i na nekim mjestima lijevo od sebe. Struktura je tako konstruirana da je broj vrijednosti čiju sumu pamti svako mjesto najviše $log_2{x}$ .
+
+<table>
+<tr><td>mjesto 1</td>
+<th>1</th><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 2</td>
+<th>1</th><th>2</th><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 3</td>
+<td>1</td><td>2</td><th>3</th><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 4</td>
+<th>1</th><th>2</th><th>3</th><th>4</th><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 5</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><th>5</th><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 6</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><th>5</th><th>6</th><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 7</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><th>7</th><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 8</td>
+<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 9</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><th>9</th><td>10</td><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 10</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><th>9</th><th>10</th><td>11</td><td>12</td></tr>
+
+<tr><td>mjesto 11</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><th>11</th><td>12</td></tr>
+
+<tr><td>mjesto 12</td>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><th>9</th><th>10</th><th>11</th><th>12</th></tr>
+</table>
+
+Ovom tablicom je prikazano koje vrijednosti pamti svako mjesto u logaritamskoj strukturi. Nekoliko primjera:
+
+- svako mjesto pamti svoju vrijednost i nekoliko uzastopnih vrijednosti lijevo od sebe.
+- mjesto 4 pamti sumu vrijednosti na 1, 2, 3 i 4.
+- mjesto 5 pamti samo svoju vrijednost
+- mjesto 10 pamti sumu vrijednosti na 9 i 10.
+- svako neparno mjesto pamti samo svoju vrijednost.
+- vrijednost na mjestu 5 pamte mjesta 5, 6 i 8.
+- vrijednost na mjestu 8 pamti samo mjesto 8.
+- vrijednost na mjestu 9 pamte mjesta 9, 10 i 12.
+- svako mjesto potencije broja 2 pamti sumu svih brojeva na njemu i lijevo od njega.
+
+=== pseudo kod za sumu i dodavanje vrijednosti ==
+
+Koristiti ćemo tri funkcije:
+
+- `koliko pamti(x)`, čitamo iz tablice, koliko ima tamnih polja u retku za mjesto **x**?
+- `suma(x)` suma svih elemenata u strukturi na mjestu **x** i lijevo od njega.
+- `dodaj(x, v)` na mjesto **x** dodaj vrijednost **v**.
+
+```
+suma(x) =
+  ako je x == 0, onda je rješenje 0.
+  inače, rješenje je suma na mjestu x + suma(x - koliko_pamti(x))
+
+dodaj(x, v) =
+  ako je x veći od N, kraj.
+  u sumu koje pamti mjesto x dodaj vrijednost v
+  dodaj(x + koliko_pamti(x), v)  
+```
+
+Pogledajmo izvođenje upita za `suma(11)`.
+
+- na mjestu 11 piše samo vrijednost za mjesto 11, rješenje je ta vrijednost uvećana za `suma(10)`
+- na mjestu 10 pamtimo sume za mjesta 9 i 10, rješenje je ta suma uvećana za `suma(8)`
+- na mjestu 8 pamtimo sume svih mjesta do 8.
+
+Vidimo da smo u tri koraka, //pokupili// u sumu sve vrijednosti iz strukture do mjesta 11.
+
+Izvođenje upita `dodaj(5, 10)`. Ova operacija mora obići sva mjesta koja u svojoj sumi pamte vrijednost mjesta 5.
+
+- počinjemo sa mjestom 5, pošto svako mjesto pamti svoju vrijednost.
+- sljedeće mjesto je mjesto 6 (u tablici se sada od stupca 5 i retka 5 spuštamo prema dolje i pratimo kada ćemo proći preko tamnog mjesta).
+- zadnje mjesto kojem ćemo uvečati vrijednost je mjesto 8.
+
+== Funkcija pomaka ==
+
+Vidimo da se funkcija `koliko_pamti` koristi i u operaciji dodavanja i u operaciji zbrajanja. Zato je nužno da se ona izvede efikasno. Promatrajući tablicu možemo vidjeti da je vrijednost ove funkcije zapravo vrijednost koju nosi najdesnija jedinica u binarnom rastavu broja. Npr:
+
+- broj 12 (1100), najdesnija jedinca nosi vrijednost 8 (100).
+- broj 5 (101), najdesnija jedinca nosi vrijednost 1 (1).
+- broj 6 (110), najdesnija jedinca nosi vrijednost 2 (10).
+
+Dakle, funkcija pomaka je uvijek potencija broja dva. Postavlja se pitanje kako efikasno izračunati ovu vrijednost?
+
+Tu je red na vama:
+
+{wcheck lowbit}
+
+
+== Konačno rješenje ==
+
+Ova implementacija koristi rekurzivne pozive u metodama upita te ju je moguće malko ubrzati koristeći iterativni pristup.
+
+```
+class LogaritamskaStruktura {
+  vector<int> a;
+
+ public:
+  LogaritamskaStruktura(int n) : a(n + 1, 0) {}
+  
+  int zbroj(int x) {
+    return x ? a[x] + zbroj(x - (x&-x)) : 0;
+  }
+
+  void dodaj(int x, int v) {
+    if (x >= a.size()) return;
+    a[x] += v;
+    dodaj(x + (x&-x), v);
+  }
+};
+```
+
+!!!
+2012 Anton Grbin
+!!!

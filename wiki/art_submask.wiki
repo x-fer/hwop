@@ -1,0 +1,70 @@
+= Iteracija po podmaskama =
+
+== Osnove korištenja bitmaski ==
+
+Bitmaska je cjelobrojni tip podatka koji nam predstavlja skup s prirodnim brojevima manjim od 64, odnosno 32 ukoliko koristimo tip `integer` za implementaciju.
+
+Tipične operacije sa skupovima koje radimo lako preslikavamo u `bitwise` operacije. Slijedi primjer osnovnih operacija:
+
+```lang=c
+// tip podataka koji koristimo je long long da mozemo cuvati 64 informacije.
+typedef unsigned long long mask_t;
+
+// sadrži li skup S broj x
+bool is_set(mask_t S, int x) {return S & (1ll << x);}
+
+// dodaj u skup S broj x
+void set(mask_t &S, int x) {S |= (1ll << x);}
+
+// izbaci x iz skupa
+void unset(mask_t &S, int x) {S &= ~(1ll << x);}
+
+// unija dvaju skupova
+mask_t together(mask_t A, mask_t B) {return A | B;}
+
+// presjek dvaju skupova
+mask_t intersect(mask_t A, mask_t B) {return A & B;}
+
+// prebrojavanje broja jedinica u skupu, rekurzivno radi jednostavnosti. A&-A je lowbit operacija.
+size_t count(mask_t A) {return A ? count(A - (A&-A)) + 1 : 0;}
+```
+
+Obično ne implementiramo ove operacije pomoću funkcija već ih direktno pišemo u kodu odnosno koristimo makro-e.
+
+== Problem ==
+
+Za dan skup $S$ , iteriraj po svim skupovima $S'$ koji su podskup od $S$ , odnosno vrijedi $S' \subset S$ . Takvih skupova ima $2^{card(S)}$ .
+
+U terminima bitmaska, potrebno je iterirati po svim vrijednostima `mask_t` tipa za koje vrijedi.
+
+```lang=c
+(it | mask) == mask;
+```
+
+== Rješenje ==
+
+Jedno od rješenja je provjeriti sve moguće vrijednosti podmaske i ispitati radi li se o podskupu. Ovo rješenje nepotrebno obilazi neka stanja:
+
+```lang=c, COUNTEREXAMPLE
+mask_t S; // zadani skup
+for (mask_t it = 0; it; ++it) {
+  if ((it | S) == S)
+    print(it);
+}
+```
+
+Rješenje s manjim brojem koraka bi mogli konstruirati tako da prvo prebrojimo koliko početni skup ima elemenata, pa iteriramo unaprijed izračunati broj koraka i u tijelu petlje odlučujemo za svaki element hoće li se naći u rezultantnom skupu ili ne. Implementacija ovog pristupa je malo nezgrapna. Srećom tu je sljedeći trik:
+
+```lang=c
+mask_t S, it = S; // mask je zadani_skup
+do {
+  print(it);
+  it = (it - 1) & S;
+} while (it != S);
+```
+
+Ovo rješenje obilazi sve podskupove originalnog skupa u leksikografski padajućem poretku.
+
+!!!
+2013. Anton Grbin
+!!!

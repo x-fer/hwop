@@ -1,0 +1,27 @@
+= Modularna aritmetika =
+
+Predstavlja aritmetički sustav u kojem se brojevi „vrte u krug“ nakon što prijeđu određenu vrijednost (M).
+
+U modularnoj aritmetici vrijede sljedeća pravila (kongruencije):
+
+$$
+\forall M,a,b \in N, a < M, b < M \\
+\\
+(a + b) \bmod M = (a \bmod M  + b \bmod M)  \bmod M \\
+(a - b) \bmod M = (a \bmod M  - b \bmod M)  \bmod M \\
+(a \cdot b) \bmod M = ((a \bmod M)  \cdot (b \bmod M))  \bmod M \\
+$$
+
+
+Dodatno, ako je M prost broj, vrijedi i pravilo modularnog inverza:
+
+$$
+a (a^{M - 2} \bmod M) \equiv 1 \pmod M
+$$
+
+http://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+
+
+!!!
+2013 Alen Rakipović
+!!!

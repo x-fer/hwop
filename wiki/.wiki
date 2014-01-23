@@ -1,0 +1,27 @@
+= Hrvatski Wiki o Programiranju =
+
+Stranice posvećene temama iz informatike i programiranja. Čitatelj može naći informacije o
+
+- algoritmima,
+- strukturama podataka,
+- natjecateljskim zadatcima,
+- te natjecanjima.
+
+== Članci grupirani po temama ==
+
+- [[matematika|Matematika]]
+- [[strukture|Strukture podataka]]
+- [[grafovi|Teorija grafova]]
+- [[art|Programski jezici i trikovi]]
+
+== Bazični algoritmi ==
+
+- [[binarno_pretrazivanje|Binarno pretraživanje]]
+- [[ternarno_pretrazivanje|Ternarno pretraživanje]]
+- [[sweep_line|Sweep line]]
+
+
+!!!
+2013 Alen Rakipovic, Anton Grbin, Bruno Rahle, Dino Šantl, Goran Žužić
+Luka Kalinovčić, Matija Šantl, Stjepan Glavina, Tomislav Grbin
+!!!l

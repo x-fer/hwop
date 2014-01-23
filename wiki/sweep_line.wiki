@@ -1,0 +1,153 @@
+= Sweep line =
+
+Ideja koja stoji iza sweep line algoritma je zamišljena linija koja prolazeći kroz ravninu nailazi na bitne točke te ih na odgovarajući način obrađuje. Sweep line algoritmi su najčešće primjenjivani u problemima geometrijskog karaktera.
+
+== event ==
+
+Bitne točke najčešće ostvarujemo strukturom //event// koja sadrži podatke koji opisuju te bitne točke. Algoritam se ostvaruje prolaskom kroz sve event-ove točno određenim redoslijedom. Redoslijed se definira operatorom < ili vlastitom komparacijskom funkcijom. Pomoću operatora ili funkcije sortiramo eventove te time dobijamo potreban poredak.
+
+Struktura event je specifična za svaki problem, ali uvijek sadrži podatak prema kojem možemo odrediti da li se event A dešava prije ili nakon eventa B.
+
+Primjer 1: strukutra eventa dužine u ravnini 
+
+```
+struct event {
+  int x_koordinata;  // x koordinata točke 
+  bool vrsta:        // 0 = početak dužine, 1 = kraj dužine
+};
+```
+
+== operator < ili komparacijska funkcija ==
+
+Nakon što smo jasno definirali event preostaje nam odrediti njihov poredak. O poretku obrade nam ovisi hoćemo li obilaziti eventove s lijeva na desno, odozgo prema dolje ili nekim drugim obilaskom. Najčešće se uzima s lijeva na desno pa će on biti i opisan.
+
+Uzmimo slučaj iz Primjera 1. i poredak obilaska s lijeva na desno. Sad je poprilično jasno da eventove moramo sortirati na takav načina da oni s manjom X koordinatom budu obrađeni prije. Također, pretpostavimo da je struktura u koju spremamo eventove STL vector.
+
+```
+...
+#include <vector>
+...
+// definicija strukture event iz Primjera 1.
+vector <event> events;
+```
+
+Ako koristimo funkciju //sort// možemo koristiti ili vlastiti operator < na strukturi event, 
+
+```
+bool operator < (event a, event b) {
+  if (a.x_koordinata != b.x_koordinata)
+    return a.x_koordinata < b.x_koordinata;
+  return a.tip < b.tip;
+}
+```
+
+ ili vlastitu komparacijsku funkciju.
+
+```
+bool cmp (event a, event b) {
+  if (a.x_koordinata != b.x_koordinata)
+    return a.x_koordinata < b.x_koordinata;
+  return a.tip < b.tip;
+}
+```
+
+Razlika između ova dva pristupa je u pozivu funkcije //sort//.
+
+```
+// slucaj 1. operator <
+sort(events.begin(), events.end());
+// slucaj 2. komparacijska funkcija
+sort(events.begin(), events.end(), cmp);
+```
+
+Nakon što smo dobili željeni poredak eventova, preostaje nam odrediti koje akcije poduzeti u slučaju na nailazk pojednine vrste eventa. To sad i nije jasno jer nije definiran problem kojeg rješavamo.
+
+== Primjer problema ==
+
+U ravnini je zadano N dužina paralelnih sa x-osi, točkama A(x1, y1) i B(x2, y1).  Odredite najveći broj dužina koje sjeće neki pravac paralelan sa y-osi. 
+
+Napomena:
+Brojati ćemo pravac sjeće dužinu ako prolazi kroz njenu krajnju točku.
+
+Ograničenja:
+1 < N < 10000
+0 < x1, x2, y1 < 1 000 000 000
+
+Vremensko ograničenje: 1s
+Memorijsko ograničenje: 128 MB
+
+== Rješenje ==
+
+Primijetite da su ograničenja takva da će naivno rješenje pasti ili na vremenskom ograničenju ili na memorijskom ograničenju. 
+Također, y koordinata nam ne igra nikakvu ulogu.
+
+Problem je zadan na temelju prethodnih definicija struktura i funkcija, pa ćemo se na njih i pozivati u daljnjem tekstu.
+
+Imajući na umu glavnu ideju sweep line algoritma, probajmo rješiti zadatak prvo na papiru. Uzmimo krajnju točku dužine s najmanjom x koordinatom i nacrtajmo je na papir. U nastavku rješavanja uzetu točku dotične dužine više ne razmatramo. Primjetimo da je sad najveći broj sjecišta dužina na papiru i bilo kojeg pravca paralelnog s y osi jednak 1. Uzmimo sad sljedeću krajnju točku dužine s najmanjom x koordinatom. Ovdje nam se javlja mogućnost pojave kraja neke dužine čiju smo lijevu točku već nacrtali ili pojava točke kojom započinje neka nova dužina. 
+
+**Slučaj 1. počinje nova dužina**
+Ako počinje nova dužina primijećujemo da nam se broj sjecišta nekog pravca paralelnog s y osi koji se nalazi desno od trenutne x koordinate, s dužinama na papiru povećao za jedan.
+
+**Slučaj 2. završava neka dužina**
+Ako završava neka dužina primijećujemo da nam se broj sjecišta pravca paralelnog s y osi koji se nalazi desno od trenutne x koordinate, s dužinama na papiru smanjio za jedan.
+
+I time smo rješili glavni problem zadatka. Trenutno stanje sjecišta ovisi izravno o broju dužina na čiji kraj još nismo naišli. Rješenje zadatka je najveći broj //otvorenih// dužina u nekom od koraka obrađivanja evenata.
+
+Definirajmo event kao točke dužine. U Primjeru 1. smo definirali strukturu event i redosljed obrađivanja koje ćemo sada iskoristiti.
+
+== Izvorni kod rješenja - main funkcija ==
+
+```
+int main(int argc, char **argv) {
+  int N;
+  int x_1, x_2, y;
+  int rjesenje = 0, otvoreno = 0;
+
+  vector< event > events;
+
+  cin >> N;
+
+  for (int i = 0; i < N; ++i) {
+    cin >> x_1 >> x_2 >> y;
+    events.push_back(event(x_1, 0));
+    events.push_back(event(x_2, 1));
+  }
+
+  sort(events.begin(), events.end());
+
+  for (int i = 0; i < events.size(); ++i) {
+    if (events[i].vrsta == 0) {
+      otvoreno ++;
+    } else {
+      otvoreno --;
+    }
+
+    rjesenje = max(rjesenje, otvoreno);
+  }
+
+  cout << rjesenje << endl;
+
+  return 0;
+}
+```
+
+== Složeniji zadaci ==
+
+Složeniji zadaci zahtjevaju primjenu nekih od struktura podataka pomoću kojih brže doznajemo/izračunavamo potrebne informacije.
+
+Primjer takvog zadatke je određivanje sjecišta dužina koje mogu paralelne( ili okomite ) s koordinatnim osima.
+
+Rješenje tog problema uvodi novu vrstu eventa (vertikalna dužina) te naravno drugi pristup brojenja otvorenih dužina (ovdje se uvodi prigodna struktura podataka) prilikom nailaska na taj tip eventa.
+
+== Zadaci za vježbu ==
+
+z-policajac http://z-trening.com/tasks.php?show_task=5000000064
+BOI-Mars Maps http://z-trening.com/tasks.php?show_task=5000000890
+
+== Više o temi ==
+
+http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep
+
+!!!
+2013. Matija Šantl
+!!!

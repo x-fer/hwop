@@ -1,0 +1,89 @@
+= Simulacija operacija logaritamske strukture =
+
+Stanje strukture ćemo prikazati tablicom svih brojeva koji su trenutno u strukturi. Lijevi kvadratić predstavlja mjesto **1**.
+
+* Stvori praznu strukturu sa **6** mjesta.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr></table>
+
+* Suma svih brojeva na mjestu **2** i lijevo od njega.
+
+<table><tr>
+<th>0</th>
+<th>0</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr></table>
+
+//Rezultat: 0 + 0 = 0//
+
+* Broj na mjestu **3** uvečaj za **4**.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<th>4</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr></table>
+
+* Broj na mjestu **5** uvečaj za **2**.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<th>2</th>
+<td>0</td>
+</tr></table>
+
+* Suma svih brojeva na mjestu **5** i lijevo od njega.
+
+<table><tr>
+<th>0</th>
+<th>0</th>
+<th>4</th>
+<th>0</th>
+<th>2</th>
+<td>0</td>
+</tr></table>
+
+//Rezultat: 0 + 0 + 4 + 0 + 2 = 6//
+
+* Suma svih brojeva na mjestu **4** i lijevo od njega.
+
+<table><tr>
+<th>0</th>
+<th>0</th>
+<th>4</th>
+<th>0</th>
+<td>2</td>
+<td>0</td>
+</tr></table>
+
+//Rezultat: 0 + 0 + 4 + 0 = 4//
+
+== Mogući pozivi strukture u jeziku C++ ==
+
+  LogaritamskaStruktura s(6);
+  cout << s.zbroj(2) << endl; // ispisuje 0
+  s.dodaj(3, 4);
+  s.dodaj(5, 2);
+  cout << s.zbroj(5) << endl; // ispisuje 6
+  cout << s.zbroj(4) << endl; // ispisuje 4
+
+
+!!!
+2012. Anton Grbin
+!!!

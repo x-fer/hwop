@@ -1,0 +1,267 @@
+= Vektor =
+
+U linearnoj algebri osnovni pojam je **vektor**. Ovdje se nećemo koncentrirati previše na geometrijsku interpretaciju vektora, već na vektor kao pojam u linearnoj algebri. No, uvijek treba intuitivno imati na pameti da je vektor **iznos i smjer** neke veličine u prostoru. Bez obzira što za sada neznamo što je prostor uopće.
+
+> Ovo nije formalni matematički tekst, već upoznavanje s vektorima na ljudskoj razini.
+
+== Definicija i zapis ==
+
+Vektor je matematički objekt sastavljen od poredanih elemenata (najčešće realni brojevi) čiji broj nazivamo dimenzija. Npr. brojevi 5, 6, 7 mogu predstavljati neki trodimenzionalni vektor.
+
+Vektor zapisujemo u uglatim zagradama s brojevima u stupcu:
+
+$$
+\begin{bmatrix}
+5\\
+6\\
+7\\
+\end{bmatrix}
+$$
+
+U zapisu za varijablu koja je vektor koristimo masnije otisnuta slova (npr. $\mathbf{a}$ ) ili slovo sa strelicom iznad ($\vec{a}$ ).
+
+Ako će biti nezgodno u tekstu napisati vektor kao stupac, napisati ćemo ga kao redak, ali koristeći naznaku transponiranja da naglasimo kako se radi o vektoru:
+
+$$
+\vec{a} = \big[5\ 6\ 7\big]^T
+$$
+
+== Zbrajanje i množenje sa skalarom ==
+
+Vektori se zbrajaju tako da im se zbroje pripadni elementi.
+
+$$
+\begin{bmatrix}1\\2\\3\\\end{bmatrix}
++
+\begin{bmatrix}6\\5\\7\\\end{bmatrix}
+=
+\begin{bmatrix}7\\7\\10\\\end{bmatrix}
+$$
+
+Skalar je veličina koja nije vektor, npr. realan broj. Sakalre označavamo kao što smo ih i prije označavali, malim slovima: $\alpha, \beta, \gamma, a, b, c, x, y$ .
+
+Množenje sa skalarom svede se na množenje svakog člana vektora s tim skalariom.
+
+$$
+5 \cdot
+\begin{bmatrix}6\\5\\7\\\end{bmatrix}
+=
+5
+\begin{bmatrix}6\\5\\7\\\end{bmatrix}
+=
+\begin{bmatrix}30\\25\\35\\\end{bmatrix}
+$$
+
+== Norma ==
+
+Norma vektora (ili duljina u geometrijskog interpretaciji) je **skalar** koji se pridružuje svakom vektoru. Za neki vektor $\vec{a}$ sastavljen od $a_1, a_2, \dots, a_k$ njegova norma dana je s:
+
+$$
+| \vec{a} | = \sqrt{ a_1^2 + a_2^2 + \dots + a_k^2 }
+$$
+
+Primjer, za $\vec{a} = \big[6\ 5\ 7\big]^T$ vrijedi:
+
+$$
+| \vec{a} | = \sqrt{ 6^2 + 5^2 + 7^2 } = \sqrt{110}
+$$
+
+=== Posebno imenovani vektori ===
+
+S obzirom na normu za neke vektore dajemo posebna imena. Ako je $| \vec{a} | = 1$ tada kažemo da je on **jedinični vektor**. Primjeri jediničnih vektora:
+
+$$
+\begin{bmatrix}1\\0\\0\end{bmatrix}
+,\begin{bmatrix}0\\1\end{bmatrix}
+,\begin{bmatrix}1\end{bmatrix}
+\\
+\begin{bmatrix}0.8\\0.6\end{bmatrix}
+,\begin{bmatrix}0\\-0.8\\0.6\end{bmatrix}
+\\
+\begin{bmatrix}\sqrt{0.3}\\ \sqrt{0.2} \\ \sqrt{0.5} \end{bmatrix},
+\begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix}
+\\
+\begin{bmatrix}
+\sin{\phi}\\
+\cos{\phi}
+\end{bmatrix} , \phi \in R
+$$
+
+Čitatelj bi se trebao uvjeriti da je norma svih ovih vektora jednaka 1. Ovdje prikazujemo obrazloženje za zadnji napisani vektor, $\vec{a} = \big[\sin{\phi}\ \cos{\phi}\big]^T$ .
+
+$$
+| \vec{a} | = \sqrt{ \sin^2{\phi} + \cos^2{\phi} } = 1
+$$
+
+**Nul-vektor** je onaj vektor čija je norma jednaka 0. Za svaku dimenziju imamo točno jedan nul vektor i to onaj koji sadrži sve nule za svoje elemente:
+
+$$
+\begin{bmatrix}0\end{bmatrix},
+\begin{bmatrix}0\\0\end{bmatrix},
+\begin{bmatrix}0\\0\\0\end{bmatrix},
+\begin{bmatrix}0\\0\\0\\0\end{bmatrix},
+\dots
+$$
+
+== Linearna zavisnost vektora ==
+
+Intuitivno iz geometrije: Dva vektora su linearno zavisna ako gledaju u točno istom, ili točno suprotnom smjeru.
+
+Ovakav pogled na linearnu zavisnost nas može spasiti samo ako se radi o dvodimenzionalnim ili trodimenzionalnim vektorima. Več za čeitiri dimenzije je teško reči što je smjer vektora.
+
+Dva vektora $\vec{a}$ i $\vec{b}$ su linearno zavisna ako postoji skalar $\alpha$ takav da vrijedi:
+
+$$
+\alpha \cdot \vec{a} = \vec{b}
+$$
+
+Po definiciji umnoška vektora sa skalarom, možemo zapisati:
+
+$$
+\begin{bmatrix}
+\alpha a_1 \\
+\alpha a_2 \\
+\vdots \\
+\alpha a_k \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+\vdots \\
+b_k \\
+\end{bmatrix}
+$$
+
+Skalar $\alpha$  (ako postoji) nazivamo koeficijent zavisnosti. Linearnu zavisnost dvaju vektora možemo shvatiti ovako: ako su omjeri svih pripadajućih komponenata jednaki onda su ta dva vektora linearno zavisna.
+
+Primjeri linearno zavisnih vektora:
+
+$$
+\begin{bmatrix}1\\2\end{bmatrix},
+\begin{bmatrix}-3\\-6\end{bmatrix},
+\alpha = -3\\
+\begin{bmatrix}4\\4\end{bmatrix},
+\begin{bmatrix}5\\5\end{bmatrix},
+\alpha = \frac{5}{4}\\
+\begin{bmatrix}10\end{bmatrix},
+\begin{bmatrix}-23\end{bmatrix},
+\alpha = -\frac{23}{10}\\
+\begin{bmatrix}1\\2\\3\end{bmatrix},
+\begin{bmatrix}10\\20\\30\end{bmatrix},
+\alpha = 10\\
+$$
+
+Vektori su **linearno nezavisni** ako nisu linearno zavisni, tj. s kojim god skalarom množili prvi vektor, nikada nemožemo dobiti drugi vektor. Primjeri linearno nezavisnih vektora:
+
+$$
+\begin{bmatrix}1\\0\end{bmatrix},
+\begin{bmatrix}0\\1\end{bmatrix}
+\\
+\begin{bmatrix}1\\2\end{bmatrix},
+\begin{bmatrix}1\\3\end{bmatrix}
+\\
+\begin{bmatrix}1\\1\\1\end{bmatrix},
+\begin{bmatrix}2\\2\\-2\end{bmatrix}
+\\
+$$
+
+=== Linearna zavisnost više vektora ===
+
+Ideja. Iz skupa vektora uzmemo jedan i stavimo ga sa strane. Ako od preostalih vektora uspijemo zbrajanjem i množenjem sa skalarom dobiti vektor koji smo odvojili, onda je taj skup vektora linearno zavisan.
+
+Formalnije. Skup vektora je linearno zavisan ako linearnom kombinacijom svih osim jednom možemo dobiti taj jedan vektor. U primjeru su vektori $\vec{a}, \vec{b}, \vec{c}, \vec{d}$ linearno zavisni.
+
+$$
+\alpha_1 \cdot \vec{a} +
+\alpha_2 \cdot \vec{b} +
+\alpha_3 \cdot \vec{c} = \vec{d}
+$$
+
+Jer je pomoću prva tri vektora moguće dobiti zadnji. Primjetite da ako primjenimo definiciju za linearnu zavisnost više vektora na dva vektora, dobijamo gore navedenu tvrdnju.
+
+== Sakalrni produkt ==
+
+Skalarni produkt vektora $\vec{a}$ i $\vec{b}$ je skalar i definira se kao:
+
+$$
+\vec{a} \cdot \vec{b} = \cos{\angle (\vec{a}, \vec{b})} \cdot |\vec{a}| \cdot |\vec{b}|
+$$
+
+Odnosno, umnožak normi oba vektora sa kosinusom kuta između ta dva vektora. Tu nailazimo na problem pojma kuta između dva vektora. Prije nego što damo drugu istovjetnu definiciju skalarnog produkta, dati ćemo intuitivno objašnjenje za kut između vektora.
+
+=== Kut između vektora ===
+
+Za svaka dva vektora možemo odabrati jednu ravninu koja ih sadrži oba. Ako su vektori linearno zavisni (gledaju u istom smjeru) tada možemo više ravnina postaviti na njih ali nam svaka odgovara.
+
+Sada zamislimo da je ta ravnina papir i nacrtamo ta dva vektora na njoj tako da imaju hvatište u istoj točci. Kut između dvije ravnine na papiru znamo što je, i to je upravo kut između ta dva vektora koji su originalno bili u više dimenzija.
+
+Dakle, za vizualizirati kut dva vektora u više dimenzija poslužimo se trikom kojim spustimo broj dimenzija na nešto shvatljivo, kao što je papir (2d).
+
+Kosinus je trigonometrijska funkcija koja za neki kut ima vrijednost između -1 i 1. Ako je kut 0, kosinus ima vrijednost 1. Kako kut raste do okomitog (90), kosinus pada na 0, i daljnjim povećavanjem kuta do ispruženog (180) kosinus još pada do -1.
+
+=== Skalarni produkt vektora jednostavnije ===
+
+Osim definicije sa kosinusom kuta, postoji i jednostavnija definicija. Skalarni produkt dvaju vektora jest zbroj umnožaka pripadajućih komponenata.
+
+$$
+\begin{bmatrix}a_1\\a_2\\\vdots\\a_k\\\end{bmatrix}
+\cdot
+\begin{bmatrix}b_1\\b_2\\\vdots\\b_k\\\end{bmatrix}
+=
+a_1 b_1 + a_2 b_2 + \dots a_k b_k
+$$
+
+I mi ćemo najčešće ovaj način izračuna skalarnog produkta koristiti.
+
+Primjetimo sada da kosinus kuta između vektora možemo izračunati na sljedeći način:
+
+$$
+\cos{\angle (\vec{a}, \vec{b})}
+  = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| \cdot |\vec{b}|}
+  = \frac{ \sum_{i=1}^{k} a_i b_i }{ |\vec{a}| \cdot |\vec{b}| }
+$$
+
+== Prostor ==
+
+Svaki skup od $k$ linearno nezavisnih vektora dimenzije $k$ čini **prostor**. Taj skup nazivamo **baza**. Jednom kada odaberemo takav skup vektora, svaki drugi $k$ dimenzionalni vektor se može prikazati kao linearna kombinacija baze.
+
+Za prostor čija je baza skup međusobno okomitih vektora kažemo da je **kartezijev**. Primjer kartezijevog prostora je baza od dva vektora:
+
+$$
+  \vec{i} = \begin{bmatrix}
+    1 \\ 0
+  \end{bmatrix},
+  \vec{j} = \begin{bmatrix}
+    0 \\ 1
+  \end{bmatrix}
+$$
+
+== Pitanja za razmišljanje ==
+
+# Što je rezultat zbrajanja dvaju vektora (vektor, skalar, kompleksni broj, matrica, graf?)
+# Što je rezultat množenja vektora sa skalarom?
+# Što je rezultat skalarnog umnoška dvaju vektora?
+# Nigdje nismo definirali oduzimanje, ili jesmo? Definiraj oduzimanje pomoću zbrajanja i množenja sa skalarom? Koji skalar će se koristiti?
+# Ako vektor skalarno pomnožimo sa $\alpha$ kako se mijenja njegova norma?
+# Može li norma vektora biti negativna? Zašto?
+# Što je neutralni član operacije zbrajanja vektora.
+# Možemo li množenjem vektora sa skalarom dobiti vektor koji je linearno nezavisan s originalnim?
+# Linearna zavisnost je relacija definirana nad vektorima. Koje uvjete moraju ispunjavati ti vektori da bi mogli pričati o linearnoj zavisnosti?
+# Postoji li vektor koji je linearno zavisan sa svim vektorima iste dimenzije?
+# Imamo cisternu s istom količinom benzine i vode. Stroj A dok radi trosi 1 litru benzina i 2 litre vode po satu, a dok miruje vraća točno toliko u cisternu po satu. Stroj B trosi 2 litre benzina i 4 litre vode po satu i isto dok miruje vraća istu količinu nazad. Kada odlučimo možemo bilo koji stroj odspojiti od cisterne da prekinemo dotok ili odtok. Možemo li držati strojeve A i B upaljene neko određeno vrijeme da potrošimo svu benzinu i svu vodu. Zašto?
+# Ako stroj B troši 1 litru benzina i 4 litre vode, kako se mijenja situacija?
+# Koliki bi trebao biti kosinus kuta dvaju linearno zavisnih vektora? Isprobajte!
+# Je li $\big[1\ 2\big]^T, \big[1\ 0\big]^T$ prostor? Koje su koordinate vektora $\big[5\ 5\big]^T$ u njemu?
+
+=== Pitanja za Jače razmišljanje ===
+
+# Kada bi skup svih 2d jediničnih vektora prikazali kao točke u kartezijevom prostoru, dobili bi koji geometrijski objekt? Koji? A u 3d i k-d dimenzijama?
+# Može li se norma prikazati koristeći skalarni produkt dvaju vektora? Kako?
+# Za neki jedinični vektor $\vec{a}$ napišite jedini vektor koji je različit od njega, jedinični je i linearno je zavisan s njime.
+# Svaki vektor $\vec{a}$ ima dva jedinična vektora koja su linearno zavisni sa $\vec{a}$ . Koji su to?
+# Pomoću $k$ linearno nezavisnih vektora dimenzije $k$ moguće je zapisati bilo koji drugi vektor s $k$ dimenzija. Kako?
+
+!!!
+2013. Anton Grbin
+!!!

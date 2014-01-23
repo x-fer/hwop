@@ -1,0 +1,187 @@
+= Što je logaritamska struktura? =
+
+Fenwickovo stablo (binarno indeksirano stablo ili popularno "logaritamska struktura") je struktura podataka koja može nad nizom brojeva A[1..n] obavljati sljedeće operacije:
+
+a) povećaj broj A[x] za w (update)
+b) izračunaj sumu prvih x brojeva u nizu A (query)
+
+Obje rade u složenosti O(log n).
+Moguće su i malo drugačije operacije.
+
+== Stablo ==
+
+Imamo niz brojeva A[1..n], koji se na početku sastoji samo od nula. Nad njime se mogu raditi spomenute dvije operacije, ali taj niz zapravo nije potrebno nigdje spremati.
+
+Umjesto niza A[1..n] pamtimo samo niz brojeva F[0..n]. Iz njega ne možemo direktno čitati vrijednosti niza A, ali možemo ih dobiti koristeći jednakost:
+
+  A[i] = query(i) - query(i - 1)
+
+Niz F se na početku također sastoji samo od nula. Vrijednosti u broju F se mogu zamisliti kao stablo:
+
+{F21,size=full}
+
+Imena čvorova su zapisana binarno i odgovaraju indeksima u nizu F. Sada je npr. u čvoru 52 (binarno 110100) zapisana vrijednost F[52].
+Vidimo da se preorder obilaskom stabla dobiva 0, 1, 2, 3, 4, ...
+
+Djeca čvora x su čvorovi koji se dobivaju tako da se broju x u binarnom zapisu postavi jedinica i to desno od zadnje jedinice.
+Tako bi čvor 1010000 imao djecu, redom:
+
+  1010001
+  1010010
+  1010100
+  1011000
+
+U čvoru 0 je uvijek zapisana vrijednost 0, odnosno F[0] = 0.
+
+== Funkcija lobit ==
+
+  int lobit( int x ) { return x & -x; }
+
+Ova funkcija vraća zadnju jedinicu u broju x, npr:
+
+  lobit(110100) =  100
+  lobit(   101) =    1
+  lobit(  1000) = 1000
+
+Evo primjer na kojem se vidi da to je to istina (-x je isto što i ~x + 1):
+
+  x           = 110100
+  ~x          = 001011
+  ~x + 1 = -x = 001100
+  x & -x      = 000100 
+
+Neka je p(x) roditelj čvora x, npr. p(1001) = p(1000).
+Roditelj se dobiva tako da broju zadnju jedinicu pretvorimo u nulu, pa je zato:
+
+  p(x) = x - lobit(x).
+
+== Operacija query ==
+
+Stablo ima takvo svojstvo da, ako želimo dobiti A[1] + A[2] + A[3] + ... + A[n], onda je dovoljno izračunati F[n] + F[p(n)] + F[p(p(n))] + F[p(p(p(n)))] + ..., tj. zbrojiti vrijednosti od čvora x do korijena.
+
+Zbroj prvih 1110 (dekadski 14) brojeva u nizu A je F[1110] + F[1100] + F[1000].
+
+{F22,size=full}
+
+Funkcija query vraća taj zbroj. Implementacija:
+
+```
+int query( int x ) {
+  int sum = 0;
+  for( ; x > 0; x -= lobit(x) ) sum += F[x];
+  return sum;
+}
+```
+
+Složenost je O(log n) zato što dubina stabla ne prelazi log n.
+
+== Operacija update ==
+
+Ako se broj A[x] poveća za w, potrebno je promijeniti neke vrijednosti u nizu F da bi gornje svojstvo vrijedilo. Npr. ako se poveća A[1001], onda treba povećati F[1001], F[1010], F[1100], F[10000], F[100000] itd.
+Preciznije, ako se promijeni vrijednost u čvoru x, onda treba promijeniti i u njegovom prvom većem bratu te nastavit s njime. Ako čvor nema većeg brata, onda je sljedeći prvi veći brat roditelja. Ako nema takvog, onda brat djeda. Ako nema, onda brat pradjeda itd.
+
+Formula je jednostavna: nakon čvora x slijedi čvor x + lobit(x).
+
+{F23,size=full}
+
+Još jedan primjer, ovdje mijenjamo broj A[111] te je stoga potrebno promijeniti vrijednosti u označenim čvorovima:
+
+{F29,size=full}
+
+Implementacija:
+
+```
+  void update( int x, int add ) {
+    for( ; x <= n; x += lobit(x) ) F[x] += add;
+  }
+```
+
+Složenost je O(log n) jer se lobit(x) u svakom koraku povećava, a ne može se povećati više od log n puta.
+
+== Skaliranje ==
+
+Ako želimo pomnožiti svaki element niza A s nekim brojem, dovoljno je isto to napraviti i u nizu F:
+
+```
+  void scale( int factor ) {
+    for( int i = 1; i <= n; ++i ) F[i] *= factor;
+  }
+```
+
+Složenost: O(n)
+
+== Inicijalizacija na vrijednost 1 ==
+
+Umjesto na nulu, svi elementi niza A se mogu postaviti na 1 tako da niz F inicijaliziramo na sljedeći način:
+
+```
+  void init1() {
+    for( int i = 1; i <= n; ++i ) F[i] = lobit(i);
+  }
+```
+
+Drugim riječima, potrebno je postaviti vrijednosti tako da za svaki x vrijedi: query(x) = x. Nakon ove inicijalizacije očito je da je suma na putu od bilo kojeg čvora x do korijena jednaka x.
+Složenost: O(n)
+
+== Maksimum umjesto sume ==
+
+Logaritamska struktura može podržavati i ove operacije:
+
+a) postavi vrijednost broja A[x] na w, gdje je w ≥ A[x]
+b) izračunaj maksimum prvih x brojeva u nizu
+
+Pri tome na početku svi brojevi u A i F moraju biti -∞.
+Implementacija je vrlo slična onoj prije:
+
+```
+  int query( int x ) {
+    int ret = -oo;
+    for( ; x > 0; x -= lobit(x) ) ret = max( ret, F[x] );
+    return ret;
+  }
+
+  void update( int x, int value ) {
+    for( ; x <= n; x += lobit(x) ) F[x] = max( F[x], value );
+  }
+```
+
+Slična stvar se može postići i ako je potrebno računati minimum prvih x brojeva.
+
+== Više dimenzija ==
+
+Umjesto niza brojeva A[1..n], možemo imati i matricu A[1..n][1..n] (može bit i viših dimenzija). U tom slučaju funkcija update povećava vrijednost broja u polju (x,y), a query vraća sumu brojeva u podmatrici A[1..x][1..y].
+Implementacija je analogna prvotnoj:
+
+```
+  void update( int x, int y, int add ) {
+     for( int i = x; i <= n; i += i&-i )
+        for( int j = y; j <= n; j += j&-j )
+           F[i][j] += add;
+  }
+  
+  int query( int x, int y ) {
+     int ret = 0;
+  
+     for( int i = x; i > 0; i -= i&-i )
+        for( int j = y; j > 0; j -= j&-j )
+           ret += F[i][j];
+  
+     return ret;
+  }
+```
+
+== Zadaci ==
+
+[[http://www.spoj.pl/problems/INVCNT/ | Inversion Count]]
+[[http://www.spoj.pl/problems/DCEPC206/ | It's a Murder!]]
+[[http://www.spoj.pl/problems/MATSUM/ | Matrix Summation]]
+
+
+== Linkovi ==
+
+[[http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=binaryIndexedTrees | TopCoder - Binary Indexed Trees]]
+[[http://www.algorithmist.com/index.php/Fenwick_tree | Algorithmist - Fenwick tree]]
+
+!!!
+2012 Stjepan Glavina
+!!!
