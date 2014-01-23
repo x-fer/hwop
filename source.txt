@@ -22,6 +22,6 @@ Stranice posvećene temama iz informatike i programiranja. Čitatelj može naći
 
 
 !!!
-2013 Alen Rakipović, Anton Grbin, Bruno Rahle, Dino Šantl, Goran Žužić
-Luka Kalinovčić, Matija Šantl, Stjepan Glavina, Tomislav Grbin
+2013 Alen Rakipović, Anton Grbin, Bruno Rahle, Dino Šantl,
+     Goran Žužić, Luka Kalinovčić, Matija Šantl, Stjepan Glavina, Tomislav Grbin
 !!!
