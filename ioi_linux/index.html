@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>kumulativni savjeti</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="kumulativni_savjeti"></a>kumulativni savjeti</h2>
+
+
+
+<!--h1--><h4><a name="bash"></a>bash</h4>
+
+<p>Bash je skriptni programski jezik, slicno kao python.</p>
+
+<p>Kada otvorite terminal zapravo pred sobom imate interaktivni bash.</p>
+
+<p>Naredbe u bash-u mogu biti zasebni programi (ls, rm, mv, cp, g++, ...) ili ugradjene naredbe kao (if, while, for, time, ...).</p>
+
+<p>Slijedi par primjera koji se mogu upisati direktno u &#039;konzolu&#039; odnosno u bash.</p>
+
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c">#pokreni program ./t nad svim test primjerima i zanemari izlaz</span>
+<span class="k">for </span>i in <span class="o">{</span>1..10<span class="o">}</span>; <span class="k">do </span><span class="nb">time</span> ./t &lt; zad.<span class="nv">$i</span>.in &gt; /dev/null; <span class="k">done</span></pre></div>
+
+
+
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c">#pokreni program ./t nad svim test primjerima i provjeri jeli tocan</span>
+<span class="c">#prazan ispis znaci da je sve tocno</span>
+<span class="k">for </span>i in <span class="o">{</span>1..10<span class="o">}</span>; <span class="k">do </span><span class="nb">time</span> ./t &lt; zad.<span class="nv">$i</span>.in | diff -wq - zad.<span class="nv">$i</span>.out; <span class="k">done</span></pre></div>
+
+
+
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c"># 100 puta pozovi generator test primjera, pokreni pravo i brute rjesenje.</span>
+<span class="c"># usporedi jeli tocno.</span>
+<span class="k">for </span>i in <span class="o">{</span>1..100<span class="o">}</span>; <span class="k">do</span> ./gen &gt; in; ./t &lt; in &gt; tout; ./brute &lt; in &gt; bout; diff bout tout; <span class="k">done</span></pre></div>
+
+
+
+<!--h2--><h4><a name="gdb"></a>gdb</h4>
+
+<p>Sljedeca vec dobro poznata linija kompilira .cpp fajl u executable. -Wall kaze da zelimo vidjeti sva upozorenja kompajlera, dok -g daje uputu kompajleru da ostavi debug simbole unutar izvrsne datoteke. To ce nam kasnije trebati u pozivu debugger-a.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">g</span><span class="o">++</span> <span class="o">-</span><span class="no">Wall</span> <span class="o">-</span><span class="no">g</span> <span class="no">program</span><span class="o">.</span><span class="no">cpp</span> <span class="o">-</span><span class="no">o</span> <span class="no">program</span></pre></div>
+
+<p>Sada mozemo pokrenuti program.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="o">./</span><span class="no">program</span>
+<span class="no">Segmentation</span> <span class="no">fault</span></pre></div>
+
+<p>Oho. Sada zelimo vidjeti zasto se program srusio.. Pokrecemo gdb program (gnu debugger).</p>
+
+<div class="remarkup-code-block" data-code-lang="console" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="gp">$ gdb t</span></pre></div>
+
+<p>Ispisuju se poruke o programu i poruka o ucitavanju simbola. Te nas docekuje prompt. Kako bi pokrenuli program pozivamo naredbu <strong>run</strong>. Ako se program srusi ili zaustavi, s naredbom <strong>backtrace</strong> mozemo vidjeti trenutni stacktrace.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="o">(</span><span class="no">gdb</span><span class="o">)</span> <span class="no">run</span>
+<span class="no">Starting</span> <span class="no">program</span><span class="o">:</span> <span class="o">/</span><span class="no">home</span><span class="o">/</span><span class="no">agrbin</span><span class="o">/</span><span class="no">projekt</span><span class="o">/</span><span class="no">hsin</span><span class="o">/</span><span class="no">krk</span><span class="o">/</span><span class="no">tmp</span><span class="o">/</span><span class="no">gdb</span><span class="o">/</span><span class="no">t</span> 
+<span class="no">Program</span> <span class="no">received</span> <span class="no">signal</span> <span class="no">SIGSEGV</span><span class="o">,</span> <span class="no">Segmentation</span> <span class="no">fault</span><span class="o">.</span>
+<span class="mh">0x0804849a</span> <span class="no">in</span> <span class="nf" data-symbol-name="f">f</span> <span class="o">(</span><span class="no">x</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span> <span class="no">at</span> <span class="no">t</span><span class="o">.</span><span class="no">cpp</span><span class="o">:</span><span class="mi">4</span>
+<span class="mi">4</span>         <span class="k">if</span> <span class="o">(</span><span class="no">x</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="o">*((</span><span class="no">int</span><span class="o">*)</span> <span class="o">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">5</span><span class="o">));</span>
+<span class="o">(</span><span class="no">gdb</span><span class="o">)</span> <span class="no">backtrace</span>
+<span class="c">#0  0x0804849a in f (x=1) at t.cpp:4</span>
+<span class="c">#1  0x080484bf in main () at t.cpp:9</span></pre></div>
+
+<p>Sada je moguce ispisivati varijable s naredbom tipa <tt>print x</tt>.<br />
+Nakorisnija naredba u <strong>gdb</strong> je <em>help</em>. Try it yourself.</p>
+
+<!--h3--><h4><a name="time"></a>time</h4>
+
+<p>cesto nas zanima koliko traje nas neki program. odgovor na to nam moze dati bash built-in <tt>time</tt>. Pokrece se ovako:</p>
+
+<div class="remarkup-code-block" data-code-lang="console" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="gp">$ time &lt;neki_program&gt;</span></pre></div>
+
+<p>Ispis je ovakav:</p>
+
+<div class="remarkup-code-block" data-code-lang="console" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="gp">$ time ./broji </span>
+<span class="go"></span>
+<span class="go">real    0m0.718s</span>
+<span class="go">user    0m0.716s</span>
+<span class="go">sys     0m0.004s</span></pre></div>
+
+<p>Objasnimo sto znaci koji od podataka:</p>
+
+<ul>
+<li>real, stvarno vrijeme (ljudsko) izvrsavanja programa. ovo vrijeme je sigurno najvece</li>
+<li>user, koliko vremena je procesor bio zaposlen s upravo ovim procesom</li>
+<li>sys, koliko vremena je kernel obavljao operacije da bi omogucioo rad ovom procesu</li>
+</ul>
+
+<p>Uglavnom se uvijek gleda i mjeri <tt>user</tt> vrijeme.</p>
+
+<!--h4--><h4><a name="random_kod_generatora"></a>random kod generatora</h4>
+
+<p>kako bi svaki puta primjeri bili drugaciji (cesce od svake sekunde) pod linux-om se moze koristiti sljedeca dosjetka:</p>
+
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="cp">#include &lt;unistd.h&gt;</span>
+<span class="cp">#include &lt;ctime&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="n">srand</span><span class="p">(</span><span class="n">getpid</span><span class="p">()</span> <span class="o">*</span> <span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
+
+<p>Napravili smo random seed od trenutnog identifikatora procesa (koji je svaki put drugaciji) i od trenutne sekunde. Taj seed ce se stalno mijenjati :)</p>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2013, Anton Grbin</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>

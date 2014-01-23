@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Ternarno pretraživanje</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="Ternarno_pretrazivanje"></a>Ternarno pretraživanje</h2>
+
+<p>Ternarno pretraživanje je po ideji nadogradnja binarnog pretraživanja. Ako još niste, ozbiljno vas potičemo da pogledate članak o <a href="http://p4.tel.fer.hr/w/binarno_pretrazivanje/" target="_blank">Binarnom pretraživanju</a>.</p>
+
+<!--h1--><h3><a name="Uvjet"></a>Uvjet</h3>
+
+<p>Osnovni preduvjet binarnog pretraživanja jest poredanost funkcije (niza) u kojem pretražujemo. Niz je mogao biti poredan bilo uzlazno, bilo silazno, a jednaki elementi bili su dopušteni.</p>
+
+<p>U osnovi, ternarno pretraživanje koristimo kako bismo pronašli <strong>minimum ili maksimum</strong> funkcije (niza) koja ima <strong>točno jedan ekstrem</strong> i kojoj su sve <strong>uzastopne vrijednosti različite</strong>. Drugim riječima, funkcije na kojima je algoritam ternarnog pretraživanja iskoristiv su one koje prvo strogo padaju, a zatim strogo rastu ili strogo rastu, a zatim padaju.</p>
+
+<p>{F112,size=full}</p>
+
+<!--h2--><h3><a name="Ideja_i_dokaz"></a>Ideja i dokaz</h3>
+
+<p>Za početak, zamislimo strogo rastući, a zatim strogo padajući niz (analogno vrijedi i za bilo koju odgovarajuću funkciju):</p>
+
+<p><strong>T = [ 1, 3, 4, 7, 10, 15, 14, 9, 6, 2, 0];</strong></p>
+
+<p>U nizu T odabrat ćemo dva indeksa koji se nalaze na prvoj i na drugoj trećini niza. U našem slučaju, to su: <strong>a = 11/3 = 3</strong>; i <strong>b = 2 * 11/3 = 7</strong>; (obratite pažnju da ne smijemo pisati b = 2/3*11 ☺).</p>
+
+<p>Uspoređujemo <strong>T[a]</strong> (7) i <strong>T[b]</strong> (9). U ovom je slučaju <strong>T[a] &lt; T[b]</strong> pa sa sigurnošću možemo zaključiti kako se najveća vrijednost u nizu ne nalazi u prvoj trećini niza. U slučaju da vrijedi <strong>T[a] &gt; T[b]</strong>, mogli bismo zaključiti da se najveća vrijednost ne nalazi u zadnjoj trećini niza.</p>
+
+<!--h3--><h4><a name="Zasto_to_funkcionira"></a>Zašto to funkcionira?</h4>
+
+<p>Znamo da je <strong>T[0] &lt; T[a]</strong> i znamo da je <strong>T[a] &lt; T[b]</strong>. Kada bi se u prvoj trećini niza nalazio traženi, najveći element, on bi sigurno bio veći od <strong>T[a]</strong>, pa bi niz prvo rastao, zatim padao do <strong>a</strong>, a zatim ponovo rastao do indeksa <strong>b</strong>. To se kosi s početnom pretpostavkom da je niz prvo strogo rastući, a zatim strogo padajući iz čega zaključujemo da se u prvoj trećini sigurno ne nalazi traženi broj i odbacujemo ju iz daljnjeg razmatranja. Kada bi vrijedilo da je <strong>T[a] &gt; T[b]</strong>, tada bismo analognim zaključivanjem mogli odbaciti zadnji dio niza koji počinje s <strong>T[b]</strong>.</p>
+
+<!--h4--><h4><a name="Zasto_nuzno_razliciti_brojevi"></a>Zašto nužno različiti brojevi?</h4>
+
+<p>Što se događa ako u funkciji (nizu) imamo dvije iste vrijednosti? Ako je <strong>T[a] = T[b]</strong>, nećemo moći ništa zaključiti o poziciji traženog ekstrema, što najbolje prikazuju sljedeća tri niza:<br />
+1 2 <strong>5</strong> 5 <strong>5</strong> <tt>7</tt> 2<br />
+ 1 2 <strong>5</strong> <tt>6</tt> <strong>5</strong> 3 2<br />
+1 <tt>7</tt> <strong>5</strong> 5 <strong>5</strong> 3 2<br />
+U sva tri niza za vrijednosti indeksa a i b odabrali bismo <strong>a</strong>=2 i <strong>b</strong>=4, a usporedbom <strong>T[2]</strong> I <strong>T[4]</strong> ni u jednom nizu ne možemo sa sigurnošću zaključiti o poziciji ekstrema. Naravno, drukčijim odabirom indeksa „pogodili“ bismo različite elemente, ali općenito vrijedi da ternarnim pretraživanjem ne možemo ništa zaključiti kada su promatrani elementi niza jednaki, zbog čega slijedi <strong>nužan uvjet različitih elemenata</strong>.</p>
+
+<p>Kao i kod binarnog pretraživanja, prava „snaga“ algoritma ne proizlazi iz osnovne primjene u kojoj pretražujemo zadani niz, nego iz velikog broja zadataka u kojima možemo ternarnim pretraživanjem pronaći najbolje rješenje, bez obzira na funkciju o kojoj se u pozadini radi.</p>
+
+<!--h5--><h3><a name="Slozenost"></a>Složenost</h3>
+
+<p>Sada nam preostaju samo dvije trećine početnog niza, na kojima ponavljamo identičan postupak i vrlo brzo dolazimo do traženog rješenja. Složenost ovog algoritma također je logaritamska, kao i kod binarnog pretraživanja, s jedinom razlikom da je baza logaritma u ovom slučaju 3/2, što ne utječe značajno na brzinu izvršavanja.<br />
+<em>(dok binarno pretraživanje niza od 1 000 000 elemenata zahtijeva maksimalno 20 koraka, ternarno će pretraživanje na nizu iste veličine zahtijevati 35 koraka)</em></p>
+
+<!--h6--><h3><a name="Pseudokod"></a>Pseudokod</h3>
+
+<p>Pseudokod najjednostvnijeg pretraživanja u nizu:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">int</span> <span class="no">l</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="no">u</span> <span class="o">=</span> <span class="no">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="c">// lower i upper</span>
+<span class="k">while</span><span class="o">(</span> <span class="no">l</span> <span class="o">&lt;</span> <span class="no">u</span> <span class="o">)</span> <span class="o">{</span> 
+  <span class="no">int</span> <span class="no">a</span> <span class="o">=</span> <span class="no">l</span> <span class="o">+</span> <span class="o">(</span> <span class="no">u</span> <span class="o">-</span> <span class="no">l</span> <span class="o">)</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;</span>
+  <span class="no">int</span> <span class="no">b</span> <span class="o">=</span> <span class="no">l</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">(</span> <span class="no">u</span> <span class="o">-</span> <span class="no">l</span> <span class="o">)</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;</span>
+
+  <span class="c">// u ovom primjeru trazimo minimum, tj.</span>
+  <span class="c">// niz prvo strogo pada pa strogo raste</span>
+  <span class="k">if</span> <span class="o">(</span> <span class="no">T</span><span class="o">[</span><span class="no">a</span><span class="o">]</span> <span class="o">&lt;</span> <span class="no">T</span><span class="o">[</span><span class="no">b</span><span class="o">]</span> <span class="o">)</span> 
+    <span class="no">u</span> <span class="o">=</span> <span class="no">b</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="c">// sigurni smo i da T[b] nije rjesenje</span>
+  <span class="k">else</span>
+    <span class="no">l</span> <span class="o">=</span> <span class="no">a</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="c">// T[a] sigurno nije rjesenje</span>
+<span class="o">}</span></pre></div>
+
+<p>U slučaju da ne tražimo minimum niza, nego proizvoljne funkcije cijele varijable, gotovo se ništa ne mijenja, osim što ne provjeravamo odnos <strong>T[a] i T[b]</strong>, nego <strong>f(a) i f(b)</strong></p>
+
+<!--h7--><h4><a name="Realne_funkcije"></a>Realne funkcije</h4>
+
+<p>Ako je funkcija čiji minimum tražimo prima realni parametar, tada je najjednostavnije while petlju zamijeniti for petljom koja će se izvršiti unaprijed zadani broj iteracija (npr. 100 ili 200). Naravno, zbog kontinuiranosti skupa realnih brojeva, granice ćemo sada mijenjati tako da će postati <strong>l = a</strong> ili  <strong>u = b</strong>.</p>
+
+<!--h8--><h3><a name="Trik_za_pretvorbu_u_binarno_pretrazivanje"></a>Trik za pretvorbu u binarno pretraživanje</h3>
+
+<p>Ako ternarno pretraživanje radimo na skupu cijelih brojeva, moguće je iskoristiti jednostavan trik kako bismo problem ternarnog pretraživanja pretvorili u binarno pretraživanje.</p>
+
+<p>Primjetite da, u slučaju funkcije koja prvo raste pa pada, kod traženja maksimuma, mi zapravo tražimo onu točku gdje je <strong>f(x-1) &lt; f(x)</strong> i <strong>f(x+1) &lt; f(x)</strong>.<br />
+Ako bismo u binarnom pretraživanju predikat <strong>P(x)</strong> zamislili kao <strong>P(x) := f(x) &gt; f(x+1)</strong>, tada bismo binarnim pretraživanjem zapravo trebali pronaći prvi takav <strong>x</strong> za koji je P(x) = 1, a to je problem koji znamo lako riješiti! :)</p>
+
+<p>Važno je ipak uočiti da ovaj &quot;trik&quot; nije moguće iskoristiti kod funkcija na kontinuiranom skupu.</p>
+
+<!--h9--><h3><a name="Zadaci"></a>Zadaci</h3>
+
+
+
+<ol>
+<li>U ravnini su zadane dužina D i točka T. Pronađi točku T&#039; na dužini D koja je najbliža točki T</li>
+<li><a href="http://code.google.com/codejam/contest/dashboard?c=189252#s=p1" target="_blank">Center of Mass</a></li>
+</ol>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2012. Ivo Sluganović</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>
