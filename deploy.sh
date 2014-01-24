@@ -2,18 +2,17 @@
 # in ../hwop-engine/.
 # you can test your engine with ../hwop-engine/hwop test
 
-# if error occurs stop.
-set -e
+outdir=../__hwop_html
 
-../hwop-engine/hwop build --src=wiki --dst=/tmp/hwop-output
+../hwop-engine/hwop build --src=wiki --dst=$outdir
 
 git stash
-git checkout gh-pages
-rm -rf *
-cp -r /tmp/hwop-output/* .
-git add --all
-git commit --allow-empty --message='gh-pages updated.'
-git push origin HEAD:gh-pages
-git checkout master
-rm -rf /tmp/hwop-output
+
+  git checkout gh-pages
+  git rm -r *
+  cp -r $outdir/* .
+  git add --all
+  git commit --message='gh-pages updated.' && git push origin HEAD:gh-pages
+  git checkout master
+
 git stash pop
