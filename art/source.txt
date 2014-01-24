@@ -14,6 +14,7 @@ Kako napisati željeni algoritam u programskom jeziku brzo, efikasno i točno?
 
 == Općenito ==
 
+- [[art/profiling]], profiliranje programskog koda pod *nix sustavima
 - [[art/submask]], implementacijski trik za iteraciju po svim podmaskama bitmaske
 
 !!!
