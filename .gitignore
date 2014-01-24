@@ -1,0 +1,4 @@
+# Ignore backups from certain text-editors.
+*~
+*.bak
+\#*#
