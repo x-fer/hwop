@@ -1,0 +1,74 @@
+= Aproksimacije racionalnim brojevima =
+
+== Motivacija ==
+
+Poznata je stvar da omjer uzastopnih Fibonaccijevih brojeva teži u zlatni rez:
+
+$$\lim_{n \to \infty} \frac{F_{n+1}}{F_n} = \phi = \frac{1+\sqrt 5}{2}$$
+
+drugim riječima, za iracionalan broj $\phi$ možemo lagano pronaći vrlo kvalitetnu aproksimaciju racionalnim brojem, primjerice:
+
+$$ \frac{F_{20}}{F_{19}} = \frac{6765}{4181} = 1.61803396 \sim \phi = 1.61803399$$
+
+**Pitanja:** kako poopćiti ovaj rezultat (primjerice za aproksimaciju drugog korijena prirodnih brojeva), te koja je brzina konvergencije tako dobivenog postupka?
+
+== Teorija ==
+
+Pretpostavimo da želimo aproksimirati iracionalni broj $a + \sqrt b$ gdje su $a, b \in \mathbb{N}$ . Rješenje ovog problema ćemo pronaći ako se prisjetimo diferencijskih jednadžbi drugog reda.
+
+Poznato je da diferencijska jednadžba
+
+$$ a_{n+2} = \mu a_{n+1} + \eta a_n $$
+
+ima opći oblik 
+
+$$a_n = \alpha \lambda_1^n + \beta \lambda_2^n$$
+
+gdje su $\lambda_{1,2}$ rješenja jednadžbe $\lambda^2 = \mu \lambda + \eta$ 
+
+Vratimo se originalnom problemu: jednadžba s rješenjima upravo $a + \sqrt b$ i $a - \sqrt b$ je ona s karakterističkom jednadžbom
+
+$$ (\lambda - (a + \sqrt b))(\lambda - (a - \sqrt b)) = \lambda^2 - 2\lambda a + a^2 - b = 0$$
+
+Iz toga slijedi da:
+
+$$ x_{n+2} = 2ax_{n+1} + (b - a^2) x_n $$
+
+ima opći član upravo $x_n = \alpha (a+\sqrt b)^n + \beta (a - \sqrt b)^n$ na koji možemo postaviti uvjet $\alpha = \beta = 1$ iz čega slijedi $x_0 = 2;\; x_1 = 2a \in \mathbb{N}$ .
+
+Pogledajmo sada u što teži omjer uzastopnih članova pod pretpostavkom $|\lambda_1| > |\lambda_2|$ :
+
+$$ \lim_{n \to \infty} \frac{x_{n+1}}{x_n}  = \lim_{n \to \infty} \frac{\alpha\lambda_1\lambda_1^n + \beta\lambda_2\lambda_2^n}{\alpha\lambda_1^n + \beta\lambda_2^n} = \lim_{n \to \infty} \frac{\lambda_1 + \frac{\beta\lambda_2}{\alpha}(\frac{\lambda_2}{\lambda_1})^n}{1 + \frac{\beta}{\alpha}(\frac{\lambda_2}{\lambda_1})^n} \to \lambda_1$$
+
+To nam govori da $\frac{x_{n+1}}{x_n} = a + \sqrt b + O((\frac{\lambda_2}{\lambda_1})^n) = a + \sqrt b + O((\frac{a - \sqrt b}{a + \sqrt b})^n)$ 
+
+Primjetimo da ovom metodom sada možemo aproksimirati sve brojeve oblika $a + \sqrt b$ OSIM čistih korijena (jer $a = 0 \implies |\frac{\lambda_2}{\lambda_1}| = 1$ , dok je inaće ta vrijednost manja od 1). No, to nam ne predstavlja problem:
+
+Ukoliko izaberemo broj $a$ bliske vrijednosti $\sqrt b$ , primjerice $a = \text{round}(\sqrt b)$ , dobivamo odličnu konvergenciju prema broju $\frac{n}{m} \sim a + \sqrt b$ iz kojeg još samo trebamo poništiti član $a$ te dobijamo $\frac{n - a\cdot m}{m} \sim \sqrt b$ .
+
+== Primjena ==
+
+Želimo aproksimirati broj $\sqrt 2$ . Aproksimirati ćemo ga pomoću pomoćnog broja $1 + \sqrt 2$ kojega možemo izravno aproksimirati. Biramo:
+
+$$ x_{n+2} = 2x_{n+1} + x_n, \qquad x_0 = x_1 = 2 $$
+
+sada vrijedi, iz prethodnog razmatranja, da
+
+$$ \frac{x_{n+1} - x_n}{x_n} = \sqrt{2} + O(0.17^n) $$
+
+Ako ubacimo nekoliko brojeva unutra dobivamo:
+
+$$ \frac{x_{22}}{x_{21}} = \frac{263672646 - 109216786}{109216786} = \frac{154455860}{109216786} = 1.41421356237 $$
+
+Sljedeći kratki Python program implementira dani postupak:
+
+
+  a, b = 2, 2
+  for i in xrange(50):
+      a, b = b, 2 * b + a
+      print a, b
+  print float(b-a) / a
+
+!!!
+2013. Goran Žužić
+!!!

@@ -1,0 +1,116 @@
+= kumulativni savjeti =
+
+=== bash
+
+
+Bash je skriptni programski jezik, slicno kao python.
+
+Kada otvorite terminal zapravo pred sobom imate interaktivni bash.
+
+Naredbe u bash-u mogu biti zasebni programi (ls, rm, mv, cp, g++, ...) ili ugradjene naredbe kao (if, while, for, time, ...).
+
+Slijedi par primjera koji se mogu upisati direktno u 'konzolu' odnosno u bash.
+
+```lang=sh
+#pokreni program ./t nad svim test primjerima i zanemari izlaz
+for i in {1..10}; do time ./t < zad.$i.in > /dev/null; done
+```
+
+
+
+```lang=sh
+#pokreni program ./t nad svim test primjerima i provjeri jeli tocan
+#prazan ispis znaci da je sve tocno
+for i in {1..10}; do time ./t < zad.$i.in | diff -wq - zad.$i.out; done
+```
+
+
+
+```lang=sh
+# 100 puta pozovi generator test primjera, pokreni pravo i brute rjesenje.
+# usporedi jeli tocno.
+for i in {1..100}; do ./gen > in; ./t < in > tout; ./brute < in > bout; diff bout tout; done
+```
+
+=== gdb
+
+Sljedeca vec dobro poznata linija kompilira .cpp fajl u executable. -Wall kaze da zelimo vidjeti sva upozorenja kompajlera, dok -g daje uputu kompajleru da ostavi debug simbole unutar izvrsne datoteke. To ce nam kasnije trebati u pozivu debugger-a.
+
+```
+g++ -Wall -g program.cpp -o program
+```
+
+Sada mozemo pokrenuti program.
+
+```
+./program
+Segmentation fault
+```
+
+Oho. Sada zelimo vidjeti zasto se program srusio.. Pokrecemo gdb program (gnu debugger).
+
+```
+$ gdb t
+```
+
+Ispisuju se poruke o programu i poruka o ucitavanju simbola. Te nas docekuje prompt. Kako bi pokrenuli program pozivamo naredbu **run**. Ako se program srusi ili zaustavi, s naredbom **backtrace** mozemo vidjeti trenutni stacktrace.
+
+```
+(gdb) run
+Starting program: /home/agrbin/projekt/hsin/krk/tmp/gdb/t 
+Program received signal SIGSEGV, Segmentation fault.
+0x0804849a in f (x=1) at t.cpp:4
+4         if (x == 1) return *((int*) (5 - 5));
+(gdb) backtrace
+#0  0x0804849a in f (x=1) at t.cpp:4
+#1  0x080484bf in main () at t.cpp:9
+```
+
+Sada je moguce ispisivati varijable s naredbom tipa `print x`.
+Nakorisnija naredba u **gdb** je //help//. Try it yourself.
+
+=== time
+
+cesto nas zanima koliko traje nas neki program. odgovor na to nam moze dati bash built-in `time`. Pokrece se ovako:
+
+```
+$ time <neki_program>
+```
+
+Ispis je ovakav:
+
+```
+$ time ./broji 
+
+real    0m0.718s
+user    0m0.716s
+sys     0m0.004s
+```
+
+Objasnimo sto znaci koji od podataka:
+
+- real, stvarno vrijeme (ljudsko) izvrsavanja programa. ovo vrijeme je sigurno najvece
+- user, koliko vremena je procesor bio zaposlen s upravo ovim procesom
+- sys, koliko vremena je kernel obavljao operacije da bi omogucioo rad ovom procesu
+
+Uglavnom se uvijek gleda i mjeri `user` vrijeme.
+
+=== random kod generatora
+
+kako bi svaki puta primjeri bili drugaciji (cesce od svake sekunde) pod linux-om se moze koristiti sljedeca dosjetka:
+
+```lang=c
+#include <unistd.h>
+#include <ctime>
+
+int main() {
+   srand(getpid() * time(0));
+   return 0;
+}
+```
+
+Napravili smo random seed od trenutnog identifikatora procesa (koji je svaki put drugaciji) i od trenutne sekunde. Taj seed ce se stalno mijenjati :)
+
+!!!
+2013, Anton Grbin
+!!!

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Implementacije logaritamskog potenciranja</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="Implementacije_logaritamskog_potenciranja"></a>Implementacije logaritamskog potenciranja</h2>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h1--><h3><a name="Brute_force"></a>Brute force!</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="no">double</span> <span class="no">sol</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="no">int</span> <span class="no">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="no">j</span> <span class="o">&lt;</span> <span class="no">p</span><span class="o">;</span> <span class="o">++</span><span class="no">j</span><span class="o">)</span>
+    <span class="no">sol</span> <span class="o">*=</span> <span class="no">b</span><span class="o">;</span>
+  <span class="k">return</span> <span class="no">sol</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h2--><h3><a name="Rekurzivni_brute_force"></a>Rekurzivni brute force!</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="no">p</span> <span class="o">?</span> <span class="no">b</span> <span class="o">*</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">:</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h3--><h3><a name="Rekurzivno_potenciranje"></a>Rekurzivno potenciranje</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(!</span><span class="no">p</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">p</span> <span class="o">%</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">b</span> <span class="o">*</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h4--><h3><a name="Rekurzivno_logaritamsko_potenciranje"></a>Rekurzivno logaritamsko potenciranje</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code remarkup-counterexample"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">p</span> <span class="o">%</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">b</span> <span class="o">*</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="no">double</span> <span class="no">tmp</span> <span class="o">=</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+    <span class="k">return</span> <span class="no">tmp</span> <span class="o">*</span> <span class="no">tmp</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h5--><h3><a name="Rekurzivno_logaritamsko_potenciranje_)"></a>Rekurzivno logaritamsko potenciranje :)</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">p</span> <span class="o">%</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">b</span> <span class="o">*</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="no">double</span> <span class="no">tmp</span> <span class="o">=</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+    <span class="k">return</span> <span class="no">p</span> <span class="o">?</span> <span class="no">tmp</span> <span class="o">*</span> <span class="no">tmp</span> <span class="o">:</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h6--><h3><a name="Isto_rekurzivno_logaritamsko_potenciranje_)"></a>Isto rekurzivno logaritamsko potenciranje :)</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="no">double</span> <span class="no">tmp</span> <span class="o">=</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">b</span><span class="o">,</span> <span class="no">p</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">p</span> <span class="o">%</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">tmp</span> <span class="o">*</span> <span class="no">tmp</span> <span class="o">*</span> <span class="no">b</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">p</span> <span class="o">?</span> <span class="no">tmp</span> <span class="o">*</span> <span class="no">tmp</span> <span class="o">:</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h7--><h3><a name="Iterativno_logaritamsko_potenciranje"></a>Iterativno logaritamsko potenciranje</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="no">double</span> <span class="no">sol</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="no">unsigned</span> <span class="no">int</span> <span class="no">mask</span> <span class="o">=</span> <span class="o">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">31</span><span class="o">);</span> <span class="no">mask</span><span class="o">;</span> <span class="no">mask</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="no">sol</span> <span class="o">=</span> <span class="o">(</span><span class="no">sol</span> <span class="o">*</span> <span class="no">sol</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="no">mask</span> <span class="o">&amp;</span> <span class="no">p</span> <span class="o">?</span> <span class="no">b</span> <span class="o">:</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="k">return</span> <span class="no">sol</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.<br />
+.</p>
+
+<!--h8--><h3><a name="Spaljeno_iterativno_logaritamsko_potenciranje"></a>Spaljeno iterativno logaritamsko potenciranje</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">double</span> <span class="nf" data-symbol-name="potencija">potencija</span><span class="o">(</span><span class="no">double</span> <span class="no">b</span><span class="o">,</span> <span class="no">unsigned</span> <span class="no">int</span> <span class="no">p</span><span class="o">)</span> <span class="o">{</span>
+  <span class="no">double</span> <span class="no">sol</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(;</span> <span class="no">p</span><span class="o">;</span> <span class="no">p</span><span class="o">/=</span><span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="no">p</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="o">)</span> <span class="no">sol</span> <span class="o">*=</span> <span class="no">b</span><span class="o">;</span>
+    <span class="no">b</span> <span class="o">*=</span> <span class="no">b</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="k">return</span> <span class="no">sol</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2012. Anton Grbin</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>

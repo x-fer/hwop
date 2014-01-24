@@ -1,0 +1,190 @@
+= Implementacije logaritamskog potenciranja =
+
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Brute force! ==
+
+  double potencija(double b, unsigned int p) {
+    double sol = 1;
+    for (int j = 0; j < p; ++j)
+      sol *= b;
+    return sol;
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Rekurzivni brute force! ==
+
+  double potencija(double b, unsigned int p) {
+    return p ? b * potencija(b, p - 1) : 1;
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Rekurzivno potenciranje ==
+
+  double potencija(double b, unsigned int p) {
+    if (!p) return 0;
+    if (p % 2) {
+      return b * potencija(b, p - 1);
+    } else {
+      return potencija(b, p / 2) * potencija(b, p / 2);
+    }
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Rekurzivno logaritamsko potenciranje ==
+
+  COUNTEREXAMPLE
+  double potencija(double b, unsigned int p) {
+    if (p % 2) {
+      return b * potencija(b, p - 1);
+    } else {
+      double tmp = potencija(b, p / 2);
+      return tmp * tmp;
+    }
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Rekurzivno logaritamsko potenciranje :) ==
+
+  double potencija(double b, unsigned int p) {
+    if (p % 2) {
+      return b * potencija(b, p - 1);
+    } else {
+      double tmp = potencija(b, p / 2);
+      return p ? tmp * tmp : 1;
+    }
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Isto rekurzivno logaritamsko potenciranje :) ==
+
+  double potencija(double b, unsigned int p) {
+    double tmp = potencija(b, p / 2);
+    if (p % 2) {
+      return tmp * tmp * b;
+    } else {
+      return p ? tmp * tmp : 1;
+    }
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Iterativno logaritamsko potenciranje ==
+
+  double potencija(double b, unsigned int p) {
+    double sol = 1;
+    for (unsigned int mask = (1<<31); mask; mask >>= 1)
+      sol = (sol * sol) * (mask & p ? b : 1);
+    return sol;
+  }
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+== Spaljeno iterativno logaritamsko potenciranje ==
+
+  double potencija(double b, unsigned int p) {
+    double sol = 1;
+    for (; p; p/=2) {
+      if (p & 1) sol *= b;
+      b *= b;
+    }
+    return sol;
+  }
+
+!!!
+2012. Anton Grbin
+!!!

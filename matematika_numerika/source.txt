@@ -1,0 +1,108 @@
+= Numerička matematika =
+
+Današnja računala obično koriste 32-bitni (float) i 64-bitni (double) IEEE floating point prikaz kako bi prikazali realne brojeve. Za više informacija o samom prikazu najbolje je pogledati sljedeće odlične Topcoder tutoriale:
+
+http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=integersReals
+http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=integersReals2
+
+Cilj ovog članka je da shvatite probleme koji se mogu javiti oko preciznost kada radite s realnim brojevima. Uvesti ćemo pojam //apsolutne i relativne pogreške// koji su potpuno centralni za ovu temu. U nekoj realnoj situaciji jedina stvar oko koje ćete se brinuti pri radu s realnim brojevima će biti da vam apsolutna ili relativna pogreška (što god je manje) bude manja od npr. $10^{-9}$ .
+
+=== Relativna i apsolutna pogreška
+
+Pretpostavimo da je stvarna vrijednost neke veličine $x$ , a mi je u programu reprezentiramo s varijablom čija je stvarna vrijednost $\tilde{x}$ . Tada definiramo:
+
+$$
+\text{apsolutna pogr  eška: } \Delta x = x - \tilde{x}
+$$
+
+$$
+\text{relativna pogreška: } \epsilon_x = \frac{x - \tilde{x}}{x}
+$$
+
+Nekakva normalna vrijednost za min(relativna pogreška, apsolutna pogreška) je reda veličine $2^{-50}$ .
+
+==== Primjeri
+
+Nekoliko najkorisnijih primjera:
+
+
+  # Zbrajanje: $f(x,y) = x+y$ .
+    # $$ |\Delta f| \le |\Delta x| + |\Delta y| $$
+    # $$ |\epsilon_f| \le |\frac{x}{x+y}| |\epsilon_x| + |\frac{y}{x+y}| |\epsilon_y| $$
+  # Oduzimanje: $f(x,y) = x-y$ .
+    # $$ |\Delta f| \le |\Delta x| + |\Delta y| $$
+    # $$ |\epsilon_f| \le |\frac{x}{x-y}| |\epsilon_x| + |\frac{y}{x-y}| |\epsilon_y| $$
+    # Dakle ako $x \sim y$ , relativna pogreška oduzimanja može eksplodirati.
+  # Množenje: $f(x,y) = xy$ .
+    # $$ |\Delta f| \le |y||\Delta x| + |x||\Delta y| $$
+    # $$ |\epsilon_f| \le |\epsilon_x| + |\epsilon_y| $$
+  # Dijeljenje: $f(x,y) = \frac{x}{y}$ .
+    # $$ |\Delta f| \le \frac{|\Delta x|}{|y|} + \frac{|x||\Delta y|}{|y|^2} $$
+    # $$ |\epsilon_f| \le |\epsilon_x| + |\epsilon_y| $$
+
+==== Izvod
+
+Pretpostavimo u ovom trenutku kako su računala savršeno precizna i da su sve pogreške unesene mjerenjima i aproksimacijama. Zanima nas sljedeći problem: za zadane brojeve $x, y$ izračunati $f(x, y)$ za neku "normalnu" (barem dva puta derivabilnu) funkciju $f$ .
+
+$$
+f(x,y) = f(\tilde{x} + \Delta x, \tilde{y} + \Delta y) = f(\tilde{x}, \tilde{y}) + \frac{\partial f}{\partial x} \Delta x + \frac{\partial f}{\partial y} \Delta y
+$$
+
+Ovdje smo zanemarili članove višeg reda. Ovo je opravdano jer su oni normalno reda veličine $2^{-100$ , mnogo manji nego što je reprezentabilno. Sada imamo:
+
+$$
+\Delta f = f(x,y) - f(\tilde{x}, \tilde{y}) =  \boxed{ \frac{\partial f}{\partial x} \Delta x + \frac{\partial f}{\partial y} \Delta y }
+$$
+
+$$
+\epsilon_f = \frac{f(x,y) - f(\tilde{x}, \tilde{y})}{f(x,y)} =  \frac{\partial f}{\partial x} \frac{\Delta x}{f(x,y)} \frac{x}{x} + \frac{\partial f}{\partial y} \frac{\Delta y}{f(x,y)} \frac{y}{y} = \boxed{ \frac{\partial f}{\partial x} \frac{x}{f(x,y)} \epsilon_x + \frac{\partial f}{\partial y} \frac{y}{f(x,y)} \epsilon_y}
+$$
+
+== Zadatak: CollectingBonuses
+
+Izvor: TopCoder SRM 400; Div I; Level 3
+Zadatak: http://community.topcoder.com/stat?c=problem_statement&pm=8764&rd=12172&rm=&cr=10574855
+Editorial: http://community.topcoder.com/tc?module=Static&d1=match_editorials&d2=srm400
+
+Nakon što malo razmislite o zadatku (i znate ponešto o Markovljevim lancima), nije teško zaključiti kako je potrebno izračunati sljedeću sumu:
+
+$$n \cdot \sum_{i=n-k+1}^n \frac{1}{i}$$
+
+Problem nam tvore ograničenja: $n, k \le 10^{18}$ . Naivno sumiranje for-petljom ne dolazi u obzir. Problemu je potrebno drugačije pristupiti: definirajmo takozvani //harmonijski red//:
+
+$$ H_n = \sum_{i=1}^n \frac{1}{i} $$
+
+Sada je potrebno izračunati $n \cdot \left ( H_n - H_{n-k} \right )$ s relativnom ili apsolutnom pogreškom od $10^{-9}$ (dovoljno je ispuniti bilo koji od ta dva uvjeta). Kratko prisječanje na gornje formule nam govori da je to zadovoljeno kada izračunamo razliku harmonijskih suma s relativnom pogreškom od $10^{-9}$ ili s apsolutnom pogreškom od $10^{-27}$ (dovoljno je ispuniti bilo koji od ta dva uvjeta). No, broj s apsolutnom pogreškom od $10^{-27}$ nije nemoguće precizno pohraniti (zato jer harmonijske sume nisu brojevi bliski 0).
+
+Računanje harmonijskog reda je poznat problem u matematici i njemu se pristupa tako da se $H_n$ usporedi s integralom $\int_1^n \frac{1}{x} dx = \ln n$ u što nećemo ulaziti. [[http://www.wolframalpha.com/input/?i=harmonic+series+expansion | WolframAlpha]] nam je ovdje od velike pomoći i kaže da:
+
+$$
+H_n = \ln n + \gamma + \frac{1}{2n} - \frac{1}{12n^2} + \frac{1}{120n^4} + O(n^{-6})
+$$
+
+gdje je $\gamma = 0.57721566490153286060651209008240243104215933593992 \ldots$ . Iako ova formula ima **veliku relativnu i apsolutnu pogrešku** za male $n$ , primjetite da sada uvijek znamo izračunati $H_n$ s malom relativnom pogreškom. Kako je $H_n$ za sve praktične primjene manji od 100, dovoljno je izračunati $H_n$ s aps. pogreškom $10^{-12}$ :
+
+  ako je n < 10^3, iskoristi naivni algoritam
+  inače vrati $\ln n + \gamma + 1/(2n) - 1/(12n^2) + 1/(120n^4)$
+
+No, to **NIJE** dovoljno za riješiti cijeli zadatak. Budući da oduzimamo dvije harmonijske sume (koje su obično bliske za velike n, k), relativna pogreška se može jako povećati, stoga to nije konačan način na koji se zadatak rješava. U tome slučaju kada su oba n i k jako veliki, a njihove harmonijske sume bliske, koristiti ćemo formulu:
+
+$$
+H_n - H_{n-k} = \ln \left( \frac{n}{n-k}\right ) - \frac{k}{2n(n-k)} + \frac{kn}{12n^2(n-k)^2}
+$$
+
+Još jednom, ova formula za razliku je neprecizna kada je $n-k$ dovoljno mali broj (aproksimacija harmonijske sume je neprecizna za male H). Ja (Goran) sam osobno ručno izračunao prvih milijun članova sume, pa radio aproksimacije za preostale članove (naknadno sam otkrio da gornji algoritam prolazi čak i kada se ručno posumiraju samo prvih 10 članova).
+
+Potrebno je dati još samo jednu napomenu: funkcija $\ln(.)$ , koja je u C/C++-u implementirana u math.h preko funkcije double log(double) neprecizna ukoliko nam je argument funkcije vrlo blizak 1 (npr. $\frac{n}{n-k} = \frac{10^{18}}{10^{18}-10^{10}}$ . U tome slučaju je potrebno koristiti funkciju log1p(x) koja nam vraća $\ln(1+x)$ , ali s mnogo većom preciznosti.
+
+U konačnici, algoritam izgleda ovako (nisam ga detaljno provjerio, ali trebao bi biti ok):
+
+  ako k < 10^6 vrati n*naivno_sumiranje(n-k, n);
+  prefix_suma := naivno_sumiranje(n-k+1, n-k+10^6)  // ručno posumiraj prvih 10^6 članova
+  k := k - 10^6
+  ako n/(n-k) < 1.1 tada L := log1p(k/(n-k)) inače L := log(n/(n-k))
+  vrati n * (prefix_suma + L - k/2/n/(n-k) + k*n/12/n^2/(n-k)^2)
+
+!!!
+2012. Goran Žužić
+!!!

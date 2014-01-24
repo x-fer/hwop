@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Sweep line</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="Sweep_line"></a>Sweep line</h2>
+
+<p>Ideja koja stoji iza sweep line algoritma je zamišljena linija koja prolazeći kroz ravninu nailazi na bitne točke te ih na odgovarajući način obrađuje. Sweep line algoritmi su najčešće primjenjivani u problemima geometrijskog karaktera.</p>
+
+<!--h1--><h3><a name="event"></a>event</h3>
+
+<p>Bitne točke najčešće ostvarujemo strukturom <em>event</em> koja sadrži podatke koji opisuju te bitne točke. Algoritam se ostvaruje prolaskom kroz sve event-ove točno određenim redoslijedom. Redoslijed se definira operatorom &lt; ili vlastitom komparacijskom funkcijom. Pomoću operatora ili funkcije sortiramo eventove te time dobijamo potreban poredak.</p>
+
+<p>Struktura event je specifična za svaki problem, ali uvijek sadrži podatak prema kojem možemo odrediti da li se event A dešava prije ili nakon eventa B.</p>
+
+<p>Primjer 1: strukutra eventa dužine u ravnini</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">struct</span> <span class="no">event</span> <span class="o">{</span>
+  <span class="no">int</span> <span class="no">x_koordinata</span><span class="o">;</span>  <span class="c">// x koordinata točke </span>
+  <span class="no">bool</span> <span class="no">vrsta</span><span class="o">:</span>        <span class="c">// 0 = početak dužine, 1 = kraj dužine</span>
+<span class="o">};</span></pre></div>
+
+
+
+<!--h2--><h3><a name="operator_ili_komparacijska_funkcija"></a>operator &lt; ili komparacijska funkcija</h3>
+
+<p>Nakon što smo jasno definirali event preostaje nam odrediti njihov poredak. O poretku obrade nam ovisi hoćemo li obilaziti eventove s lijeva na desno, odozgo prema dolje ili nekim drugim obilaskom. Najčešće se uzima s lijeva na desno pa će on biti i opisan.</p>
+
+<p>Uzmimo slučaj iz Primjera 1. i poredak obilaska s lijeva na desno. Sad je poprilično jasno da eventove moramo sortirati na takav načina da oni s manjom X koordinatom budu obrađeni prije. Također, pretpostavimo da je struktura u koju spremamo eventove STL vector.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="o">...</span>
+<span class="c">#include &lt;vector&gt;</span>
+<span class="o">...</span>
+<span class="c">// definicija strukture event iz Primjera 1.</span>
+<span class="no">vector</span> <span class="o">&lt;</span><span class="no">event</span><span class="o">&gt;</span> <span class="no">events</span><span class="o">;</span></pre></div>
+
+<p>Ako koristimo funkciju <em>sort</em> možemo koristiti ili vlastiti operator &lt; na strukturi event,</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">bool</span> <span class="no">operator</span> <span class="o">&lt;</span> <span class="o">(</span><span class="no">event</span> <span class="no">a</span><span class="o">,</span> <span class="no">event</span> <span class="no">b</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">a</span><span class="o">.</span><span class="no">x_koordinata</span> <span class="o">!=</span> <span class="no">b</span><span class="o">.</span><span class="no">x_koordinata</span><span class="o">)</span>
+    <span class="k">return</span> <span class="no">a</span><span class="o">.</span><span class="no">x_koordinata</span> <span class="o">&lt;</span> <span class="no">b</span><span class="o">.</span><span class="no">x_koordinata</span><span class="o">;</span>
+  <span class="k">return</span> <span class="no">a</span><span class="o">.</span><span class="no">tip</span> <span class="o">&lt;</span> <span class="no">b</span><span class="o">.</span><span class="no">tip</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>ili vlastitu komparacijsku funkciju.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">bool</span> <span class="nf" data-symbol-name="cmp">cmp</span> <span class="o">(</span><span class="no">event</span> <span class="no">a</span><span class="o">,</span> <span class="no">event</span> <span class="no">b</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="no">a</span><span class="o">.</span><span class="no">x_koordinata</span> <span class="o">!=</span> <span class="no">b</span><span class="o">.</span><span class="no">x_koordinata</span><span class="o">)</span>
+    <span class="k">return</span> <span class="no">a</span><span class="o">.</span><span class="no">x_koordinata</span> <span class="o">&lt;</span> <span class="no">b</span><span class="o">.</span><span class="no">x_koordinata</span><span class="o">;</span>
+  <span class="k">return</span> <span class="no">a</span><span class="o">.</span><span class="no">tip</span> <span class="o">&lt;</span> <span class="no">b</span><span class="o">.</span><span class="no">tip</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>Razlika između ova dva pristupa je u pozivu funkcije <em>sort</em>.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c">// slucaj 1. operator &lt;</span>
+<span class="nf" data-symbol-name="sort">sort</span><span class="o">(</span><span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="begin">begin</span><span class="o">(),</span> <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="end">end</span><span class="o">());</span>
+<span class="c">// slucaj 2. komparacijska funkcija</span>
+<span class="nf" data-symbol-name="sort">sort</span><span class="o">(</span><span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="begin">begin</span><span class="o">(),</span> <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="end">end</span><span class="o">(),</span> <span class="no">cmp</span><span class="o">);</span></pre></div>
+
+<p>Nakon što smo dobili željeni poredak eventova, preostaje nam odrediti koje akcije poduzeti u slučaju na nailazk pojednine vrste eventa. To sad i nije jasno jer nije definiran problem kojeg rješavamo.</p>
+
+<!--h3--><h3><a name="Primjer_problema"></a>Primjer problema</h3>
+
+<p>U ravnini je zadano N dužina paralelnih sa x-osi, točkama A(x1, y1) i B(x2, y1).  Odredite najveći broj dužina koje sjeće neki pravac paralelan sa y-osi.</p>
+
+<p>Napomena:<br />
+Brojati ćemo pravac sjeće dužinu ako prolazi kroz njenu krajnju točku.</p>
+
+<p>Ograničenja:<br />
+1 &lt; N &lt; 10000<br />
+0 &lt; x1, x2, y1 &lt; 1 000 000 000</p>
+
+<p>Vremensko ograničenje: 1s<br />
+Memorijsko ograničenje: 128 MB</p>
+
+<!--h4--><h3><a name="Rjesenje"></a>Rješenje</h3>
+
+<p>Primijetite da su ograničenja takva da će naivno rješenje pasti ili na vremenskom ograničenju ili na memorijskom ograničenju. <br />
+Također, y koordinata nam ne igra nikakvu ulogu.</p>
+
+<p>Problem je zadan na temelju prethodnih definicija struktura i funkcija, pa ćemo se na njih i pozivati u daljnjem tekstu.</p>
+
+<p>Imajući na umu glavnu ideju sweep line algoritma, probajmo rješiti zadatak prvo na papiru. Uzmimo krajnju točku dužine s najmanjom x koordinatom i nacrtajmo je na papir. U nastavku rješavanja uzetu točku dotične dužine više ne razmatramo. Primjetimo da je sad najveći broj sjecišta dužina na papiru i bilo kojeg pravca paralelnog s y osi jednak 1. Uzmimo sad sljedeću krajnju točku dužine s najmanjom x koordinatom. Ovdje nam se javlja mogućnost pojave kraja neke dužine čiju smo lijevu točku već nacrtali ili pojava točke kojom započinje neka nova dužina.</p>
+
+<p><strong>Slučaj 1. počinje nova dužina</strong><br />
+Ako počinje nova dužina primijećujemo da nam se broj sjecišta nekog pravca paralelnog s y osi koji se nalazi desno od trenutne x koordinate, s dužinama na papiru povećao za jedan.</p>
+
+<p><strong>Slučaj 2. završava neka dužina</strong><br />
+Ako završava neka dužina primijećujemo da nam se broj sjecišta pravca paralelnog s y osi koji se nalazi desno od trenutne x koordinate, s dužinama na papiru smanjio za jedan.</p>
+
+<p>I time smo rješili glavni problem zadatka. Trenutno stanje sjecišta ovisi izravno o broju dužina na čiji kraj još nismo naišli. Rješenje zadatka je najveći broj <em>otvorenih</em> dužina u nekom od koraka obrađivanja evenata.</p>
+
+<p>Definirajmo event kao točke dužine. U Primjeru 1. smo definirali strukturu event i redosljed obrađivanja koje ćemo sada iskoristiti.</p>
+
+<!--h5--><h3><a name="Izvorni_kod_rjesenja_-_main_funkcija"></a>Izvorni kod rješenja - main funkcija</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">int</span> <span class="nf" data-symbol-name="main">main</span><span class="o">(</span><span class="no">int</span> <span class="no">argc</span><span class="o">,</span> <span class="no">char</span> <span class="o">**</span><span class="no">argv</span><span class="o">)</span> <span class="o">{</span>
+  <span class="no">int</span> <span class="no">N</span><span class="o">;</span>
+  <span class="no">int</span> <span class="no">x_1</span><span class="o">,</span> <span class="no">x_2</span><span class="o">,</span> <span class="no">y</span><span class="o">;</span>
+  <span class="no">int</span> <span class="no">rjesenje</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="no">otvoreno</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+  <span class="no">vector</span><span class="o">&lt;</span> <span class="no">event</span> <span class="o">&gt;</span> <span class="no">events</span><span class="o">;</span>
+
+  <span class="no">cin</span> <span class="o">&gt;&gt;</span> <span class="no">N</span><span class="o">;</span>
+
+  <span class="k">for</span> <span class="o">(</span><span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;</span> <span class="no">N</span><span class="o">;</span> <span class="o">++</span><span class="no">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="no">cin</span> <span class="o">&gt;&gt;</span> <span class="no">x_1</span> <span class="o">&gt;&gt;</span> <span class="no">x_2</span> <span class="o">&gt;&gt;</span> <span class="no">y</span><span class="o">;</span>
+    <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="push_back">push_back</span><span class="o">(</span><span class="nf" data-symbol-name="event">event</span><span class="o">(</span><span class="no">x_1</span><span class="o">,</span> <span class="mi">0</span><span class="o">));</span>
+    <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="push_back">push_back</span><span class="o">(</span><span class="nf" data-symbol-name="event">event</span><span class="o">(</span><span class="no">x_2</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+  <span class="o">}</span>
+
+  <span class="nf" data-symbol-name="sort">sort</span><span class="o">(</span><span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="begin">begin</span><span class="o">(),</span> <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="end">end</span><span class="o">());</span>
+
+  <span class="k">for</span> <span class="o">(</span><span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;</span> <span class="no">events</span><span class="o">.</span><span class="nf" data-symbol-name="size">size</span><span class="o">();</span> <span class="o">++</span><span class="no">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="no">events</span><span class="o">[</span><span class="no">i</span><span class="o">].</span><span class="no">vrsta</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="no">otvoreno</span> <span class="o">++;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="no">otvoreno</span> <span class="o">--;</span>
+    <span class="o">}</span>
+
+    <span class="no">rjesenje</span> <span class="o">=</span> <span class="nf" data-symbol-name="max">max</span><span class="o">(</span><span class="no">rjesenje</span><span class="o">,</span> <span class="no">otvoreno</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="no">cout</span> <span class="o">&lt;&lt;</span> <span class="no">rjesenje</span> <span class="o">&lt;&lt;</span> <span class="no">endl</span><span class="o">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+
+
+<!--h6--><h3><a name="Slozeniji_zadaci"></a>Složeniji zadaci</h3>
+
+<p>Složeniji zadaci zahtjevaju primjenu nekih od struktura podataka pomoću kojih brže doznajemo/izračunavamo potrebne informacije.</p>
+
+<p>Primjer takvog zadatke je određivanje sjecišta dužina koje mogu paralelne( ili okomite ) s koordinatnim osima.</p>
+
+<p>Rješenje tog problema uvodi novu vrstu eventa (vertikalna dužina) te naravno drugi pristup brojenja otvorenih dužina (ovdje se uvodi prigodna struktura podataka) prilikom nailaska na taj tip eventa.</p>
+
+<!--h7--><h3><a name="Zadaci_za_vjezbu"></a>Zadaci za vježbu</h3>
+
+<p>z-policajac <a href="http://z-trening.com/tasks.php?show_task=5000000064" target="_blank">http://z-trening.com/tasks.php?show_task=5000000064</a><br />
+BOI-Mars Maps <a href="http://z-trening.com/tasks.php?show_task=5000000890" target="_blank">http://z-trening.com/tasks.php?show_task=5000000890</a></p>
+
+<!--h8--><h3><a name="Vise_o_temi"></a>Više o temi</h3>
+
+<p><a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=lineSweep" target="_blank">http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=lineSweep</a></p>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2013. Matija Šantl</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>

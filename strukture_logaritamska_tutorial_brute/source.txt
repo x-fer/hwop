@@ -1,0 +1,112 @@
+= Ova implementacija strukture =
+
+I ova struktura implementirana u jeziku c++ će točno odrađivati sve operacije koje smo zahtjevali.
+
+```
+class Struktura {
+  vector<int> a;
+
+ public:
+  LogaritamskaStruktura(int n) : a(n + 1, 0) {}
+  
+  int zbroj(int x) {
+    return a[x];
+  }
+
+  void dodaj(int x, int v) {
+    for (int i = x; i < a.size(); ++i)
+      a[i] += v;
+  }
+
+};
+```
+
+Broj operacija potrebnih za dodavanje elementa u strukturu je sada veći od 1! Točnije, moramo napraviti **N** - **x** koraka, što je proporcionalno sa **N**.
+
+Dakle u ovoj implementaciji na svakom mjestu pamtimo sumu svih vrijednosti na njemu i lijevo od njega. To nam vrlo lijepo odgovara za dobiti sumu vrijednosti, no kod dodavanja se moramo pitati:
+
+- čije sve vrijednosti moram promijeniti ako povećam vrijednost na mjestu **x**.
+
+U ovom slučaju odgovor je **mjestu x i svim mjestima desno od njega**.
+
+== Simulacija operacija ==
+
+* Stvori praznu strukturu sa **6** mjesta.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr></table>
+
+* Suma svih brojeva na mjestu **2** i lijevo od njega.
+
+<table><tr>
+<td>0</td>
+<th>0</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr></table>
+
+//Rezultat: a[2] = 0//
+
+* Broj na mjestu **3** uvečaj za **4**.
+
+//Sva mjesta čijoj ću sumi doprinjeti moram povećati za 4. To su mjesta 3,4,5,6.//
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<th>4</th>
+<th>4</th>
+<th>4</th>
+<th>4</th>
+</tr></table>
+
+* Broj na mjestu **5** uvečaj za **2**.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<th>6</th>
+<th>6</th>
+</tr></table>
+
+//Sva mjesta čijoj ću sumi doprinjeti moram povećati za 2. To su mjesta 5,6.//
+
+* Suma svih brojeva na mjestu **5** i lijevo od njega.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<th>6</th>
+<td>6</td>
+</tr></table>
+
+//Rezultat: a[5] = 6//
+
+* Suma svih brojeva na mjestu **4** i lijevo od njega.
+
+<table><tr>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<th>4</th>
+<td>6</td>
+<td>6</td>
+</tr></table>
+
+//Rezultat: a[4] = 4//
+
+!!!
+2012. Anton Grbin
+!!!

@@ -1,0 +1,16 @@
+= Matematika u informatici =
+
+
+== Teorija brojeva ==
+
+- [[matematika/logpow|Logaritamsko potenciranje]]
+- [[matematika/teorija_brojeva/gcd/|GCD]]
+
+== Numerička matematika ==
+
+- [[matematika/numerika|Numerika]], pogreške u decimalnom zapisu
+- [[matematika/racapprox/|Aproksimacije racionalnim brojevima]]
+
+!!!
+2013. Anton Grbin, Alen Rakipović, Goran Žužić
+!!!

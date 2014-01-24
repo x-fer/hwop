@@ -1,0 +1,234 @@
+= Uvod =
+
+Monotoni red je struktura podataka koja se ponaša jednako kao i običan red (queue), samo uz to može dati najbolji element u redu.
+
+Prva ideja je koristiti običan red uz dodatnu funkciju koja će pronaći najbolji element u $O(n)$ vremenu tj. prolazimo kroz sve elemente i tražimo najbolji ($n$  je trenutna veličina reda).
+Kako se nad ovom strukturom mogu često postavljati upiti za najbolji element, ovakva implementacija je najčešće spora.
+
+Pokazat će se da je moguće napraviti strukturu koja odgovara na upit ima prosječnu vremensku složenost $O(1)$ . Da bismo to postigli potrebno je strukturu organizirati na malo drugačiji način.
+
+== Monotoni red ==
+
+Koristit ćemo listu da bismo prikazali kako monotoni red radi. Operacije koje moramo implementirati su: ubacivanje (na kraj reda), izbacivanje (početak reda) i upit (trenutno najbolji u redu). Izbacivanje i upit se lako implementiraju i to tako da izbacivanje makne prvi element liste, a upit samo vrati prvi element liste. Ono što je bitno drugačije od običnog reda je ubacivanje u red. U ovom trenutku možda nije jasno zašto upit vraća prvi element liste, ali to je posljedica ubacivanja (tj. organizacije liste).
+
+Važno je napomenuti da lista neće prikazivati pravo stanje reda. Pretpostavimo da postoji lista i da su u njoj elementi sortirani. Pri ubacivanju tražimo mjesto u listi na koje kad ubacimo element, listu ostavlja sortiranu, pri tome brišemo sve elemente koji su strogo lošiji od trenutnog koji se ubacuje. 
+
+Neka u nekom trenutku lista izgleda ovako (uvijek je sortirana i u ovom primjeru monotoni red na upit vraća najveći broj u redu):
+
+graph list1 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ a7 [label="7" shape="box"];
+ b7 [label="7" shape="box"];
+ 8 [shape="box"] 
+ 4 [shape="box"]
+ 1 [shape="box"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- a7
+ a7 -- b7
+ b7 -- 4
+ 4 -- 1
+ 1 -- list_end
+}
+
+Idemo pogledati što se dogodi kada u red dodamo broj 9:
+
+graph list2 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ a7 [label="7" shape="box"];
+ b7 [label="7" shape="box"];
+ 8 [shape="box"] 
+ 4 [shape="box"]
+ 1 [shape="box"]
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- a7
+ a7 -- b7
+ b7 -- 4
+ 4 -- 1
+ 1 -- 9
+ 9 -- list_end
+}
+
+graph list3 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ a7 [label="7" shape="box"];
+ b7 [label="7" shape="box"];
+ 8 [shape="box"] 
+ 4 [shape="box"]
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- a7
+ a7 -- b7
+ b7 -- 4
+ 4 -- 9
+ 9 -- list_end
+}
+
+
+graph list4 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ a7 [label="7" shape="box"];
+ b7 [label="7" shape="box"];
+ 8 [shape="box"] 
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- a7
+ a7 -- b7
+ b7 -- 9
+ 9 -- list_end
+}
+
+graph list5 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ a7 [label="7" shape="box"];
+ 8 [shape="box"] 
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- a7
+ a7 -- 9
+ 9 -- list_end
+}
+
+graph list6 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ 8 [shape="box"] 
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 8
+ 8 -- 9
+ 9 -- list_end
+}
+
+graph list7 {
+ rankdir = LR
+ list_begin [label="begin" shape="none"]
+ list_end [label="end" shape="none"]
+ 10 [shape="box"]
+ 9 [shape="box" color="red"]
+ list_begin -- 10 
+ 10 -- 9
+ 9 -- list_end
+}
+
+Pogledamo da li je element ispred bolji ili jednak, ako je onda je 9 na pravome mjestu, a ako nije tada 9 stavimo na njegovo mjesto a njega obrišemo. 
+Ovo je pravi trenutak da možemo opravdati ovakvu operaciju. U postupku ubacivanja, kada obrišemo neki element u listi, zapravo tvrdimo da taj element nikada neće postati najveći u redu. Kada bi ostavili ovakav red (bez dodavanja 9), 1 bi bio najveći element u redu kada bi sve ostale elemente izbacili iz reda i to je razlog zašto 1 moramo pamtiti. Kada dodajemo 9 tada 1 nikako ne može postati najveći element u redu, jer da bismo mogli izbaciti 9 prvo moramo izbaciti 1. Možemo reći da je broj 9 maskirao (sakrio) broj 1.
+
+Vidimo da lista ne čuva pravo stanje reda (poredak podataka). A ta informacija nam je potreba kod operacije izbacivanja elementa iz reda. Kad izbacujemo element iz monotonog reda trebamo znati koji element je prvi u redu, a očito lista takvu informaciju ne čuva.
+To riješimo tako da uz listu imamo i pravi red, tj. monotoni red će u sebi sadržavati listu i običan red. Brišemo element iz liste samo ako se na početku reda nalazi isti element kao i na početku liste.
+
+Vremenske složenosti svih operacija su $O(1)$ . Za izbacivanje i upit je to trivijalno, a za ubacivanje slijedi dokaz (prije gledanja samog dokaza pogledajte implementaciju).
+
+==Dokaz amortizirane složenosti ubacivanja==
+
+Da bismo neki element dodali u listu trebamo određen broj koraka. Ako lista ima $n$ elemenata, najgori slučaj se dogodi kad ubacujemo najbolji element u listu. Kako takav element mora doći na prvo mjesto moramo obrisati $n$ elemenata u listi, što je vremenske složenosti $O(n)$ , i to nije dobro. Postavlja se pitanje da li je to dobra procjena složenosti ove operacije. Sigurno je da ta operacija može maksimalno potrošiti $n$ "koraka", ali ono što nismo rekli je koliko često se to događa. Pri analizi struktura podataka, tj. operacija koje se obavljaju nad njom, često nam nije važno koji je najgori slučaj, već kolika je složenost u prosjeku. Takvu složenost zovemo amortizirana vremenska složenost i takva složenost je puno bliža stvarnom vremenu (koje se može izmjeriti nakon što iskodiramo strukturu).
+
+Iz gornjeg primjera ubacivanja možemo vidjeti da nakon ubacivanja novog elementa (broja 9) lista se smanjila. To znači da ubacivanje sljedećeg elementa sigurno ne može potrošiti više od 2 "koraka", i to je motivacija za ovakvu analizu.
+
+Pretpostavimo da imamo praznu red (tj. listu). Želimo ubaciti $k$ elemenata u red. Zanima nas koliko je "koraka" potrebno da se $k$ elemenata ubaci u monotoni red. Sad ćemo preciznije definirati što znači korak i reći da je to bilo kakvo zapisivanje ili brisanje iz memorije. 
+
+Ako promatramo implementaciju, funkcije ubacivanja sigurno po pozivu troši 2 koraka (to je upisivanje u red i zapisivanje u listu) i još plus broj koliko puta se petlja zavrti (brisanje elemenata liste).
+
+Označit ćemo s $R_{i}$ ukupan broj koraka koji je potrošen na $i$ -to ubacivanje u monotoni red. S $P_{i}$ označiti ćemo broj koraka koji potroši petlja u $i$ -tom koraku. 
+
+$R_{i}=2+P_{i}$
+ 
+Ukupan broj koraka za $k$ ubacivanja je: $\sum_{i=1}^{k} R_{i}= \sum_{i=1}^{k} 2+P_{i}= 2\cdot k + \sum_{i=1}^{k}P_{i}$
+
+Za ukupnu sumu sada trebamo odrediti koliko puta se petlja zavrti za $k$ ubacivanja. Ono što nas zanima je najgori slučaj tj. koliko najviše puta se može petlja zavrtjeti. Petlja u svakom koraku briše jedan element liste. Kako smo ubacili $k$ elemenata maksimalna duljina te liste je $k$ . To znači da se ukupno mogu obrisati maksimalno $k$ elemenata. Važno je primjeriti da broj brisanja elemenata ne može biti veći od $k$ tj. petlja se u svim pozivima skupa ne može zavrtjeti više od $k$ puta i s time smo dobili gornju granicu:  $\sum_{i=1}^{k}P_{i}  = k$
+
+Ukupan broj koraka: $2\cdot k + k = 3k$ . Kako smo koristili $k$ poziva funkcija, prosječan broj koraka po pozivu je $\frac{3k}{k} = 3$ što spada u $O(1)$ vremensku složenost. 
+
+Q.E.D
+
+== Implementacija ==
+
+Na početku definiramo konstantu za ERROR, listu i običan red.
+
+```
+const int ERROR = 0x7fffffff;
+
+list mList;     //lista koja na prvom mjestu cuva najveci element
+queue mQueue;   //red
+```
+
+==Ubacivanje==
+
+Pronalazimo mjesto gdje se treba nalaziti novi element u listi. Kako element klizi prema početku liste tako briše sve one elemente koje preskoči.
+Osim toga potrebno je element dodati i u običan red.
+
+```
+void push(int x)
+{
+  while( !mList.empty() &amp;&amp; x &gt; mList.back() )
+    mList.pop_back();
+  
+  mList.push_back(x);
+  mQueue.push(x); 
+}
+```
+
+==Izbacivanje==
+
+Izbacivanje je veoma jednostavna operacija. Treba provjeriti da li se na početku liste nalazi isti element kao i na početku reda. Ako da onda brišemo element iz liste. Iz reda se uvijek briše element.
+
+```
+void pop()
+{
+  if ( !mQueue.empty() )
+  {
+    if ( mQueue.front() == mList.front() ) 
+      mList.pop_front();
+    
+    mQueue.pop();
+  }  
+}
+```
+
+==Upit==
+
+Pri obavljanju upita vratimo prvi element liste, vratimo ERROR ako su red i lista prazni.
+
+```
+int query()
+{
+  if ( mList.empty() )
+    return ERROR;
+  else
+    return mList.front();
+}
+```
+
+==Komentar==
+
+U ovom primjeru koristi se programski jezik C++ i STL. Monotoni red može se implementirati i samo pomoću niza (niz koji simulira listu), što je nešto brža implementacija ali naravno vremenska složenost ostaje ista.
+
+==Zadaci==
+
+* [[http://www.z-trening.com/tasks.php?show_task=5000000080|z-paradajz]]
+
+!!!
+Dino Šantl, 2013.
+!!!
