@@ -22,4 +22,6 @@ Ako želite dodati nešto, ili popraviti //bug// u nekom projektu otvorenog koda
 10. Napišite tekst pull requesta.
 11. Odaberite "Send pull request"
 
-
+!!!
+2014 Bruno Rahle
+!!!
