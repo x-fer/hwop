@@ -10,6 +10,8 @@
 
 - [[matematika/numerika|Numerika]], pogreške u decimalnom zapisu
 - [[matematika/racapprox/|Aproksimacije racionalnim brojevima]]
+- [[Multiplikativni inverz]]
+
 
 !!!
 2013. Anton Grbin, Alen Rakipović, Goran Žužić
