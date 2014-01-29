@@ -1,0 +1,28 @@
+= Edit udaljenost
+
+Zadana su dva niza znakova, $p$ i $q$ . Niz $p$ je fiksan, dok na nizu $q$ možemo obavljati sljedeće operacije:
+
+- umetanje: na bilo koju poziciju umetnemo proizvoljan znak
+- brisanje: izbrišemo znak na bilo kojoj poziciji
+- supstitucija: zamijenimo znak na nekoj poziciji s drugim znakom
+
+Koji je najmanji broj operacija potreban da nizovi znakova postanu jednaki?
+
+Na primjer, za niz znakova "tobogan" i "bogdan", najmanji potreban broj operacija je 3.
+
+1. na prvo mjesto riječi "bogdan" umetnemo 'o'
+2. na prvo mjesto riječi "obogdan" umetnemo 't'
+3. iz riječi "tobogdan" izbrišemo slovo 'd'
+
+Operacije možemo vizualizirati "poravnavanjem":
+
+  tobog-an
+  --bogdan
+
+
+== Elementi svakog rješenja dinamičkim programiranjem
+
+1. Stanje?
+2. Početni slučajevi?
+3. Relacija?
+

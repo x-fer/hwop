@@ -1,0 +1,22 @@
+= Bomboni
+
+== Problem
+
+Zadana je tablica na kojoj je u svakom polju nekoliko bombona.
+
+| 0 | 0 | 2 | 3 | 1 | 0 
+| 1 | 0 | 0 | 4 | 2 | 2 
+| 1 | 0 | 0 | 0 | 1 | 1 
+| 1 | 0 | 0 | 0 | 1 | 0
+
+Na početku se nalazimo u gornjem lijevom polju tablice i želimo doći do donjeg desnog polja. Kretati se možemo u svakom koraku samo jedno polje prema desno ili jedno polje prema dolje.  
+
+Koliko najviše bombona možemo sakupiti na putu prema dolje?
+
+
+== Elementi svakog rješenja dinamičkim programiranjem
+
+1. Stanje?
+2. Početni slučajevi?
+3. Relacija?
+

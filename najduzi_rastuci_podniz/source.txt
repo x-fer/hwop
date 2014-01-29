@@ -1,0 +1,27 @@
+= Najduži rastući podniz
+
+Najduži rastući podniz tipičan je jednodimenzionalni problem u dinamičkom programiranju na kojem se može naučiti rekonstrukcija!
+
+== Problem
+
+Zadan je niz brojeva $A_i$ veličine $N$ . Potrebno je odrediti najdulji podniz ovog niza koji je strogo rastući.
+
+Matematički pisano, potrebno je pronaći najdulji niz indeksa $i_1, i_2, \dots, i_k$ takav da vrijedi:
+
+$$
+i_1 < i_2 < i_3 \dots < i_{k-1} < i_k \\
+A_{i_1} < A_{i_2} < A_{i_3} \dots < A_{i_{k-1}} < A_{i_k}
+$$
+
+>
+
+Na primjer, za zadani niz ${1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10}$ rješenje je $7$ , a to je podniz ${1, 4, 5, 6, 7, 8, 10}$ .
+
+
+
+== Elementi svakog rješenja dinamičkim programiranjem
+
+1. Stanje?
+2. Početni slučajevi?
+3. Relacija?
+
