@@ -7,7 +7,7 @@
     <title>Binarno pretraživanje</title>
   </head>
   <body class="markup">
-    <div class="markup-container"><!--h0--><h2><a name="Binarno_pretrazivanje"></a>Binarno pretraživanje</h2>
+    <div class="markup-container"><!--h0--><h2><a name="binarno_pretrazivanje"></a>Binarno pretraživanje</h2>
 
 <p>Binarno pretraživanje jedan je od osnovnih algoritama kojim je vrlo lako objasniti ubrzanja koja je moguće postići pametnim dizajnom i smanjivanjem složenosti.<br />
 U ovom članku nećemo se fokusirati na objašnjavanje osnova binarnog pretraživanja, jer pretpostavljamo da vam je ideja poznata, nego na zanimljive primjene na probleme gdje korištenje binarnog pretraživanja nije očito, a vrlo je moćno.</p>
@@ -17,19 +17,19 @@ U ovom članku nećemo se fokusirati na objašnjavanje osnova binarnog pretraži
 <p><tt>&quot;Although the basic idea of binary search is comparatively straightforward, the details can be surprisingly tricky...&quot;</tt><br />
 <tt>— Professor Donald Knuth</tt></p>
 
-<!--h1--><h3><a name="Topcoder_tutorial"></a>Topcoder tutorial</h3>
+<!--h1--><h3><a name="topcoder_tutorial"></a>Topcoder tutorial</h3>
 
 <p>Vjerojatno najkvalitetniji materijal o binarnom pretraživanju moguće je pronaći na stranicama <a href="http://www.topcoder.com/tc" target="_blank">Topcoder</a> natjecanja, te ga ovdje nećemo kopirati/prevoditi :)<br />
 Spomenuti tutorial napisao je Lovro Pužar, bivši student FER-a i jedan od najuspješnijih hrvatskih olimpijaca. Lovrin tutorial možete naći na linku <a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=binarySearch" target="_blank">Binary Search Tutorial</a> - hvala Lovro! ☺</p>
 
 <p>(Osim tutoriala o binarnom pretraživanju, na linku <a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=alg_index" target="_blank">Algorithm Tutorials</a> nalazi se bogata baza izvrsnih tutoriala o algoritmima. Bacite oko kad imate slobodnog vremena ;)</p>
 
-<!--h2--><h3><a name="Ugradene_funkcije"></a>Ugrađene funkcije</h3>
+<!--h2--><h3><a name="ugradene_funkcije"></a>Ugrađene funkcije</h3>
 
 <p>U <a href="https://p4.tel.fer.hr:9090/w/stl/" target="_blank">biblioteci STL</a>-u za C++ i ostalim bibliotekama za Javu, C# i mnoge druge programske jezike, naći ćete ugrađene funkcije koje implementiraju binarno pretraživanje. One su u osnovi zamišljene da funkcioniraju na poljima, zbog čega često svejedno sami implementiramo binarno pretraživanje, a i pri korištenju ovih funkcija, bitno je da razumijete na koji način funkcioniraju i što je njihov rezultat.<br />
 Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća implementacija bit će značajno lakša :)</p>
 
-<!--h3--><h4><a name="C"></a>C++</h4>
+<!--h3--><h4><a name="c"></a>C++</h4>
 
 
 
@@ -40,7 +40,7 @@ Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća im
 <li>equal_range</li>
 </ul>
 
-<!--h4--><h4><a name="Java"></a>Java</h4>
+<!--h4--><h4><a name="java"></a>Java</h4>
 
 
 
@@ -48,7 +48,7 @@ Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća im
 <li>Arrays.binary_search</li>
 </ul>
 
-<!--h5--><h4><a name="C-1"></a>C#</h4>
+<!--h5--><h4><a name="c-1"></a>C#</h4>
 
 
 
@@ -56,7 +56,7 @@ Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća im
 <li>Array.binary_search</li>
 </ul>
 
-<!--h6--><h3><a name="Kontinuirani_skup"></a>Kontinuirani skup</h3>
+<!--h6--><h3><a name="kontinuirani_skup"></a>Kontinuirani skup</h3>
 
 <p>Za razliku od diskretnog skupa, moguće je da funkcija koju pretražujemo bude kontinuirana, što nam značajno pojednostavljuje implementaciju.</p>
 
@@ -70,11 +70,11 @@ Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća im
 
 <p>Kako je zbog velikih mogućih raspona realnih brojeva lako moguće pogrešno postaviti kriterije željene preciznosti, najčešće se koristi druga mogućnost. Nakon unaprijed zadanog broja koraka (npr. 100) možemo biti sigurni da je postignuta željena preciznost, ali i izbjegavamo slučajeve u kojima pokrenemo beskonačnu petlju.</p>
 
-<!--h7--><h3><a name="Zadaci"></a>Zadaci</h3>
+<!--h7--><h3><a name="zadaci"></a>Zadaci</h3>
 
 
 
-<!--h8--><h4><a name="Diskretno_b_p"></a>Diskretno b. p.</h4>
+<!--h8--><h4><a name="diskretno_b_p"></a>Diskretno b. p.</h4>
 
 
 
@@ -85,7 +85,7 @@ Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća im
 <li><a href="http://www.hsin.hr/dmih06/zadaci/pascal_c_cpp/hio/zadaci.pdf" target="_blank">Banana</a></li>
 </ol>
 
-<!--h9--><h4><a name="Kontinuirano_b_p"></a>Kontinuirano b. p.</h4>
+<!--h9--><h4><a name="kontinuirano_b_p"></a>Kontinuirano b. p.</h4>
 
 
 

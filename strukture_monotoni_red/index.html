@@ -7,7 +7,7 @@
     <title>Uvod</title>
   </head>
   <body class="markup">
-    <div class="markup-container"><!--h0--><h2><a name="Uvod"></a>Uvod</h2>
+    <div class="markup-container"><!--h0--><h2><a name="uvod"></a>Uvod</h2>
 
 <p>Monotoni red je struktura podataka koja se ponaša jednako kao i običan red (queue), samo uz to može dati najbolji element u redu.</p>
 
@@ -16,7 +16,7 @@ Kako se nad ovom strukturom mogu često postavljati upiti za najbolji element, o
 
 <p>Pokazat će se da je moguće napraviti strukturu koja odgovara na upit ima prosječnu vremensku složenost <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 4.75ex; height: 2.5ex; vertical-align: -0.75ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -778.5807122916057 2061 1057.1614245832113" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-4F" stroke-width="10" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path><path id="MJMAIN-28" stroke-width="10" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJMAIN-29" stroke-width="10" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-4F" xlink:href="#MJMATHI-4F"></use><use href="#MJMAIN-28" x="768" y="0" xlink:href="#MJMAIN-28"></use><use href="#MJMAIN-31" x="1162" y="0" xlink:href="#MJMAIN-31"></use><use href="#MJMAIN-29" x="1667" y="0" xlink:href="#MJMAIN-29"></use></g></svg></span>. Da bismo to postigli potrebno je strukturu organizirati na malo drugačiji način.</p>
 
-<!--h1--><h3><a name="Monotoni_red"></a>Monotoni red</h3>
+<!--h1--><h3><a name="monotoni_red"></a>Monotoni red</h3>
 
 <p>Koristit ćemo listu da bismo prikazali kako monotoni red radi. Operacije koje moramo implementirati su: ubacivanje (na kraj reda), izbacivanje (početak reda) i upit (trenutno najbolji u redu). Izbacivanje i upit se lako implementiraju i to tako da izbacivanje makne prvi element liste, a upit samo vrati prvi element liste. Ono što je bitno drugačije od običnog reda je ubacivanje u red. U ovom trenutku možda nije jasno zašto upit vraća prvi element liste, ali to je posljedica ubacivanja (tj. organizacije liste).</p>
 
@@ -58,7 +58,7 @@ To riješimo tako da uz listu imamo i pravi red, tj. monotoni red će u sebi sad
 
 <p>Vremenske složenosti svih operacija su <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 4.75ex; height: 2.5ex; vertical-align: -0.75ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -778.5807122916057 2061 1057.1614245832113" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-4F" stroke-width="10" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path><path id="MJMAIN-28" stroke-width="10" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJMAIN-29" stroke-width="10" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-4F" xlink:href="#MJMATHI-4F"></use><use href="#MJMAIN-28" x="768" y="0" xlink:href="#MJMAIN-28"></use><use href="#MJMAIN-31" x="1162" y="0" xlink:href="#MJMAIN-31"></use><use href="#MJMAIN-29" x="1667" y="0" xlink:href="#MJMAIN-29"></use></g></svg></span>. Za izbacivanje i upit je to trivijalno, a za ubacivanje slijedi dokaz (prije gledanja samog dokaza pogledajte implementaciju).</p>
 
-<!--h2--><h3><a name="Dokaz_amortizirane_slozenosti_ubacivanja"></a>Dokaz amortizirane složenosti ubacivanja</h3>
+<!--h2--><h3><a name="dokaz_amortizirane_slozenosti_ubacivanja"></a>Dokaz amortizirane složenosti ubacivanja</h3>
 
 <p>Da bismo neki element dodali u listu trebamo određen broj koraka. Ako lista ima <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.375ex; height: 1.125ex; vertical-align: -0.125ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -471.5807122916057 605 511.1614245832114" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-6E" stroke-width="10" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-6E" xlink:href="#MJMATHI-6E"></use></g></svg></span> elemenata, najgori slučaj se dogodi kad ubacujemo najbolji element u listu. Kako takav element mora doći na prvo mjesto moramo obrisati <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.375ex; height: 1.125ex; vertical-align: -0.125ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -471.5807122916057 605 511.1614245832114" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-6E" stroke-width="10" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-6E" xlink:href="#MJMATHI-6E"></use></g></svg></span> elemenata u listi, što je vremenske složenosti <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 5ex; height: 2.5ex; vertical-align: -0.75ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -778.5807122916057 2161 1057.1614245832113" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-4F" stroke-width="10" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path><path id="MJMAIN-28" stroke-width="10" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJMATHI-6E" stroke-width="10" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJMAIN-29" stroke-width="10" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-4F" xlink:href="#MJMATHI-4F"></use><use href="#MJMAIN-28" x="768" y="0" xlink:href="#MJMAIN-28"></use><use href="#MJMATHI-6E" x="1162" y="0" xlink:href="#MJMATHI-6E"></use><use href="#MJMAIN-29" x="1767" y="0" xlink:href="#MJMAIN-29"></use></g></svg></span>, i to nije dobro. Postavlja se pitanje da li je to dobra procjena složenosti ove operacije. Sigurno je da ta operacija može maksimalno potrošiti <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.375ex; height: 1.125ex; vertical-align: -0.125ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -471.5807122916057 605 511.1614245832114" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-6E" stroke-width="10" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-6E" xlink:href="#MJMATHI-6E"></use></g></svg></span> &quot;koraka&quot;, ali ono što nismo rekli je koliko često se to događa. Pri analizi struktura podataka, tj. operacija koje se obavljaju nad njom, često nam nije važno koji je najgori slučaj, već kolika je složenost u prosjeku. Takvu složenost zovemo amortizirana vremenska složenost i takva složenost je puno bliža stvarnom vremenu (koje se može izmjeriti nakon što iskodiramo strukturu).</p>
 
@@ -80,7 +80,7 @@ To riješimo tako da uz listu imamo i pravi red, tj. monotoni red će u sebi sad
 
 <p>Q.E.D</p>
 
-<!--h3--><h3><a name="Implementacija"></a>Implementacija</h3>
+<!--h3--><h3><a name="implementacija"></a>Implementacija</h3>
 
 <p>Na početku definiramo konstantu za ERROR, listu i običan red.</p>
 
@@ -91,7 +91,7 @@ To riješimo tako da uz listu imamo i pravi red, tj. monotoni red će u sebi sad
 
 
 
-<!--h4--><h3><a name="Ubacivanje"></a>Ubacivanje</h3>
+<!--h4--><h3><a name="ubacivanje"></a>Ubacivanje</h3>
 
 <p>Pronalazimo mjesto gdje se treba nalaziti novi element u listi. Kako element klizi prema početku liste tako briše sve one elemente koje preskoči.<br />
 Osim toga potrebno je element dodati i u običan red.</p>
@@ -107,7 +107,7 @@ Osim toga potrebno je element dodati i u običan red.</p>
 
 
 
-<!--h5--><h3><a name="Izbacivanje"></a>Izbacivanje</h3>
+<!--h5--><h3><a name="izbacivanje"></a>Izbacivanje</h3>
 
 <p>Izbacivanje je veoma jednostavna operacija. Treba provjeriti da li se na početku liste nalazi isti element kao i na početku reda. Ako da onda brišemo element iz liste. Iz reda se uvijek briše element.</p>
 
@@ -124,7 +124,7 @@ Osim toga potrebno je element dodati i u običan red.</p>
 
 
 
-<!--h6--><h3><a name="Upit"></a>Upit</h3>
+<!--h6--><h3><a name="upit"></a>Upit</h3>
 
 <p>Pri obavljanju upita vratimo prvi element liste, vratimo ERROR ako su red i lista prazni.</p>
 
@@ -138,11 +138,11 @@ Osim toga potrebno je element dodati i u običan red.</p>
 
 
 
-<!--h7--><h3><a name="Komentar"></a>Komentar</h3>
+<!--h7--><h3><a name="komentar"></a>Komentar</h3>
 
 <p>U ovom primjeru koristi se programski jezik C++ i STL. Monotoni red može se implementirati i samo pomoću niza (niz koji simulira listu), što je nešto brža implementacija ali naravno vremenska složenost ostaje ista.</p>
 
-<!--h8--><h3><a name="Zadaci"></a>Zadaci</h3>
+<!--h8--><h3><a name="zadaci"></a>Zadaci</h3>
 
 
 
