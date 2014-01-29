@@ -103,7 +103,7 @@ Vidimo da smo u tri koraka, //pokupili// u sumu sve vrijednosti iz strukture do 
 
 Izvođenje upita `dodaj(5, 10)`. Ova operacija mora obići sva mjesta koja u svojoj sumi pamte vrijednost mjesta 5.
 
-- počinjemo sa mjestom 5, pošto svako mjesto pamti svoju vrijednost.
+- počinjemo sa mjestom 5, budući da svako mjesto pamti svoju vrijednost.
 - sljedeće mjesto je mjesto 6 (u tablici se sada od stupca 5 i retka 5 spuštamo prema dolje i pratimo kada ćemo proći preko tamnog mjesta).
 - zadnje mjesto kojem ćemo uvečati vrijednost je mjesto 8.
 
@@ -116,11 +116,6 @@ Vidimo da se funkcija `koliko_pamti` koristi i u operaciji dodavanja i u operaci
 - broj 6 (110), najdesnija jedinca nosi vrijednost 2 (10).
 
 Dakle, funkcija pomaka je uvijek potencija broja dva. Postavlja se pitanje kako efikasno izračunati ovu vrijednost?
-
-Tu je red na vama:
-
-{wcheck lowbit}
-
 
 == Konačno rješenje ==
 
