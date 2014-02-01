@@ -9,12 +9,12 @@ typedef double lf;
 
 const lf EPSILON = 1e-12;
 
-inline bool lt(lf a, lf b) { return b - a > EPSILON; }
+inline bool lt(const lf& a, const lf& b) { return b - a > EPSILON; }
 
-inline bool gt(lf a, lf b) { return lt(b, a); }
-inline bool eq(lf a, lf b) { return !lt(a, b) && !lt(b, a); }
-inline bool le(lf a, lf b) { return !gt(a, b); }
-inline bool ge(lf a, lf b) { return !lt(a, b); }
+inline bool gt(const lf& a, const lf& b) { return lt(b, a); }
+inline bool eq(const lf& a, const lf& b) { return !lt(a, b) && !lt(b, a); }
+inline bool le(const lf& a, const lf& b) { return !gt(a, b); }
+inline bool ge(const lf& a, const lf& b) { return !lt(a, b); }
 /*END art_epsilon::e3*/
 
 int main() {
