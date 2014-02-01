@@ -66,7 +66,7 @@
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code remarkup-counterexample"><span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
 
 <span class="n">memset</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">str</span><span class="p">);</span></pre></div>
 
@@ -76,7 +76,7 @@
 
 <p>Iskoristiti ćemo priliku da još malo oblatimo jezik <tt>C</tt>, odnosno da pokažemo kako lako programera može dovesti do teško ispravljivih grešaka. Pretpostavimo da smo zaobišli ovaj debakl i ispravno postavili sve vrijednosti niza na &#039;a&#039;:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code remarkup-counterexample"><span class="kt">size_t</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">size_t</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
 <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
 <span class="n">memset</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">);</span></pre></div>
 
