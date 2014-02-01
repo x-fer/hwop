@@ -12,7 +12,7 @@ Cilj ovog članka je da shvatite probleme koji se mogu javiti oko preciznost kad
 Pretpostavimo da je stvarna vrijednost neke veličine $x$ , a mi je u programu reprezentiramo s varijablom čija je stvarna vrijednost $\tilde{x}$ . Tada definiramo:
 
 $$
-\text{apsolutna pogreška: } \Delta x = x - \tilde{x}
+\text{apsolutna pogr  eška: } \Delta x = x - \tilde{x}
 $$
 
 $$
@@ -27,18 +27,18 @@ Nekoliko najkorisnijih primjera:
 
 
   # Zbrajanje: $f(x,y) = x+y$ .
-    # $|\Delta f| \le |\Delta x| + |\Delta y|$
-    # $|\epsilon_f| \le |\frac{x}{x+y}| |\epsilon_x| + |\frac{y}{x+y}| |\epsilon_y|$
+    # $$ |\Delta f| \le |\Delta x| + |\Delta y| $$
+    # $$ |\epsilon_f| \le |\frac{x}{x+y}| |\epsilon_x| + |\frac{y}{x+y}| |\epsilon_y| $$
   # Oduzimanje: $f(x,y) = x-y$ .
-    # $|\Delta f| \le |\Delta x| + |\Delta y|$
-    # $|\epsilon_f| \le |\frac{x}{x-y}| |\epsilon_x| + |\frac{y}{x-y}| |\epsilon_y|$
+    # $$ |\Delta f| \le |\Delta x| + |\Delta y| $$
+    # $$ |\epsilon_f| \le |\frac{x}{x-y}| |\epsilon_x| + |\frac{y}{x-y}| |\epsilon_y| $$
     # Dakle ako $x \sim y$ , relativna pogreška oduzimanja može eksplodirati.
   # Množenje: $f(x,y) = xy$ .
-    # $|\Delta f| \le |y||\Delta x| + |x||\Delta y|$
-    # $|\epsilon_f| \le |\epsilon_x| + |\epsilon_y|$
+    # $$ |\Delta f| \le |y||\Delta x| + |x||\Delta y| $$
+    # $$ |\epsilon_f| \le |\epsilon_x| + |\epsilon_y| $$
   # Dijeljenje: $f(x,y) = \frac{x}{y}$ .
-    # $|\Delta f| \le \frac{|\Delta x|}{|y|} + \frac{|x||\Delta y|}{|y|^2}$
-    # $|\epsilon_f| \le |\epsilon_x| + |\epsilon_y|$
+    # $$ |\Delta f| \le \frac{|\Delta x|}{|y|} + \frac{|x||\Delta y|}{|y|^2} $$
+    # $$ |\epsilon_f| \le |\epsilon_x| + |\epsilon_y| $$
 
 ==== Izvod
 
@@ -66,15 +66,11 @@ Editorial: http://community.topcoder.com/tc?module=Static&d1=match_editorials&d2
 
 Nakon što malo razmislite o zadatku (i znate ponešto o Markovljevim lancima), nije teško zaključiti kako je potrebno izračunati sljedeću sumu:
 
-$$
-n \cdot \sum_{i=n-k+1}^n \frac{1}{i}
-$$
+$$n \cdot \sum_{i=n-k+1}^n \frac{1}{i}$$
 
 Problem nam tvore ograničenja: $n, k \le 10^{18}$ . Naivno sumiranje for-petljom ne dolazi u obzir. Problemu je potrebno drugačije pristupiti: definirajmo takozvani //harmonijski red//:
 
-$$
-H_n = \sum_{i=1}^n \frac{1}{i}
-$$
+$$ H_n = \sum_{i=1}^n \frac{1}{i} $$
 
 Sada je potrebno izračunati $n \cdot \left ( H_n - H_{n-k} \right )$ s relativnom ili apsolutnom pogreškom od $10^{-9}$ (dovoljno je ispuniti bilo koji od ta dva uvjeta). Kratko prisječanje na gornje formule nam govori da je to zadovoljeno kada izračunamo razliku harmonijskih suma s relativnom pogreškom od $10^{-9}$ ili s apsolutnom pogreškom od $10^{-27}$ (dovoljno je ispuniti bilo koji od ta dva uvjeta). No, broj s apsolutnom pogreškom od $10^{-27}$ nije nemoguće precizno pohraniti (zato jer harmonijske sume nisu brojevi bliski 0).
 
@@ -97,7 +93,7 @@ $$
 
 Još jednom, ova formula za razliku je neprecizna kada je $n-k$ dovoljno mali broj (aproksimacija harmonijske sume je neprecizna za male H). Ja (Goran) sam osobno ručno izračunao prvih milijun članova sume, pa radio aproksimacije za preostale članove (naknadno sam otkrio da gornji algoritam prolazi čak i kada se ručno posumiraju samo prvih 10 članova).
 
-Potrebno je dati još samo jednu napomenu: funkcija $\ln(.)$ , koja je u C/C++-u implementirana u math.h preko funkcije double log(double) neprecizna ukoliko nam je argument funkcije vrlo blizak 1 (npr. $\frac{n}{n-k} = \frac{10^{18}}{10^{18}-10^{10}}$ ). U tome slučaju je potrebno koristiti funkciju log1p(x) koja nam vraća $\ln(1+x)$ , ali s mnogo većom preciznosti.
+Potrebno je dati još samo jednu napomenu: funkcija $\ln(.)$ , koja je u C/C++-u implementirana u math.h preko funkcije double log(double) neprecizna ukoliko nam je argument funkcije vrlo blizak 1 (npr. $\frac{n}{n-k} = \frac{10^{18}}{10^{18}-10^{10}}$ . U tome slučaju je potrebno koristiti funkciju log1p(x) koja nam vraća $\ln(1+x)$ , ali s mnogo većom preciznosti.
 
 U konačnici, algoritam izgleda ovako (nisam ga detaljno provjerio, ali trebao bi biti ok):
 

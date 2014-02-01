@@ -16,6 +16,8 @@ Kako napisati željeni algoritam u programskom jeziku brzo, efikasno i točno?
 
 - [[art/profiling]], profiliranje programskog koda pod *nix sustavima
 - [[art/submask]], implementacijski trik za iteraciju po svim podmaskama bitmaske
+- [[art/inf]], konstanta `inf` u programskom kodu.
+- [[art/epsilon]], uspoređivanje brojeva s decimalnom točkom.
 
 !!!
 2013. Anton Grbin

@@ -52,7 +52,7 @@ $$
 \end{eqnarray}
 $$
 
-Drugim riječima, $- \frac{\alpha}{\beta} = M - \frac{\alpha}{\beta}$ je modularni inverz broja $x$ . Podsjetimo se samo kako izračunati $\alpha$ i $\beta$ :
+Drugim riječima, $- \frac{\alpha}{\beta} = M - \frac{\alpha}{\beta}$ je modularni inverz broja $x$ . Podsjetimo se samo kako izračunati $\alpha$ i $\beta$:
 
 $$
 \begin{eqnarray}
