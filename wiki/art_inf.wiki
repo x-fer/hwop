@@ -61,7 +61,7 @@ memset(a, oo, sizeof a); assert(a[0] == oo);
 
 == Česta greška s `memset`-om
 
-```counterexample,lang=c
+```lang=c
 char* str = (char*) malloc(100);
 
 memset(str, 'a', sizeof str);
@@ -73,7 +73,7 @@ Na koliko memorijskih lokacija ovaj poziv postavlja vrijednost `'a'`? Vrijedi li
 
 Iskoristiti ćemo priliku da još malo oblatimo jezik `C`, odnosno da pokažemo kako lako programera može dovesti do teško ispravljivih grešaka. Pretpostavimo da smo zaobišli ovaj debakl i ispravno postavili sve vrijednosti niza na 'a':
 
-```counterexample,lang=c
+```lang=c
 size_t length = 100;
 char *str = (char*) malloc(length);
 memset(str, 'a', length);

@@ -4,7 +4,7 @@ Vrijedi li da je $0.7 + 0.2 + 0.1 = 1$ ? Da, naravno!
 
 Što ispisuje slijedeći programski isječak?
 
-```lang=cpp,e1
+```lang=cpp
 if (0.7 + 0.2 + 0.1 == 1) {
   cout << "da, naravno!" << endl;
 } else {
@@ -18,7 +18,7 @@ Operator `==` će u programu provjeriti jesu li lijeva i desna strana jednake, o
 
 Pogledajmo na kratko kako izgledaju gore uspoređeni brojevi u memoriji (hexadecimalno) i kada se ispišu na 20 decimalnih mjesta.
 
-```e2
+```
 union broj {
   long long ll;
   double lf;
@@ -42,7 +42,7 @@ Razlog ovom hazardu je ograničena preciznost zapisa brojeva koji se koristi. Od
 
 Stoga, uvijek kada je potrebno u zadatku koristiti i uspoređivati decimalne brojeve potrebno je to raditi imajući na umu preciznost:
 
-```lang=cpp,e3
+```lang=cpp
 typedef double lf;
 
 const lf EPSILON = 1e-12;
