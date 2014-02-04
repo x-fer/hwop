@@ -1,0 +1,39 @@
+= Učitavajne ulaznih podataka
+
+Čak i ovaj jednostavan zahvat nekada zna biti //tricky//. U ovom članku opisati ćemo neke probleme i rješenja vezano za učitavanje podataka.
+
+== Učitavanje "do kraja datoteke"
+
+Neki zadaci traže da se test podaci učitavaju "dok ih ima". Primjer takvog zadatka je: http://www.spoj.com/problems/MIXTURES/
+
+Svaki od mehanizama unosa `scanf` i `cin` ima svoje načine rješavanja ovog problema.
+
+**scanf**
+
+```name=scanf
+int n;
+while (scanf("%d", &n) == 1) {
+  ...
+}
+```
+
+Povratna vrijednost funkcije `scanf` je broj uspješno pridruženih vrijednosti. To možemo iskoristiti kako bi provjerili jesmo li uspješno učitali nove podatke.
+
+**cin**
+
+Situacija kod `cin` toka podataka je isto toliko jednostavna za napisati, no malo teža za razumijeti zašto radi.
+
+```name=cin
+int n;
+while (cin >> n) {
+   ...
+}
+```
+
+Kao prvo `cin` nije funkcija već instanca objekta tipa `istream`, odnosno tok podataka. U razredu `istream` definiran je `bool operator();` koji evaluira trenutni tok u `true` ako je sve do sada prošlo bez greške ili `false` ako se pojavila greška.
+
+Operator `>>` definiran je nad tokom podataka `istream` i na svim `POD` (//plain old data-types//) podacima. Njegova povratna vrijednost je referenca na tok podatka s lijeve strane.
+
+Prema tome, povratna vrijednost izraza `cin >> n` privremeni je objekt tipa `istream` koji se može evaluairati u `bool` tip podatka koji će nam reći jeli došlo do greške ili ne.
+
+

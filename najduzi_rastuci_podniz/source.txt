@@ -13,10 +13,7 @@ i_1 < i_2 < i_3 \dots < i_{k-1} < i_k \\
 A_{i_1} < A_{i_2} < A_{i_3} \dots < A_{i_{k-1}} < A_{i_k}
 $$
 
->
-
 Na primjer, za zadani niz ${1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10}$ rješenje je $7$ , a to je podniz ${1, 4, 5, 6, 7, 8, 10}$ .
-
 
 
 == Elementi svakog rješenja dinamičkim programiranjem

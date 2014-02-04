@@ -18,6 +18,7 @@ Kako napisati željeni algoritam u programskom jeziku brzo, efikasno i točno?
 - [[art/submask]], implementacijski trik za iteraciju po svim podmaskama bitmaske
 - [[art/inf]], konstanta `inf` u programskom kodu.
 - [[art/epsilon]], uspoređivanje brojeva s decimalnom točkom.
+- [[art/ucitavanje|učitavanje podataka]]
 
 !!!
 2013. Anton Grbin
