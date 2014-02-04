@@ -35,7 +35,7 @@
    <span class="o">...</span>
 <span class="o">}</span></pre></div>
 
-<p>Kao prvo <tt>cin</tt> nije funkcija već instanca objekta tipa <tt>istream</tt>, odnosno tok podataka. U razredu <tt>istream</tt> definiran je <tt>bool operator();</tt> koji evaluira trenutni tok u <tt>true</tt> ako je sve do sada prošlo bez greške ili <tt>false</tt> ako se pojavila greška.</p>
+<p>Kao prvo <tt>cin</tt> nije funkcija već instanca objekta tipa <tt>istream</tt>, odnosno tok podataka. U razredu <tt>istream</tt> definiran je <tt>operator bool();</tt> koji evaluira trenutni tok u <tt>true</tt> ako je sve do sada prošlo bez greške ili <tt>false</tt> ako se pojavila greška.</p>
 
 <p>Operator <tt>&gt;&gt;</tt> definiran je nad tokom podataka <tt>istream</tt> i na svim <tt>POD</tt> (<em>plain old data-types</em>) podacima. Njegova povratna vrijednost je referenca na tok podatka s lijeve strane.</p>
 
