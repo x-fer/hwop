@@ -30,7 +30,7 @@ while (cin >> n) {
 }
 ```
 
-Kao prvo `cin` nije funkcija već instanca objekta tipa `istream`, odnosno tok podataka. U razredu `istream` definiran je `bool operator();` koji evaluira trenutni tok u `true` ako je sve do sada prošlo bez greške ili `false` ako se pojavila greška.
+Kao prvo `cin` nije funkcija već instanca objekta tipa `istream`, odnosno tok podataka. U razredu `istream` definiran je `operator bool();` koji evaluira trenutni tok u `true` ako je sve do sada prošlo bez greške ili `false` ako se pojavila greška.
 
 Operator `>>` definiran je nad tokom podataka `istream` i na svim `POD` (//plain old data-types//) podacima. Njegova povratna vrijednost je referenca na tok podatka s lijeve strane.
 
