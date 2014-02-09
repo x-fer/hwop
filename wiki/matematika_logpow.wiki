@@ -19,23 +19,16 @@ Nakon što pročitate ovu stranicu moći ćete implementirati gornju funkciju u 
 
 == Korištena svojstva potenciranja ==
 
-Bitno se podsjetiti dva svojstva potenciranja prije objašnjenja algoritama logaritamskog potenciranja :
+Bitno se podsjetiti dva svojstva potenciranja prije objašnjenja algoritama logaritamskog potenciranja:
 
 $$
 a^{p-1} \cdot a = a^p \\
 a^x \cdot a^y = a^{x + y}
 $$
 
-Oba svojstva direktno slijede iz definicije operatora potenciranja i svojstava eksponencijalne funkcije:
-
-$$
-a^b := e^{b}\ln{a}
-$$
-
-
 == Rekurzivno logaritamsko potenciranje ==
 
-Promatrajmo problem potenciranja kada je $p$ prirodan broj. Pretpostavimo da znamo sve potencije baze $a$ manje od $p$. Potenciju $a^p$ možemo izračunati koristeći gore navedena svojstva podjelom na dva slučaja:
+Promatrajmo problem potenciranja kada je $p$ prirodan broj. Pretpostavimo da znamo sve potencije baze $a$ manje od $p$ . Potenciju $a^p$ možemo izračunati koristeći gore navedena svojstva podjelom na dva slučaja:
 
 $$
 a^p = \left\{ 

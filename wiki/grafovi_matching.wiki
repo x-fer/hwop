@@ -37,7 +37,7 @@ Sve dok možemo, ponavljamo ova dva koraka:
 Na kraju očitamo rješenje tako što pronađemo sve veze koje su okrenute od B prema A.
 U svakom koraku algoritma povećat ćemo rješenje za 1.
 Nacrtaj si jedan put kakav smo opisali gore, i pogledaj što se dogodi kad okreneš sve veze, pa ćeš vidjet!
-A možeš pogledat i ovaj [[/w/grafovi/matching/sim/ | primjer]].
+A možeš pogledat i ovaj [[grafovi/matching/sim/|primjer]].
 
 == Implementacija ==
 
@@ -45,6 +45,7 @@ Predlažem da probaš sam napisati algoritam i rješiti prvi zadatak dan dolje p
 Ako nećeš to, onda bar pažljivo pročitaj objašnjenje i shvati ovaj kod, i onda ga napiši sam bez gledanja tu.
 
 $graph[N][N]$ je tipična matrica sa nulama i jedinicama:
+
 $$
 graph[i][j] = \left\{ 
   \begin{array}{l l}
