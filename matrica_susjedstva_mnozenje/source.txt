@@ -83,7 +83,7 @@ Kako bi izgledala $A(0)$ ? To je matrica koja nam kaže broj putova duljine $0$ 
 
 Za $A(1)$ imamo originalnu matricu susjedstva.
 
-$A(n)$ možemo zapisati kao $A(n-1) \cdot A(1) = A(n-1) \cdot A$ i indukcijom po $n$ dokazujemo da vrijedi $A(n) = A^n$ .
+$A(k)$ možemo zapisati kao $A(k-1) \cdot A(1) = A(k-1) \cdot A$ i indukcijom po $k$ dokazujemo da vrijedi $A(k) = A^k$ .
 
 $$
 A^3 =
@@ -101,7 +101,18 @@ $$
 
 Budući da je množenje matrica asocijativno, možemo iskoristiti [[matematika_logpow|brzo potenciranje]].
 
+== Pronalazak svih najkraćih putova duljine $k$
+
+Ukoliko maknemo i netežinski uvjet za naš graf, matrica susjedstva pamti težinu brida između dva vrha. Ako brid između neka dva vrha ne postoji, smatramo da je težina brida $\infty$ . Neka je množenje matrica dano s:
+
+$$
+(A \cdot B)_{i,j} = \min_{k=1}^n (A_{i,k} + B_{k,j})
+$$
+
+Ukoliko implementiramo potenciranje s ovakvim množenjem, uz početnu matricu $A(0)$ s nulama na glavnoj dijagonali i $\infty$ na ostalim mjestima, u konačnoj matrici $A^n$ na mjestu $i, j$ možemo očitati najkraći put koji prolazi kroz točno $K$ bridova.
+
+
 !!!
-2014. Anton Grbin
+2014. Anton Grbin, Filip Pavetić
 !!!
 
