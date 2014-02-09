@@ -1,7 +1,12 @@
 = Teorija grafova =
 
-Za sada samo najnaprednija tema:
+== Prikaz grafa u memoriji ==
 
+- [[Matrica susjedstva]], najjednostavniji prikaz grafa
+
+== Naprednije teme ==
+
+- [[matrica_susjedstva_mnozenje|Množenje matrice susjedstva]], grafovi upoznaju linearnu algebru.
 - [[grafovi/matching|Maksimalno sparivanje u bipartitnom grafu]], //(engl. maximum bipartite matching)//
 - [[grafovi/cirkulacije|Cirkulacije]], nadgradnja na //network flow//.
 
