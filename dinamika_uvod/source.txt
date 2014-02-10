@@ -84,9 +84,9 @@ Broj koraka takvog programa je onda ponovno 30, kao i u iterativnom slučaju.
 
 == Elementi svakog rješenja dinamičkim programiranjem
 
-1. Stanje. U našem slučaju stanje je neki element niza.
-2. Početni slučajevi. Prva dva elementa niza su 1.
-3. Relacija. Trenutno stanje je zbroj prethodna dva stanja.
+1. **Stanje?** U našem slučaju stanje je neki element niza.
+2. **Početni slučajevi?** Prva dva elementa niza su 1.
+3. **Relacija?** Trenutno stanje je zbroj prethodna dva stanja.
 
 !!!
 2014. Anton Grbin
