@@ -4,7 +4,7 @@ Najduži rastući podniz tipičan je jednodimenzionalni problem u dinamičkom pr
 
 == Problem
 
-Zadan je niz brojeva $A_i$ veličine $N$ . Potrebno je odrediti najdulji podniz ovog niza koji je strogo rastući.
+Zadan je niz brojeva $A_i$ veličine $N$ . Potrebno je odrediti najdulji ne nužno uzastopni podniz ovog niza koji je strogo rastući.
 
 Matematički pisano, potrebno je pronaći najdulji niz indeksa $i_1, i_2, \dots, i_k$ takav da vrijedi:
 
@@ -15,10 +15,173 @@ $$
 
 Na primjer, za zadani niz ${1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10}$ rješenje je $7$ , a to je podniz ${1, 4, 5, 6, 7, 8, 10}$ .
 
+== Razrada
+
+Kako bi čovjek rješio ovaj problem? Uz niz od 10 brojeva i nije nešto teško sagledati sve brojeve iz visoka i onda vidjeti što će biti najduži rastući podniz. No, zamislimo da imamo knjigu od tisuću stranica u kojoj je na svakoj stranici napisan neki broj. Zadatak je da u knjizi označimo neke stranice (stavimo uho na njih) tako da kada obilazimo sve označene stranice brojevi na njima budu strogo rastući.
+
+Vlasnik knjige se neće ljutiti ako označavamo stranice i pišemo bilo kakve informacije po njima. Kako bi čovjek rješio problem s knjigom? Što će zapisivati na njene stranice?
+
+=== Naivno rješenje
+
+Jedno rješenje je da krenemo od početka knjige, označimo prvu stranicu i pamtimo vrijednost na zadnjoj stranici koju smo označili. Novu stranicu označavamo samo ako je vrijednost na njoj veća od zadnje koju smo označili.
+
+Budući da u ovom rješenju pokušavamo označit svaku stranicu koju možemo, rješenje se naziva naivno. Ukoliko knjiga sadrži stranice ${1, 10, 2, 3, 4, 5}$ , mi ćemo označiti prvu i drugu stranicu i kasnije više nećemo moći označiti niti jednu novu stranicu. Rješenje koje smo dobili je duljine $2$ , a najbolje rješenje je duljine $5$ .
+
+Treba razmisliti kako doskočiti ovom problemu.
+
+=== Rješenje u duhu dinamičkog programiranja
+
+Drugi pristup bi bio da na svaku stranicu zapišemo koliko je dug najduži rastući podniz koji završava točno s tom stranicom. Pod pretpostavkom da smo na ovaj način točno označili prvih $k$ stranica, moći ćemo dobiti informaciju i na $k+1$ -oj stranici! To ćemo napraviti tako da se probamo nastaviti na svaki podniz koji smo našli negdje ranije. Naš korak će biti sljedeći:
+
+- Trenutna stranica je $k+1$
+- $dp[k]$ je informacija koju smo zapisali na svakoj stranici do sada - duljina najdužeg podniza koji završava sa stranicom $k$
+- $a[k]$ je originalna brojka koja piše na stranici $k$
+- $dp[k+1] = 1$ , sigurni smo da možemo dobiti rješenje koje je barem $1$ , ako niz započnemo točno na ovoj stranici.
+- listajmo knjigu od početka do $k$ -te stranice i trenutno otvorenu stranicu označimo sa $i$
+  - ako je $a[i] >= a[k+1]$ listajmo dalje (ne možemo razmatrati nastavljanje na ovaj niz jer novo dodana brojka ne bi bila rastuća)
+  - $dp[k+1] = max(dp[k+1], dp[i] + 1)$ - ako se nastavimo na niz koji završava na stranici $i$ nova duljuna će biti ono što smo zapisali na toj stranici plus $1$ .
+
+Dakle, razmatrali smo nastavljanje niza sa svake prethodne stranice i našli smo najdulji niz na koji se možemo nastaviti! Istina je da broj listanja koji ćemo napraviti da pronađemo podniz za cijelu knjigu je $broj\_stranica^2$ , ali barem je rješenje točno!
+
+No, kada smo zapisali na svakoj stranici duljinu najdužeg rastućeg podniza koji završava s tom stranicom, kako ćemo odgovoriti na pitanje koji je najdulji rastući podniz u cijeloj knjizi? I koje ćemo stranice označiti?
+
+Za najduži rastući podniz u cijeloj knjizi možemo prolistati knjigu i od svih informacija koje smo mi zapisali naći najveću. Drugi pristup bi bio izmisliti još jednu zadnju stranicu na kojoj piše brojka koja je veća od svih ostalih u nizu. Tada će na toj stranici informacija koju smo mi zapisali biti odgovor uvećan za jedan!
+
+Koje stranice ćemo označiti ćemo pokazati u poglavlju "rekonstrukcija".
+
+Sada kada znamo kako bi čovjek rješio ovaj problem, pogledajmo dva pristupa implementacije.
+
+== Iterativan pristup
+
+U svim implementacijama pretpostavljati ćemo da je zadnji element niza veći od svih ostalih. Pri pozivu funkcije potrebno je paziti da je ovo istina, i da će rješenje za originalne elemente biti rješenje s dodanim elementom umanjeno za $1$ .
+
+
+```lang=c,name="Iterativni najduži rastući podniz"
+const int maxn = 100;
+const int oo = 0x3f3f3f3f;
+
+int N = 13;
+int a[maxn] = {1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10, oo};
+
+int iterative_lcs() {
+  int dp[maxn];
+
+  for (int k = 0; k < N; ++k) {
+    dp[k] = 1;
+    for (int i = 0; i < k; ++i) {
+      if (a[i] >= a[k]) continue;
+      dp[k] = max(dp[k], dp[i] + 1);
+    }
+  }
+
+  return dp[N - 1];
+}
+```
+
+Niz `a[]` čuva originalne brojke niza, dok niz `dp[]` čuva //stanje//. Na `dp[i]` piše duljina najdužeg rastućeg podniza koji sadrži i završava s elementom `i` u nizu `a[]`.
+
+== Rekurzivni pristup
+
+Gotovo svaki problem rješen dinamičkim programiranjem će imati dva oblika rješenja, jedno iterativno (//for petljom//), a drugo rekurzivno. Slijedi rekurzivno rješenje:
+
+
+```lang=c,name="Rekurzivni pristup za najduži rastući podniz"
+int dp[maxn];
+
+int solve(int k) {
+  // ako na mjestu dp[k] pise nesto sto nije 0,
+  // znaci da smo vec obradili ovaj problem, informaciju
+  // za ovo stanje smo upisali upravo na mjesto dp[k]
+  // (vidi zadnju liniju u rekurziji)
+  if (dp[k] != 0) return dp[k];
+
+  int ret = 1;
+  for (int i = 0; i < k; ++i) {
+    if (a[i] >= a[k]) continue;
+    ret = max(ret, solve(i) + 1);
+  }
+
+  return dp[k] = ret;
+}
+
+// pretpostavlja da je zadnji element u nizu najveci!
+int recursive_lcs() {
+  memset(dp, 0, sizeof dp);
+  return solve(N - 1);
+}
+```
+
+Hoće li funkcija raditi ispravno ako ne provjerimo jesmo li neki problem već rješili? Hoće, no broj koraka koje trebamo napraviti biti će mnogo mnogo veći.
+
+== Broj koraka
+
+I rekurzivan i iterativan pristup imaju ekvivalentan broj koraka za ukupno rješenje. U iterativnom pristupu je broj koraka lakše vidjeti, dvije //for petlje// svaka ima linearan prolaz po nizu: $O(N^2)$ ! 
+
+U rekurzivnom rješenju broj koraka računamo tako da prvo prebrojimo broj mogućih //stanja//, te onda odredimo broj koraka za //relaciju//, odnosno broj koraka da izračunamo vrijednost novog stanja pod pretpostavkom da sva prethodna stanja imamo izračunata. Broj mogućih stanja je $N$ , a u relaciji napravimo linearno koraka što nam daje ukupnu složenost od $O(N^2)$ .
+
+== Rekonstrukcija
+
+Pod rekonstrukcijom smatramo problem označavanja elemenata niza (odnosno stranica) koje čine najbolje rješenje.
+
+Na svakoj smo stranici pamtili duljinu najdužeg rastućeg podniza koji završava na toj stranici. Ukoliko dodamo još i broj stranice na čiji smo se niz //nadovezali//, moći ćemo rekonstruirati rješenje u nazad krenuvši od zadnje stranice sve dok na nekoj stranici ne piše da je najduži podniz do tuda jednak $1$ . To će značiti da je ta stranica prva u podnizu koji je rješenje.
+
+
+```lang=c,name="Najduži rastući podniz s rekonstrukcijom"
+int lcs_with_reconstruct() {
+  int dp[maxn], last[maxn];
+  bool flag[maxn];
+
+  for (int k = 0; k < N; ++k) {
+    dp[k] = 1;
+    for (int i = 0; i < k; ++i) {
+      if (a[i] >= a[k]) continue;
+      // primjetite razliku od rjesenja bez rekonstrukcije
+      if (dp[i] + 1 > dp[k]) {
+        last[k] = i;
+        dp[k] = dp[i] + 1;
+      }
+    }
+  }
+
+  // oznacimo stranice koje cine rjesenje koje zavrsava
+  // na zadnjem elementu (koji smo namjestili da je najveci)
+  memset(flag, false, sizeof flag);
+  int it = N - 1;
+  while (dp[it] != 1) {
+    it = last[it];
+    flag[it] = true;
+  }
+
+  // ispis brojeva na svim oznacenim stranicama
+  for (int i = 0; i < N; ++i)
+    if (flag[i])
+      printf("%d ", a[i]);
+  printf("\n");
+
+  return dp[N - 1];
+}
+```
 
 == Elementi svakog rješenja dinamičkim programiranjem
 
-1. Stanje?
-2. Početni slučajevi?
-3. Relacija?
+Kako bi lakše zapisali rješenje problema matematički, dodati ćemo novi element na početak i na kraj niza. Na početak dodajemo $-\infty$ , dok na kraj dodajemo $\infty$ .
 
+Dakle ako je originalan niz ${1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10}$ , proširujemo ga na $A = \{-\infty, 1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10, \infty\}$ .
+
+$N$ je broj elemenata u proširenom nizu.
+
+# **Stanje?** Funkcija $f$ koja nekom elementu u nizu pridružuje duljinu najdužeg rastućeg podniza koji završava s tim elementom.
+  - Domena i kodomena od $f$ je skup prirodnih brojeva. Kardinalnost domene je $N$ , broj elemenata u nizu.
+  - Rješenje čitamo sa $f(N) - 2$ . Dakle dužina najduljeg podniza koji završava na zadnjem ($\infty$ ) elementu, umanjena za dva, jer ni taj ni prvi element nisu bili dio originalnog niza, a sigurno smo ih pokupili u najboljem rješenju
+
+# **Početni slučajevi?**
+  - $f(1) = 1$ . Duljina najdužeg rastućeg podniza koji završava na prvom ($-\infty$ ) elementu je $1$ , i to je taj element sam.
+
+# **Relacija?**
+  - $f(k) = \max ( f(i) + 1, i \lt k \land A_i < A_k )$
+
+
+
+!!!
+2014. Anton Grbin
+!!!
