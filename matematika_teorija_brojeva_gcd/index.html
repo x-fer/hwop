@@ -28,8 +28,9 @@
     <span class="k">if</span> <span class="o">(</span><span class="no">a</span> <span class="o">&gt;=</span> <span class="no">b</span><span class="o">)</span> <span class="o">{</span>
       <span class="no">a</span> <span class="o">=</span> <span class="no">a</span> <span class="o">%</span> <span class="no">b</span><span class="o">;</span>
     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-      <span class="no">int</span> <span class="no">t</span><span class="o">;</span>
-      <span class="no">t</span> <span class="o">=</span> <span class="no">b</span><span class="o">;</span> <span class="no">b</span> <span class="o">=</span> <span class="no">a</span><span class="o">;</span> <span class="no">a</span> <span class="o">=</span> <span class="no">t</span><span class="o">;</span>
+      <span class="no">int</span> <span class="no">tmp</span> <span class="o">=</span> <span class="no">b</span><span class="o">;</span>
+      <span class="no">b</span> <span class="o">=</span> <span class="no">a</span><span class="o">;</span>
+      <span class="no">a</span> <span class="o">=</span> <span class="no">tmp</span><span class="o">;</span>
     <span class="o">}</span>
   <span class="o">}</span>
   <span class="k">return</span> <span class="no">a</span><span class="o">;</span>
