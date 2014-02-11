@@ -8,7 +8,6 @@
 
 - [[matrica_susjedstva_mnozenje|Množenje matrice susjedstva]], grafovi upoznaju linearnu algebru.
 - [[grafovi/matching|Maksimalno sparivanje u bipartitnom grafu]], //(engl. maximum bipartite matching)//
-- [[grafovi/cirkulacije|Cirkulacije]], nadgradnja na //network flow//.
 
 !!!
 2013. Anton Grbin, Tomislav Grbin, Luka Kalinovčić
