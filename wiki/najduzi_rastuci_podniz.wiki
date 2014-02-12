@@ -176,7 +176,7 @@ $n$ je broj elemenata u proširenom nizu.
 # **Početni slučajevi?**
   - $f(1) = 1$ . Duljina najdužeg rastućeg podniza koji završava na prvom ($-\infty$ ) elementu je $1$ , i to je taj element sam.
 # **Relacija?**
-  - $f(k) = \max_{i=0 \\ A_i < A_k}^{k-1} f(i) + 1$
+  - $f(k) = \max (f(i) + 1) \forall i < k, A_i < A_k$
 
 
 
