@@ -13,10 +13,95 @@ Na početku se nalazimo u gornjem lijevom polju tablice i želimo doći do donje
 
 Koliko najviše bombona možemo sakupiti na putu prema dolje?
 
+== Razrada
+
+Možda će netko htjeti odmah krenuti tamo gdje ima više bombona .. no, to je naivno razmišljanje i može dovesti do krivog rješenja. Npr. za primjer:
+
+| 0 | 5 | 5 | 5 |
+| 9 | 0 | 0 | 0 |
+
+Naivno rješenje će uspjeti pokupiti $9$ bombona, a najbolje moguće je $15$ bombona.
+
+Ovom problemu ćemo, naravno, doskočiti dinamičkim programiranjem. Na svako polje zapisati ćemo neku informaciju. To će biti maksimalan broj bombona koje možemo pokupiti nekim putem do tog polja.
+
+Sada pretpostavimo da smo obišli i tu informaciju zapisali na sva polja osim na finalno (dolje-desno). Kako ćemo rješiti finalno polje? Zapitati ćemo se jeli bolje bilo u zadnjem koraku doći od gore ili od lijevo (dakle gledamo korak u nazad). Budući da imamo podatke o najvećem broju bombona koje možemo pokupiti nekim putem do svih ostalih polja, lako uspredimo gdje piše veći broj.
+
+Stoga je stanje za ovaj problem neko polje na tablici i u njemu zapisujemo najveći broj bombona koje smo mogli pokupiti nekim putem do tog polja. Relacija kojom ćemo izračunati novo stanje na temelju izračunatih prethodnih stanja je broj bombona na trenutnom polju uvećan za veći broj od zapisane informacije za polje gore i polje lijevo.
+
+
+== Iterativno rješenje
+
+Iterativno rješenje implementira gore spomenuti algoritam. Pripazili smo jedino na prvi redak i prvi stupac koji za razmatranje imaju samo jedan prošli potez (jer bi drugi bio van ploče). Relacija za te slučajeve je još jednostavnija.
+
+```lang=c,name="Iterativno rješenje"
+int a[maxn][maxn]; // kolicine originalnih bombona na polju
+int dp[maxn][maxn]; // vrijednosti zapisane informacije
+
+int iterative_dp() {
+  dp[0][0] = a[0][0];
+  for (int i = 1; i < N; ++i)
+    dp[i][0] = a[i][0] + dp[i-1][0];
+  for (int j = 1; j < M; ++j)
+    dp[0][j] = a[0][j] + dp[0][j-1];
+
+  for (int i = 1; i < N; ++i) {
+    for (int j = 1; j < M; ++j) {
+      dp[i][j] = a[i][j];
+      dp[i][j] += std::max(dp[i-1][j], dp[i][j-1]);
+    }
+  }
+  return dp[N-1][M-1];
+}
+
+```
+
+
+== Rekurzivno rješenje
+
+U rekurzivnom rješenju pokušavamo napisati funkciju koja će biti relacija i ne brinemo se oko redosljeda obilaženja rješenja, već jednostavno pozovemo //sebe// za manji problem. Ako smo takav problem već rješavali to na neki način moramo naznačiti u polju koje nam čuva već rješene probleme.
+
+Oznaku koju ćemo staviti u polje `dp` ako to polje još nismo obradili je broj `oo`. Ovaj broj će sigurno biti veći od svih ostalih brojeva koji se mogu pojaviti kao rješenje stoga neće biti dvosmislenosti.
+
+U rekurzivnom rješenju nije potrebno posebno paziti o prvom retku i stupcu, već ako se dogodi da se funkcija pozove za negativnu vrijednost koordinata možemo vratiti broj koji je sigurno manji od svih ostalih i on nikada neće biti povratna vrijednost `max` funkcije.
+
+
+```lang=c,name="Rekurzivno rješenje"
+const int oo = 0x3f3f3f3f;
+int dp[maxn][maxn];
+
+int solve(int r, int s) {
+  if (r < 0 || s < 0) return -oo; // nitko nece htjeti uzeti -oo kao bolje rjesenje.
+  if (!r && !s) return a[r][s]; // trivijalni slucaj! zaustaviti rekurziju.
+  if (dp[r][s] != oo) return dp[r][s]; // provjeriti jesmo li ovaj problem vec rjesili
+
+  int ret = a[r][s];
+  ret += std::max(solve(r-1, s), solve(r, s-1));
+  return dp[r][s] = ret; // zapisati problem u polje i vratiti vrijednost.
+}
+
+int recursive_dp() {
+  memset(dp, oo, sizeof dp);
+  return solve(N - 1, M - 1);
+}
+```
 
 == Elementi svakog rješenja dinamičkim programiranjem
 
-1. Stanje?
-2. Početni slučajevi?
-3. Relacija?
+Neka je polje s bombonima zapisano u matricu $A$ .
+
+# **Stanje?** Funkcija koja preslikava neko polje $(i, j)$ u cijeli broj koji označava maksimalan broj prikupljenih bombona ako se krećemo po matrici od $(1, 1)$ do $(i, j)$ skokovima isključivo dolje i desno.
+  - Domena je kardinalnosti $N \cdot M$ , broj elemenata u originalnoj matrici.
+  - Rješenje čitamo iz $f(N, M)$ donjeg desnog polja u funkciji stanja.
+
+# **Početni slučajevi?**
+  - $f(1, 1) = A_{1,1}$ . Maksimalan broj bombona koji možemo sakupiti od gornjeg lijevog polja do tog polja je upravo broj bombona koji originalno tamo stoji.
+
+# **Relacija?**
+ - $f(i, j) = A_{i,j} + \left\{
+    \begin{array}{l l}
+      \max (f(i-1, j), f(i, j-1)) & \quad i \gt 1, j \gt 1 \\
+      f(i, j-1)                     & \quad i = 1, j \gt 1 \\
+      f(i-1, j)                     & \quad j = 1, i \gt 1 \\
+    \end{array} \right.$
+
 

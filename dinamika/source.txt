@@ -3,7 +3,7 @@
 == Početničke teme
 
 - [[Dinamika uvod|Uvod u dinamičko programiranje]] - Fibonaccijevi brojevi
-- [[Najduži rastući podniz]]
+- [[Najduži rastući podniz]] - Stanje s dva podatka.
 - [[Bomboni]] - Dinamika na tablici
 - [[Čokolada]] - Dvodimenzionalna dinamika
 - [[Edit distance|Edit udaljenost]] - poravnavanje nizova znakova
