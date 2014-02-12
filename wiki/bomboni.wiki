@@ -24,7 +24,7 @@ Naivno rješenje će uspjeti pokupiti $9$ bombona, a najbolje moguće je $15$ bo
 
 Ovom problemu ćemo, naravno, doskočiti dinamičkim programiranjem. Na svako polje zapisati ćemo neku informaciju. To će biti maksimalan broj bombona koje možemo pokupiti nekim putem do tog polja.
 
-Sada pretpostavimo da smo obišli i tu informaciju zapisali na sva polja osim na finalno (dolje-desno). Kako ćemo rješiti finalno polje? Zapitati ćemo se jeli bolje bilo u zadnjem koraku doći od gore ili od lijevo (dakle gledamo korak u nazad). Budući da imamo podatke o najvećem broju bombona koje možemo pokupiti nekim putem do svih ostalih polja, lako uspredimo gdje piše veći broj.
+Sada pretpostavimo da smo obišli i tu informaciju zapisali na sva polja osim na finalno (dolje-desno). Kako ćemo rješiti finalno polje? Zapitati ćemo se bilo bi bolje u zadnjem koraku doći od gore ili od lijevo (dakle gledamo korak u nazad). Budući da imamo podatke o najvećem broju bombona koje možemo pokupiti nekim putem do svih ostalih polja, lako uspredimo gdje piše veći broj.
 
 Stoga je stanje za ovaj problem neko polje na tablici i u njemu zapisujemo najveći broj bombona koje smo mogli pokupiti nekim putem do tog polja. Relacija kojom ćemo izračunati novo stanje na temelju izračunatih prethodnih stanja je broj bombona na trenutnom polju uvećan za veći broj od zapisane informacije za polje gore i polje lijevo.
 
