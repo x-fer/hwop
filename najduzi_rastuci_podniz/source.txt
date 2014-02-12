@@ -1,6 +1,6 @@
 = Najduži rastući podniz
 
-Najduži rastući podniz tipičan je jednodimenzionalni problem u dinamičkom programiranju na kojem se može naučiti rekonstrukcija!
+Najduži rastući podniz tipičan je problem u dinamičkom programiranju!
 
 == Problem
 
@@ -34,8 +34,8 @@ Treba razmisliti kako doskočiti ovom problemu.
 Drugi pristup bi bio da na svaku stranicu zapišemo koliko je dug najduži rastući podniz koji završava točno s tom stranicom. Pod pretpostavkom da smo na ovaj način točno označili prvih $k$ stranica, moći ćemo dobiti informaciju i na $k+1$ -oj stranici! To ćemo napraviti tako da se probamo nastaviti na svaki podniz koji smo našli negdje ranije. Naš korak će biti sljedeći:
 
 - Trenutna stranica je $k+1$
-- $dp[k]$ je informacija koju smo zapisali na svakoj stranici do sada - duljina najdužeg podniza koji završava sa stranicom $k$
-- $a[k]$ je originalna brojka koja piše na stranici $k$
+- $dp[i]$ je informacija koju smo zapisali na svakoj stranici do sada - duljina najdužeg podniza koji završava sa stranicom $i$
+- $a[i]$ je originalna brojka koja piše na stranici $i$
 - $dp[k+1] = 1$ , sigurni smo da možemo dobiti rješenje koje je barem $1$ , ako niz započnemo točno na ovoj stranici.
 - listajmo knjigu od početka do $k$ -te stranice i trenutno otvorenu stranicu označimo sa $i$
   - ako je $a[i] >= a[k+1]$ listajmo dalje (ne možemo razmatrati nastavljanje na ovaj niz jer novo dodana brojka ne bi bila rastuća)
@@ -115,7 +115,7 @@ Hoće li funkcija raditi ispravno ako ne provjerimo jesmo li neki problem već r
 
 == Broj koraka
 
-I rekurzivan i iterativan pristup imaju ekvivalentan broj koraka za ukupno rješenje. U iterativnom pristupu je broj koraka lakše vidjeti, dvije //for petlje// svaka ima linearan prolaz po nizu: $O(N^2)$ ! 
+I rekurzivan i iterativan pristup imaju ekvivalentan broj koraka za ukupno rješenje. U iterativnom pristupu je broj koraka lakše vidjeti, dvije //for petlje// svaka ima linearan prolaz po nizu: $O(N^2)$ . 
 
 U rekurzivnom rješenju broj koraka računamo tako da prvo prebrojimo broj mogućih //stanja//, te onda odredimo broj koraka za //relaciju//, odnosno broj koraka da izračunamo vrijednost novog stanja pod pretpostavkom da sva prethodna stanja imamo izračunata. Broj mogućih stanja je $N$ , a u relaciji napravimo linearno koraka što nam daje ukupnu složenost od $O(N^2)$ .
 
@@ -168,17 +168,15 @@ Kako bi lakše zapisali rješenje problema matematički, dodati ćemo novi eleme
 
 Dakle ako je originalan niz ${1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10}$ , proširujemo ga na $A = \{-\infty, 1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10, \infty\}$ .
 
-$N$ je broj elemenata u proširenom nizu.
+$n$ je broj elemenata u proširenom nizu.
 
 # **Stanje?** Funkcija $f$ koja nekom elementu u nizu pridružuje duljinu najdužeg rastućeg podniza koji završava s tim elementom.
-  - Domena i kodomena od $f$ je skup prirodnih brojeva. Kardinalnost domene je $N$ , broj elemenata u nizu.
-  - Rješenje čitamo sa $f(N) - 2$ . Dakle dužina najduljeg podniza koji završava na zadnjem ($\infty$ ) elementu, umanjena za dva, jer ni taj ni prvi element nisu bili dio originalnog niza, a sigurno smo ih pokupili u najboljem rješenju
-
+  - Domena i kodomena od $f$ je skup prirodnih brojeva. Kardinalnost domene je $n$ , broj elemenata u nizu.
+  - Rješenje čitamo sa $f(n) - 2$ . Dakle dužina najduljeg podniza koji završava na zadnjem ($\infty$ ) elementu, umanjena za dva, jer ni taj ni prvi element nisu bili dio originalnog niza, a sigurno smo ih pokupili u najboljem rješenju
 # **Početni slučajevi?**
   - $f(1) = 1$ . Duljina najdužeg rastućeg podniza koji završava na prvom ($-\infty$ ) elementu je $1$ , i to je taj element sam.
-
 # **Relacija?**
-  - $f(k) = \max ( f(i) + 1, i \lt k \land A_i < A_k )$
+  - $f(k) = \max_{i=0 \\ A_i < A_k}^{k-1} f(i) + 1$
 
 
 
