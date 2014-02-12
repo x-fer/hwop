@@ -62,7 +62,7 @@ U rekurzivnom rješenju pokušavamo napisati funkciju koja će biti relacija i n
 
 Oznaku koju ćemo staviti u polje `dp` ako to polje još nismo obradili je broj `oo`. Ovaj broj će sigurno biti veći od svih ostalih brojeva koji se mogu pojaviti kao rješenje stoga neće biti dvosmislenosti.
 
-U rekurzivnom rješenju nemoramo posebno paziti o prvom retku i stupcu, već ako se dogodi da se funkcija pozove za negativnu vrijednost koordinata možemo vratiti broj koji je sigurno manji od svih ostalih i on nikada neće biti povratna vrijednost `max` funkcije.
+U rekurzivnom rješenju nije potrebno posebno paziti o prvom retku i stupcu, već ako se dogodi da se funkcija pozove za negativnu vrijednost koordinata možemo vratiti broj koji je sigurno manji od svih ostalih i on nikada neće biti povratna vrijednost `max` funkcije.
 
 
 ```lang=c,name="Rekurzivno rješenje"
@@ -87,7 +87,7 @@ int recursive_dp() {
 
 == Elementi svakog rješenja dinamičkim programiranjem
 
-Neka je polje s bombonima zapisan u matricu $A$ .
+Neka je polje s bombonima zapisano u matricu $A$ .
 
 # **Stanje?** Funkcija koja preslikava neko polje $(i, j)$ u cijeli broj koji označava maksimalan broj prikupljenih bombona ako se krećemo po matrici od $(1, 1)$ do $(i, j)$ skokovima isključivo dolje i desno.
   - Domena je kardinalnosti $N \cdot M$ , broj elemenata u originalnoj matrici.
@@ -97,10 +97,11 @@ Neka je polje s bombonima zapisan u matricu $A$ .
   - $f(1, 1) = A_{1,1}$ . Maksimalan broj bombona koji možemo sakupiti od gornjeg lijevog polja do tog polja je upravo broj bombona koji originalno tamo stoji.
 
 # **Relacija?**
-  - $f(i, j) = A_{i,j} + \left\{ 
+ - $f(i, j) = A_{i,j} + \left\{
     \begin{array}{l l}
-      \max ( f(i-1, j), f(i, j-1) ) & \quad i \gt 1 \land j \gt 1 \\
-      f(i, j-1)                     & \quad i \eq 1 \land j \gt 1 \\
-      f(i-1, j)                     & \quad j \eq 1 \land i \gt 1 \\
-    \end{array} \right$
+      \max (f(i-1, j), f(i, j-1)) & \quad i \gt 1, j \gt 1 \\
+      f(i, j-1)                     & \quad i = 1, j \gt 1 \\
+      f(i-1, j)                     & \quad j = 1, i \gt 1 \\
+    \end{array} \right.$
+
 
