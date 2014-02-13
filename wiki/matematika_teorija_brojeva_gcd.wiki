@@ -17,15 +17,17 @@ int gcd(int a, int b) {
 
 
 
-```
-  name=Euklidov algoritam
+```name="Euklidov algoritam"
 int gcd(int a, int b) {
-  int t;
   while (b) {
-    if (a >= b) 
+    if (a >= b) {
       a = a % b;
-    else 
-      t = b; b = a; a = t;
+    } else {
+      int tmp = b;
+      b = a;
+      a = tmp;
+    }
+  }
   return a;
 }
 ```
