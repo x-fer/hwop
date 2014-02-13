@@ -105,3 +105,8 @@ Neka je polje s bombonima zapisano u matricu $A$ .
     \end{array} \right.$
 
 
+
+!!!
+2014. Anton Grbin
+!!!
+
