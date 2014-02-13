@@ -11,6 +11,7 @@ outdir=../__hwop_html
 git stash > /dev/null
 
   git checkout gh-pages &> /dev/null
+  git pull --rebase &> /dev/null
   rm -rf * > /dev/null
   cp -r $outdir/* .
   git add --all > /dev/null
