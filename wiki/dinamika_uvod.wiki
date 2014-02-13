@@ -78,7 +78,7 @@ int f(int x) {
 f(30);
 ```
 
-Analizom ove funkcije vidljivo je kako ćemo za svaki `x` imati maksimalno jedan poziv funkcije. To vrijedi budući da će svaki poziv funkcije `f(x)` zapisati svoju vrijednost u `dp[x]`, i sljedeći put je neće preračunavati.
+Analizom ove funkcije vidljivo je kako ćemo za svaki `x` za koji pozovemo funkciju samo jednom proći u samo tijelo funkcije. To vrijedi budući da će svaki poziv funkcije `f(x)` zapisati svoju vrijednost u `dp[x]`, i sljedeći put je neće preračunavati.
 
 Broj koraka takvog programa je onda ponovno 30, kao i u iterativnom slučaju.
 
