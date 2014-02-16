@@ -6,6 +6,7 @@ Kako napisati željeni algoritam u programskom jeziku brzo, efikasno i točno?
 
 == C ==
 
+- [[art/strlen]], //for// petlja koja ide do `strlen(t)`.
 - [[art/mikrooptimizacije]], brzina na najnižoj razini
 
 == C++ ==
