@@ -28,7 +28,9 @@ Primjetite da nikada ne tražimo promjenu vrijednosti na nekom polju već samo i
 
 Važno svojstvo funkcije **min** koje ćemo koristiti jest sljedeće:
 
-$$ min( min(A), min(B) ) = min(A \cup B) $$
+$$
+min( min(A), min(B) ) = min(A \cup B)
+$$
 
 Koje možda izgleda malo nerazumljivo kada je napisano, ali je zapravo krajnje jednostavno. Uzmimo dva skupa elemenata $A$ i $B$ . Neka je $m_a$ najmanji element u $A$ , a $m_b$ najmanji element u $B$ . Manji od brojeva $m_a$ i $m_b$ je sigurno najmanji element u $A \cup B$ .
 
@@ -39,20 +41,23 @@ U našem problemu će se to odnositi na intervale brojeva. Kako bi pronašli naj
 U fazi inicijalizacije strukture cilj nam je unaprijed izračunati najmanje vrijednosti elemenata u nekim intervalima da bi kasnije mogli što brže doći do najmanje vrijednosti za bilo koji interval. Koristiti ćemo intervale čija je veličina potencija broja dva.
 
 ```
-int mins[ LOGMAXN ][ MAXN ];
+int mins[kLogMaxN][kMaxN];
 ```
 
 U nizu `mins[ a ][ b ]` piše najmanji broj iz intervala $\left[b, b + 2^a\right>$ . Kada je $a = 0$ tj. u prvom retku ovog polja, nalaze se originalni članovi niza jer je tada $2^a = 1$ i desna granica intervala je isključiva. Ex: 
 
-$$mins[0][3] = min(niz\left[3, 3 + 2^0\right>) = min(niz[3]) = niz(3)$$
+$$
+mins[0][3] = min(niz\left[3, 3 + 2^0\right>) = min(niz[3]) = niz(3)
+$$
 
 Prema tome, za početak sve brojeve iz niza možemo učitati u prvi redak matrice `mins`.
 
 ```
 void load() {
   scanf("%d", &n);
-  for (int i = 0; i < n; ++i)
+  for (int i = 0; i < n; ++i) {
     scanf("%d", &mins[0][i]);
+  }
 }
 ```
 
@@ -72,18 +77,22 @@ Odnosno, najmanji broj u intervalu veličine $2 \cdot 2^a$ koji počinje na mjes
 
 Najmanji broj u intervalu $\left[1, 3\right> = mins[1][1] = 1$ dok je najmanji broj u intervalu $\left[3, 5\right> = mins[1][3] = -5$ . Najmanji  broj u velikom intervalu 
 
-$$\left[1, 5\right> = min(mins[1][1], mins[1][3]) = mins[2][1] = -5$$
+$$
+\left[1, 5\right> = min(mins[1][1], mins[1][3]) = mins[2][1] = -5
+$$
 
 Stoga preprocessing možemo napraviti dinamički:
 
 ```
 void init() {
-  for (int pot = 0; (1 << pot) <= n; ++pot)
-    for (int i = 0; i < n; ++i)
+  for (int pot = 0; (1 << pot) <= n; ++pot) {
+    for (int i = 0; i < n; ++i) {
       mins[pot + 1][i] = min(
         mins[pot][i],
         i + (1<<pot) < maxn ? mins[pot][i + (1<<pot)] : INF
-    );
+      );
+    }
+  }
 }
 ```
 
