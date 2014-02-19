@@ -126,7 +126,7 @@ void init2() {
 
 == Zaključak ==
 
-Postoji struktura podataka koja uz $O(N \cdot log N)$ vremena predračunanja može odgovoriti na pitanje najmanjeg broja u intervalu u konstantnom vremenu.
+Postoji struktura podataka koja uz $O(n \log n)$ vremena predračunanja može odgovoriti na pitanje najmanjeg broja u intervalu u konstantnom vremenu.
 
 Funkcija upita izgleda ovako:
 
