@@ -1,0 +1,174 @@
+= Hashing =
+
+== Kratki uvod i malo teorije ==
+
+**Što je hashing ?**
+
+Prilikom rješavanja zadataka često koristimo ispitivanje jednakosti nekakvih objekata. Ako se radi o intovima naš je problem vrlo jednostavan. Što ako imamo hrpu nizova intova i zanima nas koji od njih su međusobno jednaki? Možemo ih uspoređivati element po element, no to se ne čini previše efikasno. Pogledajmo o čemu se radi na malo apstraktnijoj razini.
+
+
+Imamo neki veliki skup **A** i njegov podskup **B** čije elemente želimo brzo uspoređivati. Označimo veličinu jednog elementa s **n** i pretpostavimo da je složenost usporedbe koju radimo na elementima **O(n)**. Za nešto veće **n** ta složenost počinje utjecati na ukupnu složenost algoritma u kojem koristimo predviđenu usporedbu. Kako bismo tome doskočili uvodimo treći skup **C** znatno manji od **A** te posebnu funkciju **h : A → C**. Za funkciju **h** kažemo da je ravnomjerna ako mapira otprilike jednak broj elemenata **A** u elemente **C**. Pritom omjer **|A|/|C|** nazivamo **load factor** i predstavlja očekivani broj elemenata **A** koje **h** mapira u neki element **C**. Funkciju **h** nazivamo **hash funkcija**, skup **A** skupom svih mogućih ključeva, a skup **C** skupom hash vrijednosti.
+
+**Hashing** možemo definirati kao mapiranje nekih većih objekata u manje kako bismo ih lakše uspoređivali. Pritom postoji problem koji se naziva kolizija i posljedica je činjenice da ovim postupkom gubimo informacije i da se dvije vrijednosti mogu mapirati u istu **hash** vrijednost.
+
+=== Jedan jednostavan primjer ===
+
+Recimo da želimo implementirati trodimenzionalni niz intova čija je svaka dimenzija veličine milijun. Takav niz ne možemo realno ugurati u memoriju pa je potrebno iskoristiti neku drugu foru. Jedan od očitih pristupa bilo bi korištenje STL map strukture, ali ovdje nam je cilj pokazati što možemo izvesti korištenjem hash funkcija. Skup A u ovom primjeru sadrži sve moguće trojke intova do milijun, dakle ima veličinu $10^{18}$ . Te ćemo trojke prvo morati smanjiti na neku prihvatljivu veličinu. Funkcija koju ćemo za trojku $(x, y, z)$ koristiti je sljedeća:
+
+$h(x,y,z) = (x \cdot a^2 + y \cdot a + z) \mod p$
+
+
+Za **p** ćemo u našem slučaju uzeti broj $1000003$ , a za **a** neki nasumični broj iz intervala **[0, p-1]**. Nula i jedan se ovdje možda i ne čine kao najbolji izbor. Vrijednosti koje ćemo dobiti takvim mapiranjem trojki biti će puno manje od početnih pa ćemo za naš fiktivni niz **N[x][y][z]** zapravo koristiti nešto manji niz **N[h(x,y,z)]**.
+
+Kako će tu i tamo sigurno doći do preklapanja odnosno **kolizije**, morat ćemo doskočiti i tom problemu.
+
+=== Chaining metdoa rješavanja kolizije ===
+
+Ova metoda rješavanja preklapanja vrlo je jednostavna i vjerojatno prva pada na pamet kao nadogradnja naše dosadašnje ideje. Što ako **N[h(x, y, z)]** nije samo niz intova nego lista četvorki **(x, y, z, v)**? Prva tri elementa **(x, y, z)** predstavljaju trojku a **v** vrijednost koja je toj trojki pridružena u našem nizu, odnosno **N[x][y][z]**.  Ako želimo elementu na poziciji **(x, y, z)** dodijeliti neku vrijednost **v** prvo ćemo ga potražiti u listi koja mu je pridružena već opisanom funkcijom.  Ako ga ne nađemo na kraj liste dodat ćemo četvorku **(x, y, z, v)**. Ako ga pak pronađemo jednostavno ćemo modificirati vrijednost **v** u pripadajućoj četvorki.
+
+Upravo smo vrlo jednostavno implementirali jako velik niz. No jedna stvar još nije jasna. Kako znamo da će naša funkcija ravnomjerno raspoređivati trojke?
+
+=== Mala analiza hash funkcije ===
+
+Funkcija koju smo definirali polinom je u **a**. Pogledajmo što dobijemo izjednačavanjem funkcije za dvije trojke **(x0, y0, z0)** i **(x1, y1, z1)**:
+
+$h(x_0, y_0, z_0) = h(x_1, y_1, z_1)$
+
+$(x_0 - x_1) \cdot a^2 + (y_0 - y_1) \cdot a + (z_0 - z_1) \equiv 0 \mod p$
+
+Jednakost dakle dobivamo u slučaju kada je **a** nultočka nekog trećeg polinoma modulo **p**. Polinom je maksimalno drugog stupnja pa tako ima maksimalno dvije različite nultočke (ovo usput nije odmah očito i vrijedi samo za prost p).  Vjerojatnost da je nasumični **a** nultočka ovog polinoma tako je **2/p**, oko 2⋅10-6 za naš p, što smatramo jako malim brojem i možemo očekivati da će funkcija biti prilično ravnomjerna.
+
+Sada ako netko ne poznaje naš izbor **a** i **p** vrlo mu je teško namjestiti primjer u kojem se puno trojki mapira u istu vrijednost. Osim ovakve analize moguće je funkciju implementirati i isprobati u praksi. Tu treba imati na umu i „pravilne“ inpute koji iz perspektive hash funkcije ne bi smjeli biti drukčiji od nasumičnih.
+
+Dobro je primijetiti kako se ovaj primjer jednostavno poopći i na razne druge tipove indeksa i time dobivamo strukturu hash tablice, vrlo korisnu za brzo mapiranje.
+
+Podatkovna struktura hash tablica podržava sljedeće operacije:
+
+$ubaci(X) : S = S \cup X$
+
+$izbaci(X) : S = S / X$
+
+$pronadi(k) : X \in S$ takav da $X.key = k$ ili $NULL$
+
+Podatkovna struktura hash tablica neće biti detaljno opisana u ovom članku.
+
+== Hashing stringova ==
+
+Od svega što se može susresti na natjecanjima stringovi su uvjerljivo najčešće žrtve hashiranja. Usporedbe stringova znak po znak nisu uvijek dovoljno efikasne, pa ćemo zato sada proučiti jednu vrlo popularnu metodu **hashiranja** stringova koja dozvoljava brzo izdvajanje pojedinih podstringova (tj. dobivanje njihovih **hash** vrijednosti). Također ćemo vidjeti vrlo efikasan način leksikografskog uspoređivanja stringova.
+
+
+=== Hash funkcija za stringove ===
+
+Hash funkcija koju obično koristimo za stringove također ima oblik polinoma, gdje su koeficijenti znakovi samog stringa. Vrijednosti ćemo pohranjivati u intove, ovaj puta bez direktnog računanja nekog ostatka (za to će se pobrinuti sama implementacija **inta**).
+
+
+Nazovimo string s kojim radimo **S**, njegovu duljinu **n** i neki prosti broj **p**. Pomoćne nizove **P** i **H** definiramo rekurzivno na sljedeći način: $P_0 = 1, P_i = p \cdot P_{i-1}$
+
+$H_0 = S_0, H_i = p \cdot H_{i-1} + S_i$
+
+
+Niz **P** je niz potencija broja **p**. No što nam predstavlja niz H? Izgleda kao da ima veze s polinomima, preciznije jako je sličan Hornerovom algoritmu za evaluiranje polinoma u nekoj točki.  Isti taj niz zato možemo zapisati u nešto preglednijem obliku:
+
+$H_i = \displaystyle\sum\limits_{j=0}^i S_j \cdot P_{i-j}$
+
+Kao **hash** vrijednost zadanog stringa podrazumijevamo $H_{n-1}$ , a ostale članove niza nazivamo **prefiks hashevima**. Ovdje ću još samo napomenuti kako za samu hash vrijednost $S_j$ ovdje uzimamo vrijednost pripadajućeg znaka.  Također nećemo brinuti o overflow problemima koji bi eventualno nastali i jednostavno ćemo ih ignorirati. Možete se uvjeriti kako se sve operacije u tom slučaju slične onima modulo $2^{32}$ .
+
+Sljedeći korak je izdvajanje **hash** vrijednosti podstringova stringa **S**.  Označimo sa **S[i,j]** podstring stringa S koji se provlači od znaka i do znaka **j**.  Po našoj definiciji hash vrijednosti stringa dobivamo sljedeću sumu:
+
+$h(S[i, j]) = \displaystyle\sum\limits_{k=i}^j S_k \cdot P_{j - k}$
+
+Začudo tu vrijednost možemo jednostavno dobiti iz već izračunatog pomoćnog niza
+**H**.
+
+Sljedeća formula daje nam tu poveznicu:
+
+$h(S[i, j]) = H_j - H_{i-1} \cdot P_{j-i+1}$
+
+Ideja kojom dolazimo do te formule je ta da prvo uzmemo prefiks **S[0,j]** i tada od njega jednostavno odrežemo prefiks **S[0,i-1]**. Kako je znak **i-1** u odnosu na znak **j** na potenciji višoj za **j-i+1** (što odgovara duljini podstringa), taj drugi prefiks potrebno je pomnožiti s $P_{j-i+1}$ . Pri konkretnoj implementaciji ove formule naravno moramo paziti na to da ne gledamo negativne indekse.
+
+Sad već posjedujemo puno alata i bacamo se na neke jednostavnije primjene.
+
+=== Traženje malog string u većem ===
+
+Sad bi već trebalo biti očito kako ćemo pristupiti ovom problemu. Pretpostavimo da imamo dva stringa **S** i **Z** s duljinama redom **n** i **m**, i neka je **n** manje od **m** tj. tražimo **S** u **Z**. Za početak izračunamo hash vrijednost stringa **S** - $h_S$ i pomoćne nizove **H** i **P** za string **Z**. Tada se ovo traženje svodi na ispitivanje je li **h( Z[i,i+n-1] )** jednak $h_S$ za sve odgovarajuće indekse i (ima ih **m-n+1**).
+
+Ova ideja čini osnovu [[http://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm|Rabin-Karp]] algoritma za traženje patterna. Primijetite i da je ovo moguće izvesti i bez pomoćnih nizova za string **Z** ako pri pomicanju na sljedeći indeks održavamo vrijednost $h_Z$ kao hash vrijednost trenutno promatranog podstringa. Tada pomoću niza **P** izbacujemo prvi znak iz trenutnog hasha i dodajemo novi znak na kraj.
+
+Kako bismo bili potpuno sigurni da nemamo slučaj kolizije potrebno je i ručno provjeriti svaki podstring koji se pokaže jednak po hash vrijednosti, no to će se uz zadanu hash funkciju događati vrlo rijetko. Zbog toga se čak možemo praviti da hash vrijednost predstavlja sam string.
+
+Sličan princip možemo primijeniti na višedimenzionalne nizove. U **2d** slučaju možemo na primjer prvo izračunati hash vrijednosti stupaca (i njihovih podstringova), i zatim te podstringove promatrati kao jednodimenzionalne nizove. Također možemo lako prebrojavati podstringove određene fiksne duljine i još mnogo toga.
+
+=== Palindrom i periodičnosti ===
+
+Palindromi su još jedan primjer gdje hashing može dobro doći. Ako umijesto samo jednog pomoćnog niza **H** konstruiramo i niz **Hr** kao niz prefiks hasheva obrnutog stringa. Označimo obrnuti string **S** sa **Sr**. Tada ispitivanje je li podstring **S[i,j]** palindrom svodi na ispitivanje jednakosti **h( S[i,j])** i **h( Sr[n-j-1,n-i-1] )**.
+
+Periodičnost stringa također je jednostavna za provjeriti, uzmemo svaki prefiks stringa, pomičemo se za njegovu duljinu i pritom testiramo jednakost. Budući da duljina mora biti djeljiva duljinom perioda broj početnih prefiksa je prilično ograničen.
+
+
+=== Najdulji zajednički prefiks ===
+
+Najdulji zajednički prefiks (engl. longest common prefix, LCP) dvaju stringova definira se kao najdulji prefiks prvog stringa koji je ujedno i prefiks drugog stringa. Rubni slučaj je naravno onaj u kojem je jedan od stringova prefiks drugoga. Traženje LCP-a može se vrlo efikasno izvesti korištenjem već opisane hash funkcije i binarnog pretraživanja. Uistinu ako je string **A** prefiks stringa **B** tada je svaki prefiks stringa **A** također prefiks stringa **B**. Pretpostavimo da su nam zadana dva podstringa stringa **S**, redom **S[x0,y0]** i **S[x1,y1]**. 
+
+Tada bi odsječak za računanje duljine njihovog LCP-a išao otprilike ovako:
+
+```
+int LCP( int x0, int y0, int x1, int y1 ) {
+    if( S[x0] != S[x1] ) return 0;
+    int lo = 1, hi = min( y0-x0+1, y1-x1+1 ), mid;
+    while( lo < hi ) {
+        mid = ( lo + hi + 1 ) / 2;        
+        if( hash( x0, x0+mid-1 ) == hash( x1, x1+mid-1 ) ) {
+            lo = mid; 
+        } else { 
+            hi = mid-1;
+        }
+    }
+    return lo; 
+}
+```
+
+=== Leksikografska usporedba podstringova ===
+
+Usporedba dva podstringa vrlo je jednostavno i efikasno izvediva koristeći LCP. 
+
+```
+bool cmp( int x0, int y0, int x1, int y1 ) { 
+    int L = LCP( x0, y0, x1, y1 );
+    if( L == y0 – x0 + 1 ) return 1;
+    if( L == y1 – x1 + 1 ) return 0;
+    return ( S[x0+L] < S[x1+L] );
+}
+```
+
+Funkcija **cmp** dakle vraća vrijednost **true** u koliko je prvi podstring leksikografski manji od drugog. Složenost jedne komparacije je **O(log N)**.  Primjer zadatka u kojem se ovakva leksikografska komparacija može iskoristiti je pronalaženje leksikografski minimalne rotacije nekog stringa. Ako tražimo takvu rotaciju u stringu **S** onda je jedno elegantno rješenje promatrati string $Z = S + S$ . Kao početne pozicije promatramo prvih pola i uspoređujemo podstringove leksikografski s onima već viđenim.
+
+Još jedna primjena ovog komparatora je izgradnja jedne od najvažnijih struktura za obradu stringova tzv. [[http://en.wikipedia.org/wiki/Suffix_array|suffix arraya]]. Ideja je sortirati sve sufikse leksikografski (koristeći njihove početne indekse). U takvom nizu sufiksa možemo vrlo efikasno tražiti podstringove, kao i rješavati još nebrojene teške probleme. Nažalost ta struktura daleko nadilazi ovaj kratki uvod, no pozivam sve zainteresirane da strukturu prouče na webu.
+
+== Zadaci ==
+
+[[http://www.spoj.com/problems/LPS/]] (najdulji palindromski podstring)
+
+[[http://www.spoj.com/problems/MINMOVE/]] (leksikografski minimalna rotacija)
+
+[[http://www.spoj.pl/problems/TREEISO/]]
+
+[[http://www.spoj.pl/problems/HSEQ/]]
+
+[[http://www.spoj.pl/problems/LSQF/]]
+
+[[http://www.spoj.pl/problems/DISUBSTR/]]
+
+== Hintovi ==
+
+- TREEISO: Postoji čvor (ili dva) u stablu koji se nazivaju centar i jedinstveni su svakom stablu. Obilazak stabla iz nekog od ta dva čvora može se zapisati u niz. (Taj niz opet treba biti pažljivo izgrađen budući da redoslijed čvorova u listi koju koristimo za obilazak nije nužno isti u oba stabla). Zbog slabijih primjera moguće je i da neke druge heuristike također prolaze.
+
+- HSEQ: Osnovni hint je suffix array odnosno niz sortiranih sufiksa stringa.  Potrebno je promatrati **LCP** susjednih sufiksa u tom nizu. Uz malo promatranja lako je prepoznati problem najvećeg pravokutnika u histogramu (možete pogledati i zadatak http://www.spoj.pl/problems/HISTOGRA/).
+
+- LSQF: Postoji način provjeravanja postoji li takav string duljine **K** za bilokoji **K** u **O(N/K)**. Taj algoritam promatra prvih **K**, drugih **K** itd. uzastopnih znakova i koristeći **LCP** i **LCS** (longest common suffix koji se računa gotovo isto kao LCP) traži postoji li opisani podstring upravo te duljine. Rješenje se dobije prolaskom po svim mogućim **K** i složenosti je $O(N \cdot log^2 N)$ .
+
+- DISUBSTR: Za kraj još jedan suffix array zadatak. Opet je potrebno sortirati sufikse i promatrati uzastopne LCP-ove. Ideja je od ukupnog broja substringova oduzeti ponavljanja. Lako je vidjeti kako LCP dva susjedna sufiksa duljine **L** predstavlja točno **L** ponovljenih substringova.
+
+!!!
+2014. Gustav Matula, Matija Šantl
+!!!
+
