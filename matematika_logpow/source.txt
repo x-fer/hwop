@@ -122,7 +122,7 @@ Radi jednostavnosti, promotrimo sada izvršavanje malo brže rekurzivne funkcije
     if (p % 2) {
       return tmp * tmp * b;
     } else {
-      return !p ? 0 : tmp * tmp;
+      return !p ? 1 : tmp * tmp;
     }
   }
 
