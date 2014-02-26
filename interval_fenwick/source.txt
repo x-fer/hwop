@@ -105,8 +105,7 @@ int upit(int a, int b) {
 
 ==Zadaci==
 
-* [[http://www.spoj.com/problems/LITE/]]
-
+* [[http://www.spoj.com/problems/PYRSUM2/]]
 
 ==Izvor==
 
