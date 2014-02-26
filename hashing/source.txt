@@ -7,7 +7,7 @@
 Prilikom rješavanja zadataka često koristimo ispitivanje jednakosti nekakvih objekata. Ako se radi o intovima naš je problem vrlo jednostavan. Što ako imamo hrpu nizova intova i zanima nas koji od njih su međusobno jednaki? Možemo ih uspoređivati element po element, no to se ne čini previše efikasno. Pogledajmo o čemu se radi na malo apstraktnijoj razini.
 
 
-Imamo neki veliki skup $A$ i njegov podskup $B$ čije elemente želimo brzo uspoređivati. Označimo veličinu jednog elementa s $n$ i pretpostavimo da je složenost usporedbe koju radimo na elementima $O(n)$ . Za nešto veće $n$ ta složenost počinje utjecati na ukupnu složenost algoritma u kojem koristimo predviđenu usporedbu. Kako bismo tome doskočili uvodimo treći skup $C$ znatno manji od $A$ te posebnu funkciju $h : A \to C$ . Za funkciju $h$ kažemo da je ravnomjerna ako mapira otprilike jednak broj elemenata $A$ u elemente $C$ . Pritom omjer $\frac{|A|}{|C|}$ nazivamo **load factor** i predstavlja očekivani broj elemenata $A$ koje $h$ mapira u neki element $C$ . Funkciju $h$ nazivamo **hash funkcija**, skup $A$ skupom svih mogućih ključeva, a skup $C$ skupom hash vrijednosti.
+Imamo neki veliki skup $A$ i njegov podskup $B$ čije elemente želimo brzo uspoređivati. Označimo veličinu jednog elementa s $n$ i pretpostavimo da je složenost usporedbe koju radimo na elementima $O(n)$ . Za nešto veće $n$ ta složenost počinje utjecati na ukupnu složenost algoritma u kojem koristimo predviđenu usporedbu. Kako bismo tome doskočili uvodimo treći skup $C$ znatno manji od $A$ te posebnu funkciju $h : A \to C$ . Za funkciju $h$ kažemo da je ravnomjerna ako mapira otprilike jednak broj elemenata $A$ u elemente $C$. Pritom omjer $\frac{|A|}{|C|}$ nazivamo **load factor** i predstavlja očekivani broj elemenata $A$ koje $h$ mapira u neki element $C$ . Funkciju $h$ nazivamo **hash funkcija**, skup $A$ skupom svih mogućih ključeva, a skup $C$ skupom hash vrijednosti.
 
 **Hashing** možemo definirati kao mapiranje nekih većih objekata u manje kako bismo ih lakše uspoređivali. Pritom postoji problem koji se naziva kolizija i posljedica je činjenice da ovim postupkom gubimo informacije i da se dvije vrijednosti mogu mapirati u istu **hash** vrijednost.
 
@@ -29,13 +29,13 @@ Upravo smo vrlo jednostavno implementirali jako velik niz. No jedna stvar još 
 
 === Mala analiza hash funkcije ===
 
-Funkcija koju smo definirali polinom je u $a$ . Pogledajmo što dobijemo izjednačavanjem funkcije za dvije trojke $(x0, y0, z0)$ i $(x1, y1, z1)$ :
+Funkcija koju smo definirali polinom je u $a$. Pogledajmo što dobijemo izjednačavanjem funkcije za dvije trojke $(x0, y0, z0)$ i $(x1, y1, z1)$ :
 
 $h(x_0, y_0, z_0) = h(x_1, y_1, z_1)$
 
 $(x_0 - x_1) \cdot a^2 + (y_0 - y_1) \cdot a + (z_0 - z_1) \equiv 0 \mod p$
 
-Jednakost dakle dobivamo u slučaju kada je $a$ nultočka nekog trećeg polinoma modulo $p$ . Polinom je maksimalno drugog stupnja pa tako ima maksimalno dvije različite nultočke (ovo usput nije odmah očito i vrijedi samo za prost $p$ ).  Vjerojatnost da je nasumični $a$ nultočka ovog polinoma tako je $2/p$ , oko $2 \cdot 10^{-6}$ za naš $p$ , što smatramo jako malim brojem i možemo očekivati da će funkcija biti prilično ravnomjerna.
+Jednakost dakle dobivamo u slučaju kada je $a$ nultočka nekog trećeg polinoma modulo $p$. Polinom je maksimalno drugog stupnja pa tako ima maksimalno dvije različite nultočke (ovo usput nije odmah očito i vrijedi samo za prost $p$ ).  Vjerojatnost da je nasumični $a$ nultočka ovog polinoma tako je $2/p$ , oko $2 \cdot 10^{-6}$ za naš $p$ , što smatramo jako malim brojem i možemo očekivati da će funkcija biti prilično ravnomjerna.
 
 Sada ako netko ne poznaje naš izbor $a$ i $p$ vrlo mu je teško namjestiti primjer u kojem se puno trojki mapira u istu vrijednost. Osim ovakve analize moguće je funkciju implementirati i isprobati u praksi. Tu treba imati na umu i "pravilne" inpute koji iz perspektive hash funkcije ne bi smjeli biti drukčiji od nasumičnih.
 
