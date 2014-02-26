@@ -19,7 +19,7 @@ $$
 H_i = \sum\limits_{j=0}^i S_j \cdot P_{i-j}
 $$
 
-Kao **hash** vrijednost zadanog stringa podrazumijevamo $H_{n-1}$ , a ostale članove niza nazivamo **prefiks hashevima**. Ovdje ću još samo napomenuti kako za samu hash vrijednost $S_j$ ovdje uzimamo vrijednost pripadajućeg znaka.  Također nećemo brinuti o overflow problemima koji bi eventualno nastali i jednostavno ćemo ih ignorirati. Možete se uvjeriti kako se sve operacije u tom slučaju slične onima modulo $2^{32}$ .
+Kao **hash** vrijednost zadanog stringa podrazumijevamo $H_{n-1}$ , a ostale članove niza nazivamo **prefiks hashevima**. Ovdje ćemo još napomenuti kako za samu hash vrijednost $S_j$ ovdje uzimamo vrijednost pripadajućeg znaka.  Također nećemo brinuti o overflow problemima koji bi eventualno nastali i jednostavno ćemo ih ignorirati. Možete se uvjeriti kako se sve operacije u tom slučaju slične onima modulo $2^{32}$ .
 
 Sljedeći korak je izdvajanje **hash** vrijednosti podstringova stringa **S**.  Označimo sa $S_{i,j}$ podstring stringa $S$ koji se provlači od znaka $i$ do znaka $j$ .  Po našoj definiciji hash vrijednosti stringa dobivamo sljedeću sumu:
 
