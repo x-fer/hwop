@@ -18,6 +18,7 @@
 <div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Union find sučelje</div><pre class="remarkup-code"><span class="k">struct</span> <span class="n">union_find</span> <span class="p">{</span>
   <span class="c1">// broj elemenata s kojima krecemo, na pocetku je svaki u svojoj grupi.</span>
   <span class="c1">// elemente u ostalim upitima referenciramo kao int iz intervala [0, n&gt;</span>
+  <span class="c1">// size_t je unsigned tip podatka koji predstavlja velicinu kontenjera.</span>
   <span class="n">union_find</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">n</span><span class="p">);</span>
 
   <span class="c1">// stopi grupu u kojoj je element x i u kojoj je element y</span>
