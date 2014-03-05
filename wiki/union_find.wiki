@@ -10,6 +10,7 @@ Struktura ima sljedeće sučelje:
 struct union_find {
   // broj elemenata s kojima krecemo, na pocetku je svaki u svojoj grupi.
   // elemente u ostalim upitima referenciramo kao int iz intervala [0, n>
+  // size_t je unsigned tip podatka koji predstavlja velicinu kontenjera.
   union_find(size_t n);
 
   // stopi grupu u kojoj je element x i u kojoj je element y
