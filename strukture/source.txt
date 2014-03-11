@@ -19,8 +19,13 @@ Općenito, što su [[strukture/stabla]] ?
 
 Moćne, obskurne..
 
--- [[strukture/konstantna|Konstantna struktura]]
--- [[strukture/monotoni_red|Monotoni red]]
+- [[strukture/konstantna|Konstantna struktura]]
+- [[strukture/monotoni_red|Monotoni red]]
+
+== Strukture za rukovanje znakovnim nizovima
+
+- [[Hashing]] - optimizacija za usporedbu složenih objekata
+- [[Hashing stringova]] - primjena na znakovnim nizovima
 
 !!!
 2013-2014. Anton Grbin, Bruno Rahle, Dino Šantl

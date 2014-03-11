@@ -64,7 +64,7 @@ void load() {
 Da bi izračunali vrijednost u polju `mins` na nekom višem retku, odnosno najmanji broj u intervalu neke veće potencije broja dva, možemo se poslužiti sljedećom relacijom:
 
 ```
-mins[a + 1][b] = min(mins[a][b], mins[a][b + (1 << a)]);
+mins[a + 1][b] = min(mins[a][b], mins[a][b + 2^a]);
 ```
 
 Odnosno, najmanji broj u intervalu veličine $2 \cdot 2^a$ koji počinje na mjestu $b$ možemo dobiti tako da promatramo intervale veličine $2^a$ koji počinju na mjestima $b$ i $b + 2^a$ . Ta dva intervala se zajedno spoje u veliki interval čije rješenje tražimo i ako uzmemo manji od najmanjih brojeva u njima, dobili smo najmanji broj u velikom intervalu. Primjer:
