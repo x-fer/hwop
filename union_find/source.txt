@@ -10,6 +10,7 @@ Struktura ima sljedeće sučelje:
 struct union_find {
   // broj elemenata s kojima krecemo, na pocetku je svaki u svojoj grupi.
   // elemente u ostalim upitima referenciramo kao int iz intervala [0, n>
+  // size_t je unsigned tip podatka koji predstavlja velicinu kontenjera.
   union_find(size_t n);
 
   // stopi grupu u kojoj je element x i u kojoj je element y
@@ -29,7 +30,7 @@ digraph {
   1; 2; 3; 4; 5; 6;
 }
 
-Sasvim je normalno da u nekoj fazi algoritma više učenika ima istog voditelja. Ono što nije očekivano jest da učenik `a` za voditelja ima učenika `b`, a učenik `b` ima za voditelja učenika `a`. To bi bio ciklus u našoj hijerarhiji što naravno nije očekiviano. Iz svega navedenoga zaključujemo da je graf u kojem su čvorovi učenici, a bridovi relacija `je_voditelj`, ništa drugo nego stablo ili više stabala (šuma).
+Sasvim je normalno da u nekoj fazi algoritma više učenika ima istog voditelja. Ono što nije očekivano jest da učenik `a` za voditelja ima učenika `b`, a učenik `b` ima za voditelja učenika `a`. To bi bio ciklus u našoj hijerarhiji što naravno nije očekivano. Iz svega navedenoga zaključujemo da je graf u kojem su čvorovi učenici, a bridovi relacija `je_voditelj`, ništa drugo nego stablo ili više stabala (šuma).
 
 digraph {
   node [size=5,shape=circle]
