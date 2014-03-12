@@ -89,20 +89,42 @@ Množenje polinoma izvodimo u kvadratnom prolazu. Svaki par elemenata $a_i$ i $b
 
 Ovaj isječak se ne brine o greškama izlaska van niza.
 
-== Implementacija u strukturi
+== Povećavanje baze
+
+Primjetimo da trenutno sve operacije zbrajanja i množenja radimo s malim brojevima (brojevima koji su manji od baze). Postavlja se pitanje zašto ne bi povećali bazu na neki višekratnik broja $10$ i rukovali s više znamenaka od jednom? Cijela logika i dalje stoji netaknuta, jedina promjena je što će baza postati puno veći broj. Najveća baza koja stane u `unsigned long long` tip podatka sa sigurnim množenjem je $10^9$ , no tada množenje može napraviti overflow u zbroju (zašto?). Tome možemo doskočiti tako da odmah u množenju radimo i normalizaciju znamenaka ili da smanjimo bazu.
 
 ```lang=cpp
+  void out() const {
+    printf("%lld", a.back());
+    for (int it = a.size() - 2; it >= 0; --it)
+      printf("%07lld", a[it]);
+    printf("\n");
+  }
+```
+
+Naime, vodeći skup znamenki smo ispiali u formatu bez vodećih nula dok smo sve ostale znamenke u sredini našeg broja ispisivali s vodećim nulama tako da je širina ispisa $9$ .
+
+== Implementacija u strukturi
+
+Slijedi implementacija `bignum` strukture:
+
+```lang=cpp
+typedef unsigned long long llint;
+
 struct bignum {
-  bignum(int k) : a(1, k) {norm();}
+  bignum(llint k) : a(1, k) {norm();}
 
   void out() const {
-    copy(a.rbegin(), a.rend(), ostream_iterator<int>(cout, " "));
-    cout << endl;
+    printf("%lld", a.back());
+    for (int it = a.size() - 2; it >= 0; --it)
+      printf("%07lld", a[it]);
+    printf("\n");
   }
 
   bignum& norm() {
     while (!a.back()) a.pop_back();
-    for (int residue = 0, it = 0; it < (int) a.size(); ++it) {
+    llint residue = 0;
+    for (size_t it = 0; it < a.size(); ++it) {
       a[it] += residue;
       residue = a[it] / B, a[it] = a[it] % B;
       if (residue && it + 1 == a.size())
@@ -128,14 +150,21 @@ struct bignum {
   }
 
  private:
-  static const int B;
-  vector<int> a;
+  static const llint B;
+  vector<llint> a;
 
-  bignum(int k, size_t size) : a(size, k) {}
+  bignum(llint k, size_t size) : a(size, k) {}
 
-  int operator[] (const int index) const {
+  llint operator[] (const int index) const {
     return index < a.size() ? a[index] : 0;
   }
 };
+
+const llint bignum::B = 10000000;
 ```
 
+Ova implementacija množenja može napraviti overflow!
+
+!!!
+2014. Anton Grbin
+!!!
