@@ -1,11 +1,11 @@
 = Tournament stablo =
 
-Ova struktura podataka jednostavnija je za konstrukciju od [[strukture/logaritamska|logaritamske strukture]] i može odgovarati na agregacijske upite u nekom intervalu.
+Ova struktura podataka jednostavnija je za konstrukciju od [[logaritamska|logaritamske strukture]] i može odgovarati na agregacijske upite u nekom intervalu.
 
 Tako naprimjer, pomoću ove strukture moći ćemo u logaritamskom vremenu odgovoriti na upite:
 
-- suma elemenata u intervalu, što može i [[strukture_logaritamska|logaritamska]]
-- najmanji broj u intervalu, slično kao što to radi i [[strukture_konstantna|konstantna struktura]].
+- suma elemenata u intervalu, što može i [[logaritamska|logaritamska]]
+- najmanji broj u intervalu, slično kao što to radi i [[konstantna|konstantna struktura]].
 - najdesniji ne-nul element u intervalu
 - bilo koju agregaciju na intervalu
 
@@ -58,7 +58,7 @@ U primjeru na slici niz $X$ velik je $7$ , i njegovi članovi zapisani su u čvo
 
 Svaki čvor pamtiti će sumu svih listova u njegovom podstablu. Tako će npr. čvor s oznakom $5$ biti zadužen za pamćenje sume elemenata `X[2] + X[3]` dok će čvor s oznakom $3$ pamtiti sumu elemenata `X[4] + X[5] + X[6] + X[7]`, ako postoji `X[7]`.
 
-Primjetite kako korjen stabla pamti agregirane vrijednosti za sve listove. Isto tako, primjetite kako se vrijednost jednog lista pamti u točno $d-1$ čvorova-roditelja, slično kao u [[strukture_logaritamska|logaritamskoj]]. Vrijednost u listu s oznakom $12$ biti će sadržana u čvorovima $\{6, 3, 1\}$ . 
+Primjetite kako korjen stabla pamti agregirane vrijednosti za sve listove. Isto tako, primjetite kako se vrijednost jednog lista pamti u točno $d-1$ čvorova-roditelja, slično kao u [[logaritamska|logaritamskoj]]. Vrijednost u listu s oznakom $12$ biti će sadržana u čvorovima $\{6, 3, 1\}$ . 
 
 Budući da se radi o potpunom binarnom stablu, agregiranu vrijednost u unutarnjem čvoru s oznakom $t$ možemo dobiti tako da agregiramo vrijednosti koje nalazimo u njegovoj djeci. U našem slučaju sume, neka u `a[i]` piše suma koju pamti unutarnji čvor s oznakom `i`. U svakom trenutku mora vrijediti `a[i] = a[i * 2] + a[i * 2 + 1]`.
 
