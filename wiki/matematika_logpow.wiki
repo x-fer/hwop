@@ -211,7 +211,7 @@ I uostalom, što ako nas zanima samo ostatak pri djeljenju neke potencije kao š
 
 == Zaključak ==
 
-Operaciju cjelobrojnog potenciranja $b^p, p \in N$ , moguće je izvesti koristeći $O(log(p))$ operacija množenja.
+Operaciju cjelobrojnog potenciranja $b^p, p \in N$ , moguće je izvesti koristeći $O(\log p)$ operacija množenja.
 
 Primjer svih algoritama koje smo koristili kroz ovaj članak vidljiv je na [[matematika/logpow/evolucija|ovdje]].
 
