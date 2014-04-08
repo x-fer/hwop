@@ -37,6 +37,13 @@ Gdje je 1000000007 naravno prost.
 Ako je ta vrijednost 1, rezultat je 0.
 ```
 
+=== Složenost ===
+
+Koristi se //big Oh// notacija: npr. $O(n \log n)$ .
+
+```lang=plain
+Koristi se //big Oh// notacija: npr. $O(n \log n)$ .
+```
 
 == Programski kod
 
