@@ -2,8 +2,8 @@
 
 **Obavezno pročitati prije:**
 
- - [[strukture_logaritamska|Logaritamska struktura ili Fenwickovo stablo]]
- - [[strukture_logaritamska_tutorial|Tutorial za Fenwickovo stablo]]
+ - [[logaritamska|Logaritamska struktura ili Fenwickovo stablo]]
+ - [[logaritamska_tutorial|Tutorial za Fenwickovo stablo]]
 
 Kada je potrebno postići logaritamsku vremensku složenost za ubacivanje elemenata u niz i traženje rezultata sume nad nekim intervalom u nizu tada se može koristiti fenwickovo stablo. Ubacivanjem elementa u fenwickovo stablo smatramo pribrojavanje broja $x$ na neku poziciju $p$ .
 
