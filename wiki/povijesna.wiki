@@ -1,0 +1,148 @@
+=Povijesna struktura
+
+//(javite mi ako postoji neki drugi hrvatski naziv ove strukture)//
+
+**Pročitati prije: **[[http://wiki.xfer.hr/strukture_tournament/|Tournament stablo]]
+
+Povijesna struktura podržava operacije koje podržava i tournament, ali osim što može odgovarati na upite prema sadašnjim podacima u strukturi, ona može odgovoriti na upite prema prošlim podacima u strukturi (koji su kasnije možda i izmijenjeni tijekom updatea strukture), tj. neka je početno vrijeme $Time = 0$ i neka se nakon svakog updatea strukture $Time$ uveća za $1$ ,  povijesna struktura može odgovoriti za neko vrijeme $t$ tako da vrijedi $0 \leq t \leq Time$ na query kao da se updatei nakon vremena $t$ nisu dogodili. Update može biti bilo koji update kojeg podržava tournament stablo, a isto vrijedi i za query osim što u povijesnoj strukturi navodimo i vrijeme za koje želimo odgovor.
+
+==Konstrukcija strukture
+
+Za svako vrijeme $t$ mi ćemo pamtiti tournament stablo kako izgleda nakon $t$ updatea. Naravno, memorijski i vremenski je nemoguće kopirati cijelo stablo nakon svakog updatea, no primijetimo da se u tournament stablu kod svakog updatea mijenja $O(\log{n})$ čvorova. Iskoristit ćemo to tako da ćemo duplicirati samo promijenjene čvorove. Njih ćemo pamtiti kako su izgledali prije updatea i kako izgledaju nakon updatea, a ostatak stabla ne moramo duplicirati jer se nije promijenio tijekom updatea.
+
+==Implementacija
+
+Čvorove ćemo vezati pointerima, svaki čvor sadržava pointer na svoje lijevo dijete, na desno dijete i svoju vrijednost. Nakon svakog updatea pamtimo još jedan novi root stabla (on je root tournamenta kako izgleda nakon zadnjeg updatea), tamo gdje ima promjene stvaramo nove čvorove, a tamo gdje nema vežemo se pointerima na stare čvorove. Dodatno, u složenijim implementacijama možemo pamtiti u čvoru i druge podatke kao što je propagacija.
+
+```lang=cpp,name=Node
+struct node {
+    int v;
+    node *l, *r; 
+    node () : v(0), l(0), r(0) {}
+    node (int v, node *l, node *r) : v(v), l(l), r(r) {}
+};
+```
+
+
+Recimo da moramo podržavati operacije: 
+
+    - update - promijeni $k$ -ti broj u nizu na vrijednost $v$
+    - query - nađi najveći broj u intervalu $[from, to)$ u nizu kako je izgledao nakon $t$ updatea (svi queryi moraju biti odgovoreni online).
+
+Te operacije možemo riješiti pomoću povijesne strukture. Strukturu ćemo izgraditi na nizu, tj. vrijednost k-tog lista povijesne strukture jednaka je vrijednosti k-tog člana niza, a vrijednost ostalih nodeova je maksimum vrijednosti djece. Opišimo osnovne funkcije povijesne strukture koja podržava spomenute operacije.
+
+===insert (promijena $k$ -tog broja u nizu na vrijednost $v$ )
+
+Funkcija insert će primati argumente:
+
+    - node u kojem se nalazimo (u tournamentu je to obično indeks koji označava gdje se u polju nalazi node, no ovdje je pointer na node)
+    - $lo$ , $hi$ - interval kojeg obuhvaća trenutni node, interval je otvoren s desne strane, tj. $[lo, hi)$
+    - $k$ - pozicija u nizu kojoj mijenjamo vrijednost tijekom operacije update
+    - $v$ - nova vrijednost na koju postavljamo $k$ -ti član niza.
+
+Funkcija insert će vraćati pointer na node. U slučaju da funkcija nije stvorila novi node insert će vratiti svoj prvi argument, tj. pointer na node u kojem se nalazimo. Ako funkcija insert stvori novi node onda vraća pointer na novostvoreni node.
+
+Razlikujemo tri slučaja u kojima se možemo naći tijekom inserta:
+
+    - node u kojem se nalazimo je $k$ -ti list
+    - $k$ -ti list se nalazi u podstablu trenutnog nodea
+    - $k$ -ti list se ne nalazi u podstablu trenutnog nodea
+
+U prvom slučaju trebamo promijeniti vrijednost lista, no s obzirom da moramo pamtiti i kako je list izgledao prije updatea stvorit ćemo novi node. Stari node na toj poziciji ne mijenjamo, nego novostvorenom nodeu postavljamo novu vrijednost. U ovom slučaju je funkcija stvorila novi node pa funckija vraća pointer na novostvoreni node.
+
+U drugom slučaju se moramo rekurzivno proširiti u oba djeteta trenutnog nodea. Rekurzivno pozvane funkcije će nam vratiti pointer na novi ili stari node, točnije jedna funkcija će vratiti pointer na novostvoreni node, a jedna na stari. Zbog činjenice da smo dobili jedan novi pointer moramo stvoriti novi node. Ponovo stari node ne diramo, a novom nodeu postavljamo vrijednost lijevog pointera na pointer koji je vratila funkcija pozvana na lijevo dijete, a vrijednost desnog pointera na pointer koji je vratila funkcija pozvana na desno dijete. Još samo moramo postaviti maksimum kojeg pamti novostvoreni node. Maksimum novostvorenog nodea je jednak maksimumu vrijednosti koje pamte njegova djeca (djeca novostvorenog nodea, a ne starog nodea). Vraćamo pointer na novostvoreni node.
+
+Treći slučaj je najlakši jer se u njemu ništa ne događa. Trenutni node se neće mijenjati jer se $k$ -ti list ne nalazi u podstablu trenutnog nodea pa onda funkcija vraća pointer na trenutni node bez širenja na djecu i bez stvaranja novog nodea.
+
+Funkciju insert pozivamo s pointerom na zadnje stvoreni root node, intervalom $[0, offset)$ (offset je potencija broja dva veća jednaka broju članova niza) i vrijednostima $k$ i $v$ koje dobijemo u inputu.
+
+Primijetimo da ćemo stvoriti $\log(n)$ nodeova i da se novostvoreni nodeovi nalaze na putu od $k$ -tog lista do roota stabla.
+Kako bismo kasnije mogli odgovarati na upite nakon ovog inserta moramo zapamtiti pointer na novi root, također moramo povećati vrijeme nakon inserta.
+
+===query (najveći broj u intervalu $[from, to)$ u vremenu $t$ , tj. nakon $t$ updatea
+
+Funkcija query će primati argumente:
+
+    - node u kojem se nalazimo
+    - $lo$ , $hi$ - interval kojeg obuhvaća trenutni node
+    - $from$ , $to$ - interval za koji tražimo maksimum
+
+Funkcija vraća nađeni maksimum u podstablu nodea u kojem se nalazimo.
+
+Ponovo razlikujemo tri slučaja te su oni identični slučajevima koje imamo u klasičnom queryu u tournament stablu te je lako provjeriti pomoću ispitivanja odnosa intervala $[from, to)$ i $[lo, hi)$ u kojem se slučaju nalazimo. Te slučajeve rješavamo na isti način kao i u tournament stablu. Bitno je napomenuti da ako ćemo raditi upite na stablu koje nije potpuno izgrađeno da ćemo morati još provjeriti i postojanje nodea te u slučaju ne postojanja vratiti minimalnu vrijednost (recimo 0, ako su moguće vrijednosti niza nenegativni brojevi). Tijekom querya ne nastaje nijedan novi node te se ne mijenjaju vrijednosti starih nodeova.
+
+Funkciju pozivamo pointerom na root node nastalom u vremenu $t$ , intervalom $[0, offset)$ i intervalom $[from, to)$ dobivenim iz inputa.
+
+=== $NIL$
+
+Kako ne bismo morali paziti da ne dereferenciramo $nullptr$ dobar trik je stvoriti node na kojeg će pokazivati pointer kojeg ćemo zvati $NIL$ . Pointere tog nodea ćemo također postaviti na $NIL$ , a vrijednost koju pamti je minimalna kako ne bi utjecala na rezultat. Time smo uštedili mnogo ispitivanja slučajeva, npr. u trenutku gdje stablo nije do kraja izgrađeno funckija insert nam može vrati $NIL$ , a mi možemo pitati za njegovu vrijednost kod određivanja maksimuma trenutnog nodea. U slučaju da nismo definirali $NIL$ pointer onda bi nam funkcija vratila $nullptr$ te bismo morali prije upita njegove vrijednosti provjeriti je li on pointer na stvarni node u memoriji ili ne pokazuje ni na što.
+
+```lang=cpp,name=Povijesna strktura
+const int MAXM = 100100;
+const int offset = 1 << 17;
+
+struct tournament {
+    int Time = 0;
+    node *NIL;
+    node *root[MAXM]; // pointeri na korijene stabla nakon svakog updatea
+
+    tournament () {
+        // NIL = new node(0, NIL, NIL); - ovako napisana linija nije dobra
+        // jer NIL je jos uvijek nedefiniran pa l i r nece biti postavljeni na NIL, nego na 0
+        NIL = new node(0, 0, 0); 
+        NIL->r = NIL->l = NIL;
+        Time = 0;
+        root[0] = NIL;
+    }   
+    
+    node* insert (node *t, int lo, int hi, int k, int v) {
+        if (k >= lo && k < hi) {
+            if (lo + 1 == hi) return new node (v, NIL, NIL); // prvi slucaj
+            else { // drugi slucaj
+                int mid = (lo + hi) / 2;
+                node *L = insert(t->l, lo, mid, k, v); 
+                node *R = insert(t->r, mid, hi, k, v); 
+                return new node ( max(L->v, R->v), L, R) ;
+            }   
+        }
+        else return t; // treci slucaj
+    }   
+
+    int query (node *t, int lo, int hi, int from, int to) {
+        if (t == NIL) return 0;
+        if (lo >= to || hi <= from) return 0;
+        if (lo >= from && hi <= to) return t->v;
+        int mid = (lo + hi) / 2;
+        return max( query(t->l, lo, mid, from, to), query(t->r, mid, hi, from, to) );
+    }
+    
+    void insert (int k, int v) {
+        root[Time+1] = insert(root[Time], 0, offset, k, v);
+        ++Time;
+    }
+    
+    int query (int t, int from, int to) {
+        return query(root[t], 0, offset, from, to);
+    }
+} T;
+```
+
+
+== Složenost ==
+
+Memorijska i vremenska složenost je $O(m \log{n})$ , $n = \textrm{broj elemenata niza}$ , a $m = \textrm{broj querya/updatea}$ .
+
+== Zadaci ==
+
+http://www.spoj.com/problems/MKTHNUM/
+** HINT **: Neka je početni niz $a$ . Napravimo $n + 1$ nizova $b$ , tako da niz $b_i$ pamti broj pojavljivanja vrijednosti elemenata koje se nalaze u prefiksu dugog $i$ elemenata polja $a$ . Izgradimo tournament nad svakim nizom $b_i$ . Sada $k$ - tu vrijednost u intervalu $[from, to)$ možemo pronaći queryem na tournamentima $T_{from-1}$ i $T_{to-1}$ . Ovo rješenje sada treba ubrzati pomoću povijesne strukture kako bismo dobili složenost $O(n \log{n})$ .
+
+http://www.spoj.com/problems/TTM/
+
+http://www.spoj.com/problems/PT07J/
+
+http://www.spoj.com/problems/COT/
+
+!!!
+2014. Mislav Bradač
+!!!

@@ -21,6 +21,7 @@ Moćne, obskurne..
 
 - [[konstantna|Konstantna struktura]]
 - [[monotoni_red|Monotoni red]]
+- [[povijesna|Povijesna struktura]] - nadgradnja na tournament
 
 == Strukture za rukovanje znakovnim nizovima
 
@@ -28,5 +29,5 @@ Moćne, obskurne..
 - [[Hashing stringova]] - primjena na znakovnim nizovima
 
 !!!
-2013-2014. Anton Grbin, Bruno Rahle, Dino Šantl
+2013-2014. Anton Grbin, Bruno Rahle, Dino Šantl, Mislav Bradač
 !!!
