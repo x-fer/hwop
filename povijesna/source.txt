@@ -135,7 +135,7 @@ Memorijska i vremenska složenost je $O(m \log{n})$ , $n = \textrm{broj elemenat
 == Zadaci ==
 
 http://www.spoj.com/problems/MKTHNUM/
-** HINT **: Neka je početni niz $a$ . Napravimo $n + 1$ nizova $b$ , tako da niz $b_i$ pamti broj pojavljivanja vrijednosti elemenata koje se nalaze u prefiksu dugog $i$ elemenata polja $a$ . Izgradimo tournament nad svakim nizom $b_i$ . Sada $k$ - tu vrijednost u intervalu $[from, to)$ možemo pronaći queryem na tournamentima $T_{from-1}$ i $T_{to-1}$ . Ovo rješenje sada treba ubrzati pomoću povijesne strukture kako bismo dobili složenost $O(n \log{n})$ .
+**HINT** : Neka je početni niz $a$ . Napravimo $n + 1$ nizova $b$ , tako da niz $b_i$ pamti broj pojavljivanja vrijednosti elemenata koje se nalaze u prefiksu dugog $i$ elemenata polja $a$ . Izgradimo tournament nad svakim nizom $b_i$ . Sada $k$ - tu vrijednost u intervalu $[from, to)$ možemo pronaći queryem na tournamentima $T_{from-1}$ i $T_{to-1}$ . Ovo rješenje sada treba ubrzati pomoću povijesne strukture kako bismo dobili složenost $O(n \log{n})$ .
 
 http://www.spoj.com/problems/TTM/
 

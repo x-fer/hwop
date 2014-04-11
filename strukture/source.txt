@@ -29,5 +29,5 @@ Moćne, obskurne..
 - [[Hashing stringova]] - primjena na znakovnim nizovima
 
 !!!
-2013-2014. Anton Grbin, Bruno Rahle, Dino Šantl, Mislav Bradač
+2013-2014. Anton Grbin, Gustav Matula, Bruno Rahle, Dino Šantl, Matija Šantl, Mislav Bradač
 !!!
