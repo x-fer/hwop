@@ -1,6 +1,6 @@
 =Povijesna struktura
 
-**Pročitati prije: **[[http://wiki.xfer.hr/strukture_tournament/|Tournament stablo]]
+**Pročitati prije: **[[http://wiki.xfer.hr/tournament/|Tournament stablo]]
 
 Povijesna struktura podržava operacije koje podržava i tournament, ali osim što može odgovarati na upite prema sadašnjim podacima u strukturi, ona može odgovoriti na upite prema prošlim podacima u strukturi (koji su kasnije možda i izmijenjeni tijekom updatea strukture), tj. neka je početno vrijeme $Time = 0$ i neka se nakon svakog updatea strukture $Time$ uveća za $1$ ,  povijesna struktura može odgovoriti za neko vrijeme $t$ tako da vrijedi $0 \leq t \leq Time$ na query kao da se updatei nakon vremena $t$ nisu dogodili. Update može biti bilo koji update kojeg podržava tournament stablo, a isto vrijedi i za query osim što u povijesnoj strukturi navodimo i vrijeme za koje želimo odgovor.
 
@@ -140,6 +140,11 @@ http://www.spoj.com/problems/TTM/
 http://www.spoj.com/problems/PT07J/
 
 http://www.spoj.com/problems/COT/
+
+== Dodatno 
+
+- https://www.youtube.com/watch?v=-sEdiFMntMA
+
 
 !!!
 2014. Mislav Bradač
