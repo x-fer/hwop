@@ -22,12 +22,12 @@ Stranice posvećene temama iz informatike i programiranja. Čitatelj može naći
 
 == Mogu li i ja napisati članak? ==
 
-Da! Repozitorij s izvorišnim datotekama nalazi se na [[github]]-u:
-
-- https://github.com/agrbin/hwop/
+Da! Repozitorij s izvorišnim datotekama nalazi se na [[github-u|https://github.com/agrbin/hwop/]] , a dostupne su i [[upute]] kako pisati članak.
 
 
 !!!
-2013 Alen Rakipović, Anton Grbin, Bruno Rahle, Dino Šantl,
-     Goran Žužić, Luka Kalinovčić, Matija Šantl, Stjepan Glavina, Tomislav Grbin
+2013.
+    Alen Rakipović, Anton Grbin, Bruno Rahle, Dino Šantl,
+    Goran Žužić, Gustav Matula, Luka Kalinovčić, Lovro Sindičić,
+    Matija Šantl, Mislav Bradač, Stjepan Glavina, Tomislav Grbin
 !!!
