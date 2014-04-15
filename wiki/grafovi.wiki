@@ -1,6 +1,38 @@
 = Teorija grafova =
 
-- [[Eulerova staza]], teorijski ostvrt na Eulerove grafove
+== Uvod u graf ==
+
+Grafom možemo opisivati modele određenoga realnog sustava, kao što su gradovi povezani cestama, rafinerije i potrošači spojeni naftovodima, plinovodi, električni sklopovi i sl.
+
+**Graf** je skup čvorova koji su povezani skupom bridova.
+
+**Čvorovi** su u prikaz grafa prikazani kružićima, dok su **bridovi** prikazani crtama.
+
+**Put** je bilo koji niz čvorova u kojem između svaka dva uzastopna čvora postoji veza.
+
+**Ciklus** je put u kojem se prvi i posljednji čvor poklapaju.
+
+**Obilazak** grafa je prolaz kroz sve točke grafa bez ponovnog posjećivanja prethodno posjećenih točaka.
+
+U usmjerenom grafu svakom je bridu dodijeljen smjer(može se proći bridom samo u jednome smjeru), dok se u neusmjerenom niti jedan brid nema dodjeljen smjer(može se proći bridom u oba smjera).
+
+**Stupanj** nekog čvora je broj bridova koji ga dodiruju, dok se u usmjerom grafu definira **ulazni stupanj** broj čvorova koji ulaze i **izlazni stuapnj** broj čvorova koji izlaze iz pojedinoga brida.
+
+**Težinski grafovi** su grafovi u kojem svaki brid ima pridruženu težinu. Težina najčešće predstavlja udaljenost izemđu brida ili cijenu puta da određeni brid prijeđe. Dok su naravno **netežinski grafovi** grafovi u kojima brid nema pridruženu težinu.
+
+Graf s **n** čvorova ima najmanje **n-1** brid.
+
+
+ $$ g= \frac{E}{V \cdot V} $$
+U formuli za **gustoću grafa** E predstavlja broj čvorova, a V broj vrhova.
+
+===PRIMJER===
+
+{eulerova_staza_1.jpg}
+
+Zadani graf ima **6** čvorova i **7** bridova.
+Riječ je o **netežinskome** grafu i **neusmjerom** grafu.
+Stupanj čvora 6 je **1**, dok je stupanj čvora 5 jednak **3**.
 
 == Prikaz grafa u memoriji ==
 
@@ -8,9 +40,10 @@
 
 == Naprednije teme ==
 
+- [[Eulerova staza]], teorijski ostvrt na Eulerove grafove
 - [[matrica_susjedstva_mnozenje|Množenje matrice susjedstva]], grafovi upoznaju linearnu algebru.
 - [[grafovi/matching|Maksimalno sparivanje u bipartitnom grafu]], //(engl. maximum bipartite matching)//
 
 !!!
-2013. Anton Grbin, Tomislav Grbin, Luka Kalinovčić, Lovro Sindičić
+2013.-2014. Anton Grbin, Tomislav Grbin, Luka Kalinovčić, Lovro Sindičić
 !!!
