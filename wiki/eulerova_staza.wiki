@@ -1,47 +1,44 @@
-= Eulerova staza =
+= Eulerova staza
 
-**Eulerova staza** grafa G je staza koja prolazi svakim bridom od G.
+**Eulerova staza** grafa $G$ je staza (put) koja prolazi svakim bridom od $G$ točno jednom.
 
 **Eulerova tura** je zatvorena Eulerova staza. Dakle, to je zatvorena staza koja prolazi svakim bridom točno jedanput.
 
 Graf je Eulerov ako ima Eulerovu turu, odnosno ako vrijedi:
 
-# Neprazan povezan graf G je Eulerov ako i samo ako su mu svi vrhovi
-parnog stupnja.
+# Neprazan povezan graf G je Eulerov ako i samo ako su mu svi vrhovi parnog stupnja.
 # Povezani graf G ima Eulerovu stazu ako i samo ako ima najviše dva vrha neparnog stupnja.
 
 **Stupanj** nekog čvora je broj bridova koji ga dodiruju.
 
 == Primjer ==
 
-{eulerova_staza_1.jpg}
+{img eulerova_staza_1.jpg}
 
 Zadan je graf koji se nalazi na gornjoj slici. Ima li on Eulerovu turu? Nema jer ne zadovoljava svojstva koja su potrebna da graf postane Eulerov.
 To znači da nisu svi vrhovi parnoga stupnja, primjerice (6 i 4), ali i sadrži više od dva čvora koja imaju neparan stuapnj, a to su redom: 2,4,5 i 6.
 
-= Zadaci =
+== Zadaci ==
 
-== Ralica ==
+=== Ralica ===
 
 Kao pripremu za zimu Grad Zagreb gradi mrežu cesta na način da ih ralica sve može proći na način da niti jednu ulicu ne prelazi više od jednoga puta. Vama je zadan broj točaka, te koja je točka povezana s kojom(riječ je naravno o dvosmjernim ulicama). I iz tih podatak trebate ispisati je li sustav cesta napravljen način kako traži gornji uvjet zadatka,tj. da ralica može proći sve ulice na način da svaku prođe samo jednom.
 
-=== Ulaz  ===
+==== Ulaz
 
 Broj N – broj točaka  i u sljedećih N (N>0 i N < 1000) ulaza brojeve A i B koji označuju da su točke A i B povezane.
 
-=== Izlaz ===
+==== Izlaz
 
 DA ako ulaz zadovoljava uvjet zadatka, ako nije onda ispišite NE.
 
-=== Napomena ===
+==== Napomena ===
 
 U test podacima neće biti slučaj da će se ulice ponavljati npr. da se unese prvo 3 5 pa onda kasnije 5 3.
 
-=== Test primjer ===
+==== Primjer
 
-==== Ulaz ====
-
-```
+```name=ulaz
 8
 1 2
 1 3
@@ -53,31 +50,31 @@ U test podacima neće biti slučaj da će se ulice ponavljati npr. da se unese p
 5 4
 ```
 
-==== Izlaz ====
 
+
+```name=izlaz
 DA
+```
 
 ==== Objašnjenje ====
 
 Primjer izgleda ovako:
 
-{eulerova_staza_2.jpg}
+{img eulerova_staza_2.jpg}
 
 Jedan mogući put je: 1 - 3 - 5 - 4 -3 - 2 - 1- 4 -2.
 
-== Kosa projekcija
+=== Kosa projekcija
 
 Može li se nacrtati kosa projekcija kocke (prikazana na slici) u jednom potezu?
 
-{eulerova_staza_3.jpg}
-
-== Još jedna slika
+{img eulerova_staza_3.jpg}
 
 Dana su tri sukladna kvadrata u međusobnom položaju prikazanom na slici. Možemo li ovu sličicu nacrtati u jednom potezu?
 
-{eulerova_staza_4.jpg}
+{img eulerova_staza_4.jpg}
 
-== Ostali zadaci ==
+== Zadaci ==
 
 [[http://www.spoj.com/problems/WORDS1/|Play on Words]]
 
@@ -93,4 +90,6 @@ Dana su tri sukladna kvadrata u međusobnom položaju prikazanom na slici. Može
 
 [[http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1144|Snow Clearing]]
 
-!!! 2014. Lovro Sindičić !!!
+!!!
+2014. Lovro Sindičić
+!!!
