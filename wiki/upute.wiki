@@ -1,5 +1,7 @@
 = Stilske upute
 
+Preporučamo da za pisanje novih članaka što više pokušamo slijediti postojeće članke. Izvorišni kod svakog članka dostupan je nadodavanjem `/source.txt` na URL od članka. Npr: http://wiki.xfer.hr/matrica_susjedstva/source.txt.
+
 == LaTeX
 
 === Oznake za matematičke varijable
