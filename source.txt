@@ -22,7 +22,7 @@ Stranice posvećene temama iz informatike i programiranja. Čitatelj može naći
 
 == Mogu li i ja napisati članak? ==
 
-Da! Repozitorij s izvorišnim datotekama nalazi se na [[github-u|https://github.com/agrbin/hwop/]] , a dostupne su i [[upute]] kako pisati članak.
+Da! Repozitorij s izvorišnim datotekama nalazi se na [[https://github.com/agrbin/hwop/|github-u]] , a dostupne su i [[upute]] kako pisati članak.
 
 
 !!!
