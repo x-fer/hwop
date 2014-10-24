@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Učitavajne ulaznih podataka</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="ucitavajne_ulaznih_podataka"></a>Učitavajne ulaznih podataka</h2>
+
+<p>Čak i ovaj jednostavan zahvat nekada zna biti <em>tricky</em>. U ovom članku opisati ćemo neke probleme i rješenja vezano za učitavanje podataka.</p>
+
+<!--h1--><h3><a name="ucitavanje_do_kraja_datoteke"></a>Učitavanje &quot;do kraja datoteke&quot;</h3>
+
+<p>Neki zadaci traže da se test podaci učitavaju &quot;dok ih ima&quot;. Primjer takvog zadatka je: <a href="http://www.spoj.com/problems/MIXTURES/" target="_blank">http://www.spoj.com/problems/MIXTURES/</a></p>
+
+<p>Svaki od mehanizama unosa <tt>scanf</tt> i <tt>cin</tt> ima svoje načine rješavanja ovog problema.</p>
+
+<p><strong>scanf</strong></p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><div class="remarkup-code-header">scanf</div><pre class="remarkup-code"><span class="no">int</span> <span class="no">n</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="nf" data-symbol-name="scanf">scanf</span><span class="o">(</span><span class="s2">&quot;%d&quot;</span><span class="o">,</span> <span class="o">&amp;</span><span class="no">n</span><span class="o">)</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+  <span class="o">...</span>
+<span class="o">}</span></pre></div>
+
+<p>Povratna vrijednost funkcije <tt>scanf</tt> je broj uspješno pridruženih vrijednosti. To možemo iskoristiti kako bi provjerili jesmo li uspješno učitali nove podatke.</p>
+
+<p><strong>cin</strong></p>
+
+<p>Situacija kod <tt>cin</tt> toka podataka je isto toliko jednostavna za napisati, no malo teža za razumijeti zašto radi.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><div class="remarkup-code-header">cin</div><pre class="remarkup-code"><span class="no">int</span> <span class="no">n</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="no">cin</span> <span class="o">&gt;&gt;</span> <span class="no">n</span><span class="o">)</span> <span class="o">{</span>
+   <span class="o">...</span>
+<span class="o">}</span></pre></div>
+
+<p>Kao prvo <tt>cin</tt> nije funkcija već instanca objekta tipa <tt>istream</tt>, odnosno tok podataka. U razredu <tt>istream</tt> definiran je <tt>operator bool();</tt> koji evaluira trenutni tok u <tt>true</tt> ako je sve do sada prošlo bez greške ili <tt>false</tt> ako se pojavila greška.</p>
+
+<p>Operator <tt>&gt;&gt;</tt> definiran je nad tokom podataka <tt>istream</tt> i na svim <tt>POD</tt> (<em>plain old data-types</em>) podacima. Njegova povratna vrijednost je referenca na tok podatka s lijeve strane.</p>
+
+<p>Prema tome, povratna vrijednost izraza <tt>cin &gt;&gt; n</tt> privremeni je objekt tipa <tt>istream</tt> koji se može evaluairati u <tt>bool</tt> tip podatka koji će nam reći jeli došlo do greške ili ne.</p>    </div>
+  </body>
+</html>

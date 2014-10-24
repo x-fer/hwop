@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Optimizacije kompajlera</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="optimizacije_kompajlera"></a>Optimizacije kompajlera</h2>
+
+<p>Često nam je potrebno u C-u iterirati od prvog do zadnjeg elementa u znakovnom nizu (string-u).</p>
+
+<p>Slijedeći program prebrojava broj pojavljivanja znaka <tt>&#039;o&#039;</tt> u nizu znakova:</p>
+
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">test.c</div><pre class="remarkup-code"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;string.h&gt;</span>
+
+<span class="k">const</span> <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="sc">&#39;o&#39;</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="n">t</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;o&#39;</span><span class="p">);</span>
+
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">cnt</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
+
+<p>Kompajliranjem i pokretanjem ovog programa, primjećujemo da njegovo izvršavanje traje duže nego što bi na prvi pogled mislili.</p>
+
+<div class="remarkup-code-block" data-code-lang="bash" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>gcc -otest test.c
+<span class="nv">$ </span><span class="nb">time</span> ./test
+99999
+
+real    0m2.185s
+user    0m2.160s
+sys     0m0.004s</pre></div>
+
+<p>Na današnjim kućnim računalima možemo očekivati da <tt>for</tt> petlja od <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.222ex; height: 1.667ex; vertical-align: -0.222ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -696.9033013280564 505 727.8066026561128" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-31" xlink:href="#MJMAIN-31"></use></g></svg></span> do <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 3.444ex; height: 2.222ex; vertical-align: -0.222ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -901.887900339787 1467.0889244992065 954.7912016678434" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJMAIN-39" stroke-width="10" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-31" xlink:href="#MJMAIN-31"></use><use href="#MJMAIN-30" x="505" y="0" xlink:href="#MJMAIN-30"></use><use transform="scale(0.7071067811865476)" href="#MJMAIN-39" x="1428" y="569" xlink:href="#MJMAIN-39"></use></g></svg></span> traje ispod dvije sekunde. Zašto onda ovaj programski isječak traje toliko?</p>
+
+<p>Odgovor je u načinu na koji je implementirana funkcija <tt>strlen</tt>. Naime, ona mora iterirati cijeli znakovni niz dok ne naiđe na oznaku kraja niza <tt>&#039;\0&#039;</tt>, odnosno vrijednost <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.222ex; height: 1.778ex; vertical-align: -0.222ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -696.9033013280564 505 749.8066026561128" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-30" xlink:href="#MJMAIN-30"></use></g></svg></span>.</p>
+
+<p>Stoga naša <tt>for</tt> petlja svakom provjerom <tt>i &lt; strlen(t)</tt>, napravi <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 7ex; height: 1.778ex; vertical-align: -0.222ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -696.9033013280564 3030 749.8066026561128" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJMAIN-30" stroke-width="10" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-31" xlink:href="#MJMAIN-31"></use><use href="#MJMAIN-30" x="505" y="0" xlink:href="#MJMAIN-30"></use><use href="#MJMAIN-30" x="1010" y="0" xlink:href="#MJMAIN-30"></use><use href="#MJMAIN-30" x="1515" y="0" xlink:href="#MJMAIN-30"></use><use href="#MJMAIN-30" x="2020" y="0" xlink:href="#MJMAIN-30"></use><use href="#MJMAIN-30" x="2525" y="0" xlink:href="#MJMAIN-30"></use></g></svg></span> koraka kako bi izračunala <tt>strlen(t)</tt>. Ukupan broj koraka tada je <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 2.444ex; height: 2.111ex; vertical-align: -0.222ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -861.7994854101626 1062.0889244992065 903.702786738219" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMATHI-6E" stroke-width="10" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJMAIN-32" stroke-width="10" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-6E" xlink:href="#MJMATHI-6E"></use><use transform="scale(0.7071067811865476)" href="#MJMAIN-32" x="855" y="513" xlink:href="#MJMAIN-32"></use></g></svg></span>, i to je razlog duljeg izvođenja programa.</p>
+
+<p>Optimizacija koju ovdje možemo napraviti je očigledna. Duljina niza se ne mijenja kako mi iteriramo kroz njega i možemo to spremiti u neku varijablu.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">size_t</span> <span class="no">length</span> <span class="o">=</span> <span class="nf" data-symbol-name="strlen">strlen</span><span class="o">(</span><span class="no">t</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="no">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;</span> <span class="no">length</span><span class="o">;</span> <span class="o">++</span><span class="no">i</span><span class="o">)</span>
+  <span class="no">cnt</span> <span class="o">+=</span> <span class="o">(</span><span class="no">t</span><span class="o">[</span><span class="no">i</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#039;o&#039;</span><span class="o">);</span></pre></div>
+
+<p>No, zar ne bi kompajler ovo sam mogao zaključiti? Odgovor je da. Ako proslijedimo kompajleru zastavicu za optimizaciju (<tt>-O1</tt>, <tt>-O2</tt> ili <tt>-O3</tt>) ova optimizacija će se dogoditi sama.</p>
+
+<!--h1--><h3><a name="optimizacije_kompajlera-1"></a>Optimizacije kompajlera</h3>
+
+<p>Kompajler je sposoban sam napraviti neke optimizacije kako bi se naš kod izvršavao brže.</p>
+
+<p>Potpnua lista optimizacija koje kompajler može napraviti nalazi se na <a href="http://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html" target="_blank">http://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html</a>. Mi ćemo pokazati osnovno korištenje optimizacija:</p>
+
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>gcc -otest test.c
+<span class="nv">$ </span>gcc -otest1 -O1 test.c
+<span class="nv">$ </span>gcc -otest2 -O2 test.c
+<span class="nv">$ </span>gcc -otest3 -O3 test.c</pre></div>
+
+<p>Pokretanjem programa dobili smo sljedeća vremena izvršavanja:</p>
+
+<table class="remarkup-table">
+<tr><td>test</td><td>2.184s</td></tr>
+<tr><td>test1</td><td>0.004s</td></tr>
+<tr><td>test2</td><td>0.004s</td></tr>
+<tr><td>test3</td><td>0.004s</td></tr>
+</table>
+
+<p>Vidimo da već na najnižoj razini optimizacija <tt>-O1</tt>, optimizaciju sa <tt>strlen</tt> kompajler napravi za nas.</p>
+
+<p>Na svim natjecanjima u Hrvatskoj, kompajliranje našeg izvornog koda izvodi se sa zastavicom <tt>-O2</tt>.</p>
+
+<!--h2--><h3><a name="bolji_pristup_pri_iteriranju_niza_znakova"></a>Bolji pristup pri iteriranju niza znakova</h3>
+
+<p>Naravno, konvencijalna metoda za itereriranje niza znakova u C-u uopće ne koristi poziv funkcije <tt>strlen</tt> već iskorištava postojanje <tt>&#039;\0&#039;</tt> na kraju niza:</p>
+
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">char</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">it</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
+  <span class="n">cnt</span> <span class="o">+=</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span> <span class="o">==</span> <span class="sc">&#39;o&#39;</span><span class="p">);</span></pre></div>
+
+<p>No, postoji li još brži način da se prebroji pojavljivanje slova <tt>&#039;o&#039;</tt> u nizu znakova?</p>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2014. Anton Grbin</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Ova implementacija strukture</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="ova_implementacija_strukture"></a>Ova implementacija strukture</h2>
+
+<p>I ova struktura implementirana u jeziku c++ će točno odrađivati sve operacije koje smo zahtjevali.</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">class</span> <span class="no">Struktura</span> <span class="o">{</span>
+  <span class="no">vector</span><span class="o">&lt;</span><span class="no">int</span><span class="o">&gt;</span> <span class="no">a</span><span class="o">;</span>
+
+ <span class="k">public</span><span class="o">:</span>
+  <span class="nf" data-symbol-name="LogaritamskaStruktura">LogaritamskaStruktura</span><span class="o">(</span><span class="no">int</span> <span class="no">n</span><span class="o">)</span> <span class="o">:</span> <span class="nf" data-symbol-name="a">a</span><span class="o">(</span><span class="no">n</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{}</span>
+  
+  <span class="no">int</span> <span class="nf" data-symbol-name="zbroj">zbroj</span><span class="o">(</span><span class="no">int</span> <span class="no">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="no">a</span><span class="o">[</span><span class="no">x</span><span class="o">];</span>
+  <span class="o">}</span>
+
+  <span class="no">void</span> <span class="nf" data-symbol-name="dodaj">dodaj</span><span class="o">(</span><span class="no">int</span> <span class="no">x</span><span class="o">,</span> <span class="no">int</span> <span class="no">v</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="no">x</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;</span> <span class="no">a</span><span class="o">.</span><span class="nf" data-symbol-name="size">size</span><span class="o">();</span> <span class="o">++</span><span class="no">i</span><span class="o">)</span>
+      <span class="no">a</span><span class="o">[</span><span class="no">i</span><span class="o">]</span> <span class="o">+=</span> <span class="no">v</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">};</span></pre></div>
+
+<p>Broj operacija potrebnih za dodavanje elementa u strukturu je sada veći od 1! Točnije, moramo napraviti <strong>N</strong> - <strong>x</strong> koraka, što je proporcionalno sa <strong>N</strong>.</p>
+
+<p>Dakle u ovoj implementaciji na svakom mjestu pamtimo sumu svih vrijednosti na njemu i lijevo od njega. To nam vrlo lijepo odgovara za dobiti sumu vrijednosti, no kod dodavanja se moramo pitati:</p>
+
+<ul>
+<li>čije sve vrijednosti moram promijeniti ako povećam vrijednost na mjestu <strong>x</strong>.</li>
+</ul>
+
+<p>U ovom slučaju odgovor je <strong>mjestu x i svim mjestima desno od njega</strong>.</p>
+
+<!--h1--><h3><a name="simulacija_operacija"></a>Simulacija operacija</h3>
+
+
+
+<ul>
+<li>Stvori praznu strukturu sa <strong>6</strong> mjesta.</li>
+</ul>
+
+<table class="remarkup-table">
+<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+
+
+
+<ul>
+<li>Suma svih brojeva na mjestu <strong>2</strong> i lijevo od njega.</li>
+</ul>
+
+<table class="remarkup-table">
+<tr><td>0</td><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+
+<p><em>Rezultat: a[2] = 0</em></p>
+
+<ul>
+<li>Broj na mjestu <strong>3</strong> uvečaj za <strong>4</strong>.</li>
+</ul>
+
+<p><em>Sva mjesta čijoj ću sumi doprinjeti moram povećati za 4. To su mjesta 3,4,5,6.</em></p>
+
+<table class="remarkup-table">
+<tr><td>0</td><td>0</td><th>4</th><th>4</th><th>4</th><th>4</th></tr>
+</table>
+
+
+
+<ul>
+<li>Broj na mjestu <strong>5</strong> uvečaj za <strong>2</strong>.</li>
+</ul>
+
+<table class="remarkup-table">
+<tr><td>0</td><td>0</td><td>4</td><td>4</td><th>6</th><th>6</th></tr>
+</table>
+
+<p><em>Sva mjesta čijoj ću sumi doprinjeti moram povećati za 2. To su mjesta 5,6.</em></p>
+
+<ul>
+<li>Suma svih brojeva na mjestu <strong>5</strong> i lijevo od njega.</li>
+</ul>
+
+<table class="remarkup-table">
+<tr><td>0</td><td>0</td><td>4</td><td>4</td><th>6</th><td>6</td></tr>
+</table>
+
+<p><em>Rezultat: a[5] = 6</em></p>
+
+<ul>
+<li>Suma svih brojeva na mjestu <strong>4</strong> i lijevo od njega.</li>
+</ul>
+
+<table class="remarkup-table">
+<tr><td>0</td><td>0</td><td>4</td><th>4</th><td>6</td><td>6</td></tr>
+</table>
+
+<p><em>Rezultat: a[4] = 4</em></p>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2012. Anton Grbin</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>

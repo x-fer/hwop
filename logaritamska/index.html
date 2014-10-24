@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Što je logaritamska struktura?</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="sto_je_logaritamska_struktura"></a>Što je logaritamska struktura?</h2>
+
+<p>Fenwickovo stablo (binarno indeksirano stablo ili popularno &quot;logaritamska struktura&quot;) je struktura podataka koja može nad nizom brojeva A[1..n] obavljati sljedeće operacije:</p>
+
+<p>a) povećaj broj A[x] za w (update)<br />
+b) izračunaj sumu prvih x brojeva u nizu A (query)</p>
+
+<p>Obje rade u složenosti O(log n).<br />
+Moguće su i malo drugačije operacije.</p>
+
+<!--h1--><h3><a name="stablo"></a>Stablo</h3>
+
+<p>Imamo niz brojeva A[1..n], koji se na početku sastoji samo od nula. Nad njime se mogu raditi spomenute dvije operacije, ali taj niz zapravo nije potrebno nigdje spremati.</p>
+
+<p>Umjesto niza A[1..n] pamtimo samo niz brojeva F[0..n]. Iz njega ne možemo direktno čitati vrijednosti niza A, ali možemo ih dobiti koristeći jednakost:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">A</span><span class="o">[</span><span class="no">i</span><span class="o">]</span> <span class="o">=</span> <span class="nf" data-symbol-name="query">query</span><span class="o">(</span><span class="no">i</span><span class="o">)</span> <span class="o">-</span> <span class="nf" data-symbol-name="query">query</span><span class="o">(</span><span class="no">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span></pre></div>
+
+<p>Niz F se na početku također sastoji samo od nula. Vrijednosti u broju F se mogu zamisliti kao stablo:</p>
+
+<p>{F21,size=full}</p>
+
+<p>Imena čvorova su zapisana binarno i odgovaraju indeksima u nizu F. Sada je npr. u čvoru 52 (binarno 110100) zapisana vrijednost F[52].<br />
+Vidimo da se preorder obilaskom stabla dobiva 0, 1, 2, 3, 4, ...</p>
+
+<p>Djeca čvora x su čvorovi koji se dobivaju tako da se broju x u binarnom zapisu postavi jedinica i to desno od zadnje jedinice.<br />
+Tako bi čvor 1010000 imao djecu, redom:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="mi">1010001</span>
+<span class="mi">1010010</span>
+<span class="mi">1010100</span>
+<span class="mi">1011000</span></pre></div>
+
+<p>U čvoru 0 je uvijek zapisana vrijednost 0, odnosno F[0] = 0.</p>
+
+<!--h2--><h3><a name="funkcija_lobit"></a>Funkcija lobit</h3>
+
+
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">int</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span> <span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="no">x</span> <span class="o">&amp;</span> <span class="o">-</span><span class="no">x</span><span class="o">;</span> <span class="o">}</span></pre></div>
+
+<p>Ova funkcija vraća zadnju jedinicu u broju x, npr:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="mi">110100</span><span class="o">)</span> <span class="o">=</span>  <span class="mi">100</span>
+<span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span>   <span class="mi">101</span><span class="o">)</span> <span class="o">=</span>    <span class="mi">1</span>
+<span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span>  <span class="mi">1000</span><span class="o">)</span> <span class="o">=</span> <span class="mi">1000</span></pre></div>
+
+<p>Evo primjer na kojem se vidi da to je to istina (-x je isto što i ~x + 1):</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">x</span>           <span class="o">=</span> <span class="mi">110100</span>
+<span class="o">~</span><span class="no">x</span>          <span class="o">=</span> <span class="mo">001011</span>
+<span class="o">~</span><span class="no">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="o">-</span><span class="no">x</span> <span class="o">=</span> <span class="mo">001100</span>
+<span class="no">x</span> <span class="o">&amp;</span> <span class="o">-</span><span class="no">x</span>      <span class="o">=</span> <span class="mo">000100</span></pre></div>
+
+<p>Neka je p(x) roditelj čvora x, npr. p(1001) = p(1000).<br />
+Roditelj se dobiva tako da broju zadnju jedinicu pretvorimo u nulu, pa je zato:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nf" data-symbol-name="p">p</span><span class="o">(</span><span class="no">x</span><span class="o">)</span> <span class="o">=</span> <span class="no">x</span> <span class="o">-</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">x</span><span class="o">).</span></pre></div>
+
+<!--h3--><h3><a name="operacija_query"></a>Operacija query</h3>
+
+<p>Stablo ima takvo svojstvo da, ako želimo dobiti A[1] + A[2] + A[3] + ... + A[n], onda je dovoljno izračunati F[n] + F[p(n)] + F[p(p(n))] + F[p(p(p(n)))] + ..., tj. zbrojiti vrijednosti od čvora x do korijena.</p>
+
+<p>Zbroj prvih 1110 (dekadski 14) brojeva u nizu A je F[1110] + F[1100] + F[1000].</p>
+
+<p>{F22,size=full}</p>
+
+<p>Funkcija query vraća taj zbroj. Implementacija:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">int</span> <span class="nf" data-symbol-name="query">query</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span> <span class="o">)</span> <span class="o">{</span>
+  <span class="no">int</span> <span class="no">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span> <span class="o">;</span> <span class="no">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="no">x</span> <span class="o">-=</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">x</span><span class="o">)</span> <span class="o">)</span> <span class="no">sum</span> <span class="o">+=</span> <span class="no">F</span><span class="o">[</span><span class="no">x</span><span class="o">];</span>
+  <span class="k">return</span> <span class="no">sum</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>Složenost je O(log n) zato što dubina stabla ne prelazi log n.</p>
+
+<!--h4--><h3><a name="operacija_update"></a>Operacija update</h3>
+
+<p>Ako se broj A[x] poveća za w, potrebno je promijeniti neke vrijednosti u nizu F da bi gornje svojstvo vrijedilo. Npr. ako se poveća A[1001], onda treba povećati F[1001], F[1010], F[1100], F[10000], F[100000] itd.<br />
+Preciznije, ako se promijeni vrijednost u čvoru x, onda treba promijeniti i u njegovom prvom većem bratu te nastavit s njime. Ako čvor nema većeg brata, onda je sljedeći prvi veći brat roditelja. Ako nema takvog, onda brat djeda. Ako nema, onda brat pradjeda itd.</p>
+
+<p>Formula je jednostavna: nakon čvora x slijedi čvor x + lobit(x).</p>
+
+<p>{F23,size=full}</p>
+
+<p>Još jedan primjer, ovdje mijenjamo broj A[111] te je stoga potrebno promijeniti vrijednosti u označenim čvorovima:</p>
+
+<p>{F29,size=full}</p>
+
+<p>Implementacija:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">void</span> <span class="nf" data-symbol-name="update">update</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span><span class="o">,</span> <span class="no">int</span> <span class="no">add</span> <span class="o">)</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span> <span class="o">;</span> <span class="no">x</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="no">x</span> <span class="o">+=</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">x</span><span class="o">)</span> <span class="o">)</span> <span class="no">F</span><span class="o">[</span><span class="no">x</span><span class="o">]</span> <span class="o">+=</span> <span class="no">add</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>Složenost je O(log n) jer se lobit(x) u svakom koraku povećava, a ne može se povećati više od log n puta.</p>
+
+<!--h5--><h3><a name="skaliranje"></a>Skaliranje</h3>
+
+<p>Ako želimo pomnožiti svaki element niza A s nekim brojem, dovoljno je isto to napraviti i u nizu F:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">void</span> <span class="nf" data-symbol-name="scale">scale</span><span class="o">(</span> <span class="no">int</span> <span class="no">factor</span> <span class="o">)</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="o">++</span><span class="no">i</span> <span class="o">)</span> <span class="no">F</span><span class="o">[</span><span class="no">i</span><span class="o">]</span> <span class="o">*=</span> <span class="no">factor</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+<p>Složenost: O(n)</p>
+
+<!--h6--><h3><a name="inicijalizacija_na_vrijednost"></a>Inicijalizacija na vrijednost 1</h3>
+
+<p>Umjesto na nulu, svi elementi niza A se mogu postaviti na 1 tako da niz F inicijaliziramo na sljedeći način:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">void</span> <span class="nf" data-symbol-name="init1">init1</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="o">++</span><span class="no">i</span> <span class="o">)</span> <span class="no">F</span><span class="o">[</span><span class="no">i</span><span class="o">]</span> <span class="o">=</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">i</span><span class="o">);</span>
+<span class="o">}</span></pre></div>
+
+<p>Drugim riječima, potrebno je postaviti vrijednosti tako da za svaki x vrijedi: query(x) = x. Nakon ove inicijalizacije očito je da je suma na putu od bilo kojeg čvora x do korijena jednaka x.<br />
+Složenost: O(n)</p>
+
+<!--h7--><h3><a name="maksimum_umjesto_sume"></a>Maksimum umjesto sume</h3>
+
+<p>Logaritamska struktura može podržavati i ove operacije:</p>
+
+<p>a) postavi vrijednost broja A[x] na w, gdje je w ≥ A[x]<br />
+b) izračunaj maksimum prvih x brojeva u nizu</p>
+
+<p>Pri tome na početku svi brojevi u A i F moraju biti -∞.<br />
+Implementacija je vrlo slična onoj prije:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">int</span> <span class="nf" data-symbol-name="query">query</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span> <span class="o">)</span> <span class="o">{</span>
+  <span class="no">int</span> <span class="no">ret</span> <span class="o">=</span> <span class="o">-</span><span class="no">oo</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span> <span class="o">;</span> <span class="no">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="no">x</span> <span class="o">-=</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">x</span><span class="o">)</span> <span class="o">)</span> <span class="no">ret</span> <span class="o">=</span> <span class="nf" data-symbol-name="max">max</span><span class="o">(</span> <span class="no">ret</span><span class="o">,</span> <span class="no">F</span><span class="o">[</span><span class="no">x</span><span class="o">]</span> <span class="o">);</span>
+  <span class="k">return</span> <span class="no">ret</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="no">void</span> <span class="nf" data-symbol-name="update">update</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span><span class="o">,</span> <span class="no">int</span> <span class="no">value</span> <span class="o">)</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span> <span class="o">;</span> <span class="no">x</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="no">x</span> <span class="o">+=</span> <span class="nf" data-symbol-name="lobit">lobit</span><span class="o">(</span><span class="no">x</span><span class="o">)</span> <span class="o">)</span> <span class="no">F</span><span class="o">[</span><span class="no">x</span><span class="o">]</span> <span class="o">=</span> <span class="nf" data-symbol-name="max">max</span><span class="o">(</span> <span class="no">F</span><span class="o">[</span><span class="no">x</span><span class="o">],</span> <span class="no">value</span> <span class="o">);</span>
+<span class="o">}</span></pre></div>
+
+<p>Slična stvar se može postići i ako je potrebno računati minimum prvih x brojeva.</p>
+
+<!--h8--><h3><a name="vise_dimenzija"></a>Više dimenzija</h3>
+
+<p>Umjesto niza brojeva A[1..n], možemo imati i matricu A[1..n][1..n] (može bit i viših dimenzija). U tom slučaju funkcija update povećava vrijednost broja u polju (x,y), a query vraća sumu brojeva u podmatrici A[1..x][1..y].<br />
+Implementacija je analogna prvotnoj:</p>
+
+<div class="remarkup-code-block" data-code-lang="php" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="no">void</span> <span class="nf" data-symbol-name="update">update</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span><span class="o">,</span> <span class="no">int</span> <span class="no">y</span><span class="o">,</span> <span class="no">int</span> <span class="no">add</span> <span class="o">)</span> <span class="o">{</span>
+   <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="no">x</span><span class="o">;</span> <span class="no">i</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="no">i</span> <span class="o">+=</span> <span class="no">i</span><span class="o">&amp;-</span><span class="no">i</span> <span class="o">)</span>
+      <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">j</span> <span class="o">=</span> <span class="no">y</span><span class="o">;</span> <span class="no">j</span> <span class="o">&lt;=</span> <span class="no">n</span><span class="o">;</span> <span class="no">j</span> <span class="o">+=</span> <span class="no">j</span><span class="o">&amp;-</span><span class="no">j</span> <span class="o">)</span>
+         <span class="no">F</span><span class="o">[</span><span class="no">i</span><span class="o">][</span><span class="no">j</span><span class="o">]</span> <span class="o">+=</span> <span class="no">add</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="no">int</span> <span class="nf" data-symbol-name="query">query</span><span class="o">(</span> <span class="no">int</span> <span class="no">x</span><span class="o">,</span> <span class="no">int</span> <span class="no">y</span> <span class="o">)</span> <span class="o">{</span>
+   <span class="no">int</span> <span class="no">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+   <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">i</span> <span class="o">=</span> <span class="no">x</span><span class="o">;</span> <span class="no">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="no">i</span> <span class="o">-=</span> <span class="no">i</span><span class="o">&amp;-</span><span class="no">i</span> <span class="o">)</span>
+      <span class="k">for</span><span class="o">(</span> <span class="no">int</span> <span class="no">j</span> <span class="o">=</span> <span class="no">y</span><span class="o">;</span> <span class="no">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="no">j</span> <span class="o">-=</span> <span class="no">j</span><span class="o">&amp;-</span><span class="no">j</span> <span class="o">)</span>
+         <span class="no">ret</span> <span class="o">+=</span> <span class="no">F</span><span class="o">[</span><span class="no">i</span><span class="o">][</span><span class="no">j</span><span class="o">];</span>
+
+   <span class="k">return</span> <span class="no">ret</span><span class="o">;</span>
+<span class="o">}</span></pre></div>
+
+
+
+<!--h9--><h3><a name="zadaci"></a>Zadaci</h3>
+
+<p><a href="http://www.spoj.pl/problems/INVCNT/" target="_blank">Inversion Count</a><br />
+<a href="http://www.spoj.pl/problems/DCEPC206/" target="_blank">It&#039;s a Murder!</a><br />
+<a href="http://www.spoj.pl/problems/MATSUM/" target="_blank">Matrix Summation</a></p>
+
+<!--h10--><h3><a name="linkovi"></a>Linkovi</h3>
+
+<p><a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=binaryIndexedTrees" target="_blank">TopCoder - Binary Indexed Trees</a><br />
+<a href="http://www.algorithmist.com/index.php/Fenwick_tree" target="_blank">Algorithmist - Fenwick tree</a></p>
+
+
+    <div style="padding-top: 5px; margin-top: 50px;
+      border-top: 1px #ccc solid;text-align:right;margin-left:auto;">
+      &copy;&nbsp;<span style="border:0">2012 Stjepan Glavina</span>
+      <a
+        rel="license"
+        style="display:block;"
+        href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+      >
+        <img
+          alt="Creative Commons License"
+          style="margin-left: auto; margin-top: 10px; margin-bottom: 10px;"
+          src="/img/cc_88x31.png"
+          width="88px" height="31px"/>
+      </a>
+      <p>
+        Ovaj članak objavljen je pod<br/>
+        <a
+          rel="license"
+          href="http://creativecommons.org/licenses/by-sa/3.0/hr/deed.en_US"
+        >
+          Creative Commons Attribution-ShareAlike 3.0 Croatia License
+        </a>
+      </p>
+    </div>
+        </div>
+  </body>
+</html>
