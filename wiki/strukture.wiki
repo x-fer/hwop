@@ -1,0 +1,33 @@
+= Strukture podataka =
+
+Većina algoritama se koristi strukturama podataka kako bi efikasno rukovali s podatcima.
+
+Ovdje navodimo i objašnjavamo neke od struktura:
+
+== Stablaste strukture ==
+
+Općenito, što su [[strukture/stabla]] ?
+
+- [[strukture/bst|Binarno stablo traženja]]
+- [[logaritamska|Logaritamska struktura]] i njen [[logaritamska_tutorial|tutorial]]
+- [[tournament|Tournament stablo]]
+- [[interval_fenwick|Interval-logaritamska struktura]], nadgradnja nad logaritamskom
+- [[strukture/priority_q|Prioritetni red]]
+- [[union_find|Union find]]
+
+== Sablasne strukture ==
+
+Moćne, obskurne..
+
+- [[konstantna|Konstantna struktura]]
+- [[monotoni_red|Monotoni red]]
+- [[povijesna|Povijesna struktura]] - nadgradnja na tournament
+
+== Strukture za rukovanje znakovnim nizovima
+
+- [[Hashing]] - optimizacija za usporedbu složenih objekata
+- [[Hashing stringova]] - primjena na znakovnim nizovima
+
+!!!
+2013-2014. Anton Grbin, Gustav Matula, Bruno Rahle, Dino Šantl, Matija Šantl, Mislav Bradač
+!!!

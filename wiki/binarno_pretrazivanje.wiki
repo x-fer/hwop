@@ -1,0 +1,75 @@
+= Binarno pretraživanje =
+
+
+Binarno pretraživanje jedan je od osnovnih algoritama kojim je vrlo lako objasniti ubrzanja koja je moguće postići pametnim dizajnom i smanjivanjem složenosti.
+U ovom članku nećemo se fokusirati na objašnjavanje osnova binarnog pretraživanja, jer pretpostavljamo da vam je ideja poznata, nego na zanimljive primjene na probleme gdje korištenje binarnog pretraživanja nije očito, a vrlo je moćno.
+
+Koncept binarnog pretraživanja na prvi pogled izgleda vrlo jednostavan, ali kada se krene u implementaciju, često dolazi do pogrešaka za jedan, beskonačnih petlji, korištenja rekurzije i sl., što je dobro opisano u sljedećem citatu:
+
+`"Although the basic idea of binary search is comparatively straightforward, the details can be surprisingly tricky..."`
+`— Professor Donald Knuth`
+
+== Topcoder tutorial ==
+
+Vjerojatno najkvalitetniji materijal o binarnom pretraživanju moguće je pronaći na stranicama [[ http://www.topcoder.com/tc | Topcoder ]] natjecanja, te ga ovdje nećemo kopirati/prevoditi :)
+Spomenuti tutorial napisao je Lovro Pužar, bivši student FER-a i jedan od najuspješnijih hrvatskih olimpijaca. Lovrin tutorial možete naći na linku [[ http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=binarySearch | Binary Search Tutorial ]] - hvala Lovro! ☺
+
+
+(Osim tutoriala o binarnom pretraživanju, na linku [[ http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=alg_index | Algorithm Tutorials ]] nalazi se bogata baza izvrsnih tutoriala o algoritmima. Bacite oko kad imate slobodnog vremena ;)
+
+
+== Ugrađene funkcije ==
+
+U [[ https://p4.tel.fer.hr:9090/w/stl/ | biblioteci STL ]]-u za C++ i ostalim bibliotekama za Javu, C# i mnoge druge programske jezike, naći ćete ugrađene funkcije koje implementiraju binarno pretraživanje. One su u osnovi zamišljene da funkcioniraju na poljima, zbog čega često svejedno sami implementiramo binarno pretraživanje, a i pri korištenju ovih funkcija, bitno je da razumijete na koji način funkcioniraju i što je njihov rezultat.
+Nakon čitanja Lovrinog tutoriala i samostalnog pisanja koda, svaka sljedeća implementacija bit će značajno lakša :)
+
+
+=== C++ ===
+
+- lower_bound
+- upper_bound
+- binary_search
+- equal_range
+
+=== Java ===
+
+- Arrays.binary_search
+
+=== C# ===
+
+- Array.binary_search
+
+== Kontinuirani skup ==
+
+Za razliku od diskretnog skupa, moguće je da funkcija koju pretražujemo bude kontinuirana, što nam značajno pojednostavljuje implementaciju.
+
+- **Granice** se sada uvijek mijenjaju na način da je **l = m** ili **u = m**. 
+- **Uvjet zaustavljanja** samog pretraživanja možemo zapisati na dva načina:
+ # dok nije zadovoljena željena preciznost
+ # ranije definiran broj koraka
+
+Kako je zbog velikih mogućih raspona realnih brojeva lako moguće pogrešno postaviti kriterije željene preciznosti, najčešće se koristi druga mogućnost. Nakon unaprijed zadanog broja koraka (npr. 100) možemo biti sigurni da je postignuta željena preciznost, ali i izbjegavamo slučajeve u kojima pokrenemo beskonačnu petlju.
+
+== Zadaci ==
+
+=== Diskretno b. p. ===
+
+# Zadan je povezan težinski graf, a potrebno je doći iz vrha označenog brojem 1 u vrh označen brojem N. Ispišite koliko iznosi najveća težina brida na optimalnom putu od 1 do N. Optimalan put je onaj kojem je najveća težina brida minimalna.
+# [[ http://acm.uva.es/p/v7/714.html | Copying Books ]]
+# [[ http://www.z-trening.com/tasks.php?show_task=5000000098 | Struja ]]
+# [[ http://www.hsin.hr/dmih06/zadaci/pascal_c_cpp/hio/zadaci.pdf | Banana ]]
+
+=== Kontinuirano b. p. ===
+
+# Bez korištenja matematičkih funkcija, nađi N-ti korijen broja X, gdje je N cijeli broj.
+# [[ http://acm.uva.es/p/v105/10566.html | Crossed Ladders ]]
+# [[ http://www.hsin.hr/prip04/zadaci/drugi_ispit/zadaci.pdf | Špilja ]]
+# [[http://www.z-trening.com/tasks.php?show_task=5000000023| Jagode]]
+# [[http://poj.org/problem?id=1064 | Cable Master]]
+# Zadane su dimenzije dva pravokutnika. Odgovori je li moguće postaviti manji pravokutnik u veći, pod uvjetom da je dozvoljene rotacije manjeg pravokutnika?
+# Zadan je polinom n-tog stupnja koji ima sve realne, jednostruke nultočke. Faktorizirajte ga. (hint: kakva je funkcija derivacija polinoma n-tog stupnja? Što možemo zaključiti iz njenih značajki?)
+
+
+!!!
+2012. Ivo Sluganović
+!!!

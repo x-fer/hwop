@@ -1,0 +1,154 @@
+= Predmatčni zbroj =
+
+== Definicija ==
+
+Definicija problema predmetačnog zbroja (prefix sum): zadan je niz $A = \{a_0, a_1, ..., a_{n-1} \}$ . Potrebno je izračunati niz $B = \{ 0, a_0, a_0+a_1, ..., a_0+a_1+...+a_{n-1} \}$ .
+
+Ovaj se problem pojavljuje često kao usko grlo u raznovrsnim problemima. Neki od njih su:
+
+* leksička usporedba nizova znakova (npr. određivanje da niz "strategija" dolazi ispred niza "strateški" u rječniku)
+* paralelno ostvarenje radix-sort i quick-sort algoritama
+* određivanje vidljivosti točaka u 3D krajoliku – uz operator max
+* zbrajanje s brojevima višestruke (proizvoljne) preciznosti
+* alokacija procesora/memorije
+* pretraživanje regularnih izraza (npr. u implementaciji grep naredbe u UNIX-u)
+* izvedba nekih operacija nad stablima (npr. dubina svakog čvora u stablu), itd. 
+
+Zbog toga puno vremena utrošeno u njegovo proučavanje i pokušaje njegove optimizacije. Dolaskom ere paralelnog programiranja, njegove paralelne verzije pokazale su se kao uspješno ubrzanje klasičnog algoritma. 
+
+=== Primjer ===
+
+Za zadani niz $A$ :
+
+| indeks | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+| --------- | -- | -- | -- | -- | -- | -- | -- | --
+| vrijednost | 5 | 3 | -8 | 4 | 12 | 6 | -9 | 1
+
+Odgovarajuće vrijednosti niza $B$ tada su:
+
+| indeks | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+| --------- | -- | -- | -- | -- | -- | -- | -- | -- | --
+| vrijednost | 0 | 5 | 8 | 0 | 4 | 16 | 22 | 13 | 14
+
+=== Sekvencijalno rješenje ===
+
+Optimalno sekvencijalno rješenje ovog algoritma je trivijalno dinamičko programiranje. Idemo redom po nizu $A$ te račnamo vrijednosti elemenata niza $B$ kao $B_{i+1}=B_i + A_i$ . Ovo je pseudokod koji odgovara toj ideji: 
+
+```
+predmetacna_suma(A, n)
+  B <- niz od (n+1) elemenata
+  B[0] <- 0
+  za svaki i {0..n}
+    B[i+1] <- A[i] + B[i]
+```
+
+==== Analiza složenosti ====
+
+I vremenska i memorijska složenost ovog algoritma je $O(N)$ .
+
+==== Implementacijski zadatak ====
+
+{wcheck prefix_sum}
+
+
+== Paralelno rješenje ==
+
+Cijeli zadatak ćemo svesti tako da ga razdvojimo na dva dijela: reduciranje i predtraženje (prescan). 
+
+=== Korak 1: Reduciranje ===
+
+==== Prepostavke ====
+
+Duljina niza $A$ je jednaka $n=2^k$ . 
+
+==== Algoritam ====
+
+Za dani niz $A$ , konstruirat ćemo niz nizova $C$ na slijedeći načina:
+
+# Krenemo od niza $A$ i nazovemo ga $C^0$
+# Za $d \in [1, k)$  
+## Za $i \in [0, n / 2^d)$
+###  $C^d_i = C^{d-1}_{2i} + C^{d-1}_{2i+1}$
+
+Primjetimo slijedeće: u svakom koraku za proračun $C^{d}$ koristimo samo $C^{d-1}$ , i za svaki element koristimo različite elemente niza $C^{d-1}$ . To znači da, ako računanje obavimo pametnim redom, ne moramo koristiti više od jednog niza. Evo i tog algoritma:
+
+# Krenemo od niza $A$ i nazovemo ga $C$
+# Za $d \in [1, k)$  
+## Za $i \in [0, n / 2^d)$
+###  $C_i = C_{2i} + C_{2i+1}$
+
+Međutim, zbog razloga koji će biti jasni tek kod algoritma predtraženja, malo ćemo modificirati indekse:
+
+# Krenemo od niza $A$ i nazovemo ga $C$
+# Za $d \in [1, k)$  
+## Za $i \in [0, n / 2^d)$
+###  $C_{2^d(i+1) -1} += C_{2^d i}$ 
+
+Ovo možemo izvesti "in place", tj. na početnom nizu bez korištenja dodatne memorije. 
+
+# Za $d \in [1, k)$  
+## Za $i \in [0, n / 2^d)$
+###  $A_{2^d(i+1) -1} += A_{2^d i}$ 
+
+==== Primjer ====
+
+Kada provodimo gornji algoritam na nizu iz prethodnog primjera, dobit ćemo ovakve rezultate po koracima.
+
+| indeks | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+| --------- | -- | -- | -- | -- | -- | -- | -- | --
+| početna vrijednost | 5 | 3 | -8 | 4 | 12 | 6 | -9 | 1
+| 1. korak | 5 | 5+3=**8** | -8 | -8+4=**-4** | 12 | 12+6=**18** | -9 | -9+1=**-8**
+| 2. korak | 5 | 8 | -8 | 8+(-4)=**4** | 12 | 18 | -9 | 18+(-8)=**10**
+| 3. korak | 5 | 8 | -8 | 4 | 12 | 18 | -9 | 4+10=**14**
+
+
+TODO: poredak cvorova u grafu nije isti kao u primjeru, pa ovaj graf skoro pa nema smisla. Rucno postavi poziciju svakog cvora. Vidi zasto se graf ne prikazuje.
+
+digraph prefix_sum_reduce {
+  rankdir=BT;
+  "5" -> "8";
+  "3" -> "8";
+  {node [label="-8"] am8a;}
+  am8a -> "-4";
+  {node [label="4"] a4a;}
+  a4a -> "-4";
+  "12" -> "18";
+  "6" -> "18";
+  {node [label="-8"] am8b;}
+  "-9" -> am8b;
+  "1" -> am8b;
+  {node [label="4"] a4b;}
+  "8" -> a4b;
+  "-4" -> a4b;
+  "18" -> "10";
+  am8b -> "10";
+  a4b -> "14";
+  "10" -> "14";
+  subgraph cluster_0 {
+    "1"; "-9"; "6"; "12";  a4a; am8a; "3";  "5"; 
+    label="Početne vrijednosti";
+  };
+  subgraph cluster_1 {
+     am8b; "18"; "-4";  "8"; 
+    label="Vrijednosti izračunate u 1. koraku";
+  };
+  subgraph cluster_2 {
+    "10"; a4b; 
+    label="Vrijednosti izračunate u 2. koraku";
+  };
+  subgraph cluster_3 {
+    "14";
+    label="Vrijednosti izračunate u 3. koraku";
+  };
+}
+
+==== Paralelizacija ====
+
+Dio koji možemo paralelizirati je unutarnja petlja. Dovoljno je primjetiti da pri proračunu $A_i$ koristimo svaki put različite elemente. Zbog toga svaki $A_i$ možemo računati na svom procesuru ili dretvi.
+
+
+=== Korak 2: Predtraženje ===
+
+!!!
+2013. Bruno Rahle
+!!!

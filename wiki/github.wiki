@@ -1,0 +1,27 @@
+= Github =
+
+[[https://github.com/|Github]] je web servis koji omogućava izrazito lako kreiranje i manipulaciju [[git]] repozitorijima.
+
+XFER koristi Github za //hosting// repozitorija kao što je [[https://github.com/agrbin/hwop|HWOP]].
+
+== //Contribution// ==
+
+=== Slanje //Pull requesta// ===
+
+Ako želite dodati nešto, ili popraviti //bug// u nekom projektu otvorenog koda (//open source//) koji se čuva na githubu, to se najčešće radi na slijedeći način: 
+
+1. Pronađete github sranice traženog projekta.
+2. Pritisnete //fork// (račvanje na hrvatskom) u gornje desnom kutu.
+3. Preuzmete taj repozitorij lokalno. 
+4. Napravite izmjene koje želite.
+5. //Commitate// izmjene na svoj repozitorij. 
+6. Otiđete u svoj repozitorij na web sučelju na githubu. 
+7. S desne strane otvorite "Pull requests".
+8. Odaberite "New pull request".
+9. Odaberite "Click to create a pull request for this comparison".
+10. Napišite tekst pull requesta.
+11. Odaberite "Send pull request"
+
+!!!
+2014 Bruno Rahle
+!!!

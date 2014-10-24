@@ -1,0 +1,86 @@
+= Konstanta INF
+
+Često u programskom kodu imamo potrebu koristiti neki broj koji je veći od svih ostalih brojeva koji se mogu pojaviti pri obradi. Takvu konstanu nazivamo `inf`, `INF` ili ponekad `oo` (zato jer `oo` podsjeća kao znak $\infty$ ). 
+
+Na koju vrijednost postaviti ovaj broj? Jedan od prijedloga je:
+
+```
+const int oo = 0x3f3f3f3f;
+```
+
+Vrijednost ovog broja je u dekadskom zapisu `1061109567` (malo više od jedne miljarde). Neki razlozi u korist ove konstante su sljedeći:
+
+- miljarda je veliki broj, obično dovoljno velik za potrebe zadataka
+- u slučaju da greškom napravimo zbroj `oo + oo`, neće doći do overflow-a
+- ova konstanta se sigurno može koristiti u pozivu `memset`
+
+== Korištenje s `memset`
+
+`memset` je funkcija koja određeni dio memorije postavlja na neku vrijednost. Njen prototip je sljedeći:
+
+```lang=c
+#include <string.h>
+
+void *memset(void *s, int c, size_t n); 
+```
+
+Njenim pozivom postavljamo `n` okteta počevši s adrese `s` na vrijednost `c`. Njeno ponašanje ekvivalnentno je s:
+
+```lang=c
+void* memset(void *s, int c, size_t n) {
+  char *byte_ptr = s;
+  char byte = c & 0xff;
+  while (n--) {
+    *(byte_ptr++) = c;
+  }
+  return s;
+}
+```
+
+Primjetite da se postavlja vrijednost okteta, a ne cijelih brojeva (4 okteta). Stoga, ako koristimo funkciju `memset` na nizu cijelih brojeva za neke vrijednosti `c` možemo dobiti naizgled čudne rezultate:
+
+```lang=c
+int a[10];
+memset(a, 1, sizeof a);
+printf("%d\n", a[0]);
+// ispisuje se 16843009
+```
+
+Razlog ovome je što smo u 4 memorijske lokacije koje čuvaju vrijednost za prvi član niza zapisali vrijednost `0x01` i sada taj prvi član iznosi `(1 << 24) + (1 << 16) + (1 << 8) + 1`.
+
+No, ukoliko je cijeli broj oblika `(x << 24) + (x << 16) + (x << 8) + x`, on se može `memset`-ati bez greške. Ovakvi brojevi kada se zapišu u memoriju imaju jednaku vrijednost svih 4 okteta. Stoga, svaki od sljedećih `memset` poziva radi očekivanu operaciju:
+
+```lang=c
+const int oo = 0x3f3f3f3f;
+int a[10];
+
+memset(a, 0, sizeof a); assert(a[0] == 0);
+memset(a, -1, sizeof a); assert(a[0] == -1);
+memset(a, oo, sizeof a); assert(a[0] == oo);
+```
+
+== Česta greška s `memset`-om
+
+```lang=c
+char* str = (char*) malloc(100);
+
+memset(str, 'a', sizeof str);
+```
+
+Na koliko memorijskih lokacija ovaj poziv postavlja vrijednost `'a'`? Vrijedi li da je `a[9] == 'a'`?
+
+`sizeof` je statički operator koji se u semantičkoj analizi pretvara u konstantu. U ovom slučaju `sizeof str` ekvivalentno je s `sizeof char*` što je na 32-bitnim arhitekturama 4, odnosno određujemo veličinu pokazivača na znak. Stoga, poziv koji smo napravili ekvivalentan je s `memset(str, 'a', 4)`.
+
+Iskoristiti ćemo priliku da još malo oblatimo jezik `C`, odnosno da pokažemo kako lako programera može dovesti do teško ispravljivih grešaka. Pretpostavimo da smo zaobišli ovaj debakl i ispravno postavili sve vrijednosti niza na 'a':
+
+```lang=c
+size_t length = 100;
+char *str = (char*) malloc(length);
+memset(str, 'a', length);
+```
+
+Koliko je sada dug naš niz znakova, odnosno koliko iznosi `strlen(a)`?
+
+!!!
+2014. Anton Grbin
+!!!

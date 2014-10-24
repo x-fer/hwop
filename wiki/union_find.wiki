@@ -1,0 +1,147 @@
+= Union find
+
+Union find ili [[http://en.wikipedia.org/wiki/Disjoint-set_data_structure|disjoint set data structure]] struktura je podataka koja stapa grupe elemenata i ispituje jesu li dva elementa u istoj grupi.
+
+== Definicija strukture
+
+Struktura ima sljedeće sučelje:
+
+```lang=c,name=Union find sučelje
+struct union_find {
+  // broj elemenata s kojima krecemo, na pocetku je svaki u svojoj grupi.
+  // elemente u ostalim upitima referenciramo kao int iz intervala [0, n>
+  // size_t je unsigned tip podatka koji predstavlja velicinu kontenjera.
+  union_find(size_t n);
+
+  // stopi grupu u kojoj je element x i u kojoj je element y
+  void spoji(int x, int y);
+
+  // vraca true ako su x i y u istoj grupi.
+  bool equiv(int x, int y);
+};
+```
+
+== Razrada
+
+Zamislimo da su svi elementi učenici u razredu. Svaki učenik će pamtiti voditelja svoje grupe. Inicijalno, svaki je učenik sam svoj voditelj jer su svi učenici na početku u posebnim grupama veličine $1$ . Kada prikazujemo učenike kao graf, nećemo prikazati brid za učenika koji je sam sebi voditelj.
+
+digraph {
+  node [size=5,shape=circle,shape=doublecircle]
+  1; 2; 3; 4; 5; 6;
+}
+
+Sasvim je normalno da u nekoj fazi algoritma više učenika ima istog voditelja. Ono što nije očekivano jest da učenik `a` za voditelja ima učenika `b`, a učenik `b` ima za voditelja učenika `a`. To bi bio ciklus u našoj hijerarhiji što naravno nije očekivano. Iz svega navedenoga zaključujemo da je graf u kojem su čvorovi učenici, a bridovi relacija `je_voditelj`, ništa drugo nego stablo ili više stabala (šuma).
+
+digraph {
+  node [size=5,shape=circle]
+  2 [shape=doublecircle];
+  6 [shape=doublecircle];
+  1 -> 2;
+  3 -> 1;
+  4 -> 1;
+  5 -> 6;
+}
+
+Voditelja grupe od nekog učenika `x` pronaći ćemo tako da slijedimo bridove `je_voditelj` sve dok ne dođemo do čvora koji nema voditelja. Tada znamo da je on voditelj grupe. Tako npr. voditelj grupe u kojoj je učenik $3$ je učenik $2$ .
+
+Prilikom spajanja dvije grupe raditi ćemo samo s njihovim voditeljima. Dakle, ako želimo spojiti grupe od `a` i `b`, prvi korak je da pronađemo njihove voditelje. Ukoliko se pokaže da su voditelji isti čvor, tada nije potrebno ništa napraviti jer su te dvije grupe već spojene!
+
+Ukoliko su voditelji dva različita čvora, tada imamo izbor:
+
+1. Postaviti `6` za novog voditelja od `2` (slika lijevo).
+2. Postaviti `2` za novog voditelja od `6` (slika desno).
+
+digraph {
+  node [size=5,shape=circle]
+  2 -> 6;
+  6 [shape=doublecircle];
+  1 -> 2;
+  3 -> 1;
+  4 -> 1;
+  5 -> 6;
+  inv[style=invis];inv[style=invis];
+  n1 [label=1]; n2 [label=2]; n3 [label=3];
+  n4 [label=4]; n5 [label=5]; n6 [label=6];
+  n2 [shape=doublecircle];
+  n6 -> n2;
+  n1 -> n2;
+  n3 -> n1;
+  n4 -> n1;
+  n5 -> n6;
+}
+
+Kako god odlučili vrijedi da svi elementi u grafu imaju jednog te istog voditelja grupe, odnosno vrijedi da smo stopili dvije grupe u jednu!
+
+== Traženje voditelja
+
+Gore smo naveli da voditelja grupe možemo pronaći tako da slijedimo bridove grafa sve dok ne dođemo do čvora koji nema svog voditelja. Tada znamo da je taj čvor voditelj svoje komponente. Nekada broj bridova koje ćemo proći može biti velik, pogledajmo primjer:
+
+digraph {
+  rankdir=LR;
+  node [size=5,shape=circle];
+  10 [shape=doublecircle];
+  1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10;
+}
+
+Za pronalazak voditelja od `1`, moramo proći $9$ bridova! No, budući da sad za svaki čvor znamo tko mu je voditelj možemo postaviti direktni brid između učenika i njegovog voditelja grupe! Intuitivno, ako saznamo tko je voditelj grupe za nekog učenika opisanim postupkom, ništa nećemo narušiti ako njegov brid preusmjerimo direktno na tog pronađenog voditelja.
+
+digraph {
+  rankdir=LR;
+  node [size=5,shape=circle];
+  10 [shape=doublecircle];
+  1 -> 10;
+  2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10;
+}
+
+Isto to možemo napraviti i za sve učenike na putu do voditelja!
+
+digraph {
+  node [size=5,shape=circle];
+  10 [shape=doublecircle];
+  1 -> 10; 2 -> 10; 3 -> 10; 4 -> 10;
+  5 -> 10; 6 -> 10; 7 -> 10; 8 -> 10;
+  9 -> 10;
+}
+
+Sljedeći put kada budemo tražili voditelja, biti će nam potreban samo jedan skok!
+
+== Odabir voditelja kod stapanja dviju grupa
+
+Prisjetimo se kako smo imali odabir kod stapanja dviju grupa kojeg ćemo voditelja stavit za novog voditelja obje grupe. Jedan pristup pri razrješavanju ovog problema je uvijek postaviti leksikografski manjeg voditelja za novog voditelja. Ovaj pristup bi nas mogao dovesti do jako dugog lanca što nam se ne sviđa. Taj lanac će se ako koristimo gore navedenu optimizaciju kolapsirati u plitko stablo prvom potragom za voditelja, no čak je i dugi lanac moguće izbjeći.
+
+Jedno od rješenja za izbjegavanje dugog lanca je pamćenje stupnja svake grupe te proglašavanje novim voditeljem onog voditelja koji ima veći stupanj. (Zainteresiranog čitatelja upućujemo na [[http://en.wikipedia.org/wiki/Disjoint-set_data_structure#Disjoint-set_forests|wikipediju]]).
+
+U svim našim primjenama ovog algoritma uvijek će dovoljno dobro biti jednostavnije rješenje: za svaku ovu odluku, bacamo kocku i nasumično biramo novog voditelja. Uz ovu nasumičnu optimizaciju i optimizaciju skraćivanja puta, oba upita na ovu strukturu postaju praktično amortizirano $O(1)$ složeni.
+
+== Implementacija
+
+```lang=c,name="Union find"
+struct union_find {
+  vector<int> parent;
+
+  union_find(size_t n) {
+    parent.resize(n);
+    while (n--) parent[n] = n;
+  }
+
+  int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+  }
+
+  void spoji(int x, int y) {
+    if (rand() % 2) swap(x, y);
+    parent[find(x)] = find(y);
+  }
+
+  bool equiv(int x, int y) {
+    return find(x) == find(y);
+  }
+};
+```
+
+Razmisliti što se događa kada pokušamo spojiti dva elementa koja su već u istoj grupi! Happy coding!
+
+!!!
+2014. Anton Grbin
+!!!

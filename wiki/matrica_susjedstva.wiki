@@ -1,0 +1,74 @@
+= Matrica susjedstva
+
+**Matrica susjedstva** jedan je od načina prikaza grafa u memoriji.
+
+== Definicija
+
+**Jednostavan graf** netežinski je, neusmjereni graf u kojem brid spaja dva različita vrha. Ne postoji više bridove između dva ista vrha.
+
+Zadan je jednostavan graf $G = (V, E)$ čije vrhove (skup $V$ ) možemo poredati u niz. Neka je $n = |V|$ broj vrhova i označimo ih sa ${v_1, v_2, \dots, v_n}$ . Matrica susjedstva $A$ dimenzija $n \times n$ dana je formulom po članovima:
+
+$$
+A_{i,j} = \left\{ 
+  \begin{array}{l l}
+    1 & \quad (v_i, v_j) \in E \\
+    0 & \quad \text{u suprotnom.}
+  \end{array} \right.
+$$
+
+Odnosno riječima, matrica susjedstva je kvadratna matrica $n$ sa $n$ , u kojoj na mjestu $i, j$ piše $1$ ako postoji brid koji spaja vrh $v_i$ i $v_j$ .
+
+== Primjer
+
+Dan je graf i pripadajuća matrica susjedstva:
+
+graph {
+  rankdir=LR;
+  node[shape=circle];
+  1 -- 2;
+  1 -- 3;
+  2 -- 3;
+  2 -- 4;
+  3 -- 4;
+}
+
+$$
+A = \begin{bmatrix}
+  0 & 1 & 1 & 0 \\
+  1 & 0 & 1 & 1 \\
+  1 & 1 & 0 & 1 \\
+  0 & 1 & 1 & 0 \\
+\end{bmatrix}
+$$
+
+== Svojstva
+
+- Suma jedinica u redu $i$ je stupanj vrha $v_i$ , odnosno $degree(v_i) = \sum_j A_{i,j}$ .
+- Matrica susjedstva jednostavnog grafa ima sve nule na glavnoj dijagonali, budući da niti jedan vrh nema brid u samog sebe.
+- Ukoliko je graf neusmjeren matrica susjedstva je simetrična, odnosno vrijedi $A_{i,j} = A_{j,i}$ .
+
+== Implementacija
+
+Matricu susjedstva pamtimo kao polje. Ovaj isječak prikazuje učitavanje neusmjerenog grafa. Dolazi u obzir umjesto `int` tipa podataka koristiti `bool` radi uštede memorije. Isto tako, u C++ jeziku koristili bi `vector` i `cin`.
+
+```lang=c
+int N, graph[maxn][maxn];
+
+void load() {
+  int m, a, b;
+  scanf("%d%d", &N, &m);
+  for (int i = 0; i < m; ++i) {
+    scanf("%d%d", &a, &b);
+    --a; --b;
+    graph[a][b] = graph[b][a] = 1;
+  }
+}
+```
+
+== Nastavak čitanja
+
+[[matrica_susjedstva_mnozenje|Što možemo raditi s ovom matricom?]]
+
+!!!
+2014. Anton Grbin
+!!!

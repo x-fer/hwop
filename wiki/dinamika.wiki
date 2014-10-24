@@ -1,0 +1,11 @@
+= Dinamičko programiranje =
+
+== Početničke teme
+
+- [[Dinamika uvod|Uvod u dinamičko programiranje]] - Fibonaccijevi brojevi
+- [[Bomboni]] - Dinamika na tablici
+- [[Najduži rastući podniz]] - Stanje s dva podatka.
+- [[Čokolada]] - Dvodimenzionalna dinamika
+- [[Edit distance|Edit udaljenost]] - poravnavanje nizova znakova
+
+

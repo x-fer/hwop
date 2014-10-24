@@ -1,0 +1,25 @@
+= ČOOOOOOOKOLADA!
+
+== Problem
+
+Svi jako vole jesti čokoladu. Neki ljudi pak jedu samo čokolade u obliku kvadrata, tj. one gdje je broj kockica u retku i stupcu jednak.
+
+Za danu čokoladu s $M \times N$ kockica, u koliko najmanje lomova možemo dobiti sve komade u kvadratnim oblicima?
+
+Na primjer, ako imamo čokoladu sa $5 \times 6$ redaka i stupaca možemo napraviti sljedeće lomove:
+
+1. Odlomimo zadnji stupac -> 5x5 + 5x1
+2. Odlomimo jednu kockicu s zadnjeg stupca -> 5x5 + 1x1 + 4x1
+3. Još jednu -> 5x5 + 1x1 + 1x1 + 3x1
+4. Još jednu -> 5x5 + 1x1 + 1x1 + 1x1 + 2x1
+5. Još jednu -> 5x5 + 1x1 + 1x1 + 1x1 + 1x1 + 1x1
+
+Napravili smo ukupno 5 lomova. Možemo li uz manje lomova doći do svih kvadratnih djelova?
+
+
+== Elementi svakog rješenja dinamičkim programiranjem
+
+1. Stanje?
+2. Početni slučajevi?
+3. Relacija?
+
