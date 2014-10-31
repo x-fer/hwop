@@ -24,7 +24,7 @@ Nakon što ste završili s pisanjem teksta članka te se tekst članka pridržav
 
 Jednom kada budemo zadovoljni teksom članka, objavit ćemo ga na [[http://wiki.xfer.hr/|HWoP-u]].
 
-= Napredniji korisnici
+== Napredniji korisnici
 
 Umjesto da se radi 2. korak i šalje zahtjev za objavom članka na `phabricator` možete napraviti sljedeće.
 

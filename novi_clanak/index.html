@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Pisanje i objavljivanje novog članka</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="pisanje_i_objavljivanje_novog_clanka"></a>Pisanje i objavljivanje novog članka</h2>
+
+<p>Ukoliko želite napisati novi članak i objaviti ga na HWoP-u (Hrvatski Wiki o Programiranju) potrebno je napraviti sljedeće korake.</p>
+
+<!--h1--><h3><a name="pisanje_teksta_clanka"></a>1. Pisanje teksta članka</h3>
+
+<p>Za pisanje teksta članka najbolje je koristiti <tt>markup</tt> (<a href="http://mp.xfer.hr/" target="_blank">http://mp.xfer.hr/</a>). U vašem omiljenom internet pregledniku otvorite sljedeću poveznicu (<a href="http://mp.xfer.hr/novi_clanak_rev1/" target="_blank">http://mp.xfer.hr/novi_clanak_rev1/</a> pri čemu novi_clanak zamijenite s imenom vašeg članka) i možete početi s pisanjem teksta.</p>
+
+<p>Upute koje je pritom potrebno sljediti se nalaze <a href="/upute" class="markup-link">ovdje</a>.</p>
+
+<!--h2--><h3><a name="zahtjev_za_objavnom_clanka"></a>2. Zahtjev za objavnom članka</h3>
+
+<p>Nakon što ste završili s pisanjem teksta članka te se tekst članka pridržava upute iz prethodnog koraka, zahtjev za objavnom članka možete napraviti na sljedeći način.</p>
+
+<ul>
+<li>Kopirati URI na kojem se nalazi trenutna verzija članka (npr. <a href="http://mp.xfer.hr/novi_clanak_rev1/" target="_blank">http://mp.xfer.hr/novi_clanak_rev1/</a>)</li>
+<li>Poslati e-mail na <tt>phabricator+task@xfer.hr</tt><ul>
+<li>kao naslov poruke napisati ime članka s naznakom [HWoP] (npr. [HWoP] Splay stablo)</li>
+<li>u tijelu poruke možete napisati zašto mislite da bi taj članak trebali objaviti ili eventualno postaviti pitanja</li>
+</ul></li>
+<li>Nakon toga ćete dobiti e-mail od  <tt>phabricatora</tt> u kojem će pisati da je napravljen novi zadatak</li>
+</ul>
+
+<ul>
+<li>Sva daljnja komunikacija oko teksta članka će se obavljati u toj email korespondenciji</li>
+</ul>
+
+<!--h3--><h3><a name="objava_clanka"></a>3. Objava članka</h3>
+
+<p>Jednom kada budemo zadovoljni teksom članka, objavit ćemo ga na <a href="http://wiki.xfer.hr/" target="_blank">HWoP-u</a>.</p>
+
+<!--h4--><h3><a name="napredniji_korisnici"></a>Napredniji korisnici</h3>
+
+<p>Umjesto da se radi 2. korak i šalje zahtjev za objavom članka na <tt>phabricator</tt> možete napraviti sljedeće.</p>
+
+<ul>
+<li>Fork repozitorija <a href="https://github.com/agrbin/hwop.git" target="_blank">https://github.com/agrbin/hwop.git</a></li>
+<li>Napisati članak (koristeći markup) te sadržaj članka spremiti u novu datoteku u /wiki/ direktorij</li>
+<li>Napraviti pull request s vašim promjenama<ul>
+<li>Sva daljnja komunikacija oko teksta članka će se obavljati na github straniti dotičnog pull requesta</li>
+</ul></li>
+</ul>
+
+<p>Jednom kada budemo zadovoljni teksom članka, napravit ćemo merge pull requesta. Više o pull requestu možete pročitati <a href="https://help.github.com/articles/using-pull-requests/" target="_blank">ovdje</a> ili <a href="/github" class="markup-link">ovdje</a>].</p>    </div>
+  </body>
+</html>
