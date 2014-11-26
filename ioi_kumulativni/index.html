@@ -27,21 +27,21 @@
 
 <p>Ovo bi moglo ici u <strong>knjiznicu</strong>.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">#define sort(V) sort(V.begin(), V.end())
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="cp">#define sort(V) sort(V.begin(), V.end())</span>
 
-#define reverse(V) reverse(V.begin(), V.end())
+<span class="cp">#define reverse(V) reverse(V.begin(), V.end())</span>
 
-#define unique(V) do {\
-    sort(V); \
-    V.resize(unique(V.begin(), V.end()) - V.begin());\
-  } while (0)
+<span class="cp">#define unique(V) do {\</span>
+<span class="cp">    sort(V); \</span>
+<span class="cp">    V.resize(unique(V.begin(), V.end()) - V.begin());\</span>
+<span class="cp">  } while (0)</span>
 
-// #define debug
-#ifdef debug
-#define print(x) cout &lt;&lt; #x &lt;&lt; &quot; = &quot; &lt;&lt; x &lt;&lt; &quot;\n&quot;
-#else
-#define print(x)
-#endif</pre></div>
+<span class="c1">// #define debug</span>
+<span class="cp">#ifdef debug</span>
+<span class="cp">#define print(x) cout &lt;&lt; #x &lt;&lt; &quot; = &quot; &lt;&lt; x &lt;&lt; &quot;\n&quot;</span>
+<span class="cp">#else</span>
+<span class="cp">#define print(x)</span>
+<span class="cp">#endif</span></pre></div>
 
 <p>makro-e debagiramo pozivom samo preprocesora <tt>g++ -E a.cpp</tt>. ova naredba ispisuje potpuno preprocesani kod.</p>
 
@@ -109,54 +109,54 @@
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">// primi vlasnistvo neke varijable iz nekog drugo scope-a. u ovom scopu (ovoj
-// funkciji) ta varijabla ce se zvati v. funkcija poveca varijablu s kojom je
-// pozovemo.
-// ovo je najbrzi prijenos neke varijable u funkciju jer se ne kopira ama bas
-// nista. zbog toga smijemo onda prenositi cijele map-e, set-ove i vektore bez
-// straha da ce raditi sporo. no potrebno je paziti da su efekti koje napravimo
-// nad paremetrom v vidljivi pozivatelju.
-// parametar s kojim zovemo funkciju f MORA biti cvrsta varijabla koju vidimo
-// iz pozivajuceg scope-a.
-int f(int &amp;v) {
-  ++v;
-}
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c1">// primi vlasnistvo neke varijable iz nekog drugo scope-a. u ovom scopu (ovoj</span>
+<span class="c1">// funkciji) ta varijabla ce se zvati v. funkcija poveca varijablu s kojom je</span>
+<span class="c1">// pozovemo.</span>
+<span class="c1">// ovo je najbrzi prijenos neke varijable u funkciju jer se ne kopira ama bas</span>
+<span class="c1">// nista. zbog toga smijemo onda prenositi cijele map-e, set-ove i vektore bez</span>
+<span class="c1">// straha da ce raditi sporo. no potrebno je paziti da su efekti koje napravimo</span>
+<span class="c1">// nad paremetrom v vidljivi pozivatelju.</span>
+<span class="c1">// parametar s kojim zovemo funkciju f MORA biti cvrsta varijabla koju vidimo</span>
+<span class="c1">// iz pozivajuceg scope-a.</span>
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="o">++</span><span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
 
-// primi vlasnistvo varijable v ali zbog const-a kompajler te stiti da neces
-// mijenjati taj v. dakle smijemo ga samo citati.
-// ovdje mozemo koristiti cinjenicu da nema nikakvog kopiranja i nemat straha da
-// cemo nastetiti pozivatelju (promijeniti mu nesto cega nije svjestan).
-int g(const int &amp;v) {
-  return v;
-}
+<span class="c1">// primi vlasnistvo varijable v ali zbog const-a kompajler te stiti da neces</span>
+<span class="c1">// mijenjati taj v. dakle smijemo ga samo citati.</span>
+<span class="c1">// ovdje mozemo koristiti cinjenicu da nema nikakvog kopiranja i nemat straha da</span>
+<span class="c1">// cemo nastetiti pozivatelju (promijeniti mu nesto cega nije svjestan).</span>
+<span class="kt">int</span> <span class="nf">g</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
 
-int broj_pet() {return 5;}
+<span class="kt">int</span> <span class="nf">broj_pet</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="mi">5</span><span class="p">;}</span>
 
-int main() {
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 
-  // x je lokalna varijabla u ovom scopeu
-  int x = 4;
+  <span class="c1">// x je lokalna varijabla u ovom scopeu</span>
+  <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 
-  // funkciji f dajemo pravo da dira nas x. ona ce ga povecati.
-  f(x);
+  <span class="c1">// funkciji f dajemo pravo da dira nas x. ona ce ga povecati.</span>
+  <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 
-  // funkciji g dajemo pravo da CITA nas x (zbog const int &amp;v), ona ce samo
-  // vratiti (x + 1) u ovom slucaju.
-  g(x);
+  <span class="c1">// funkciji g dajemo pravo da CITA nas x (zbog const int &amp;v), ona ce samo</span>
+  <span class="c1">// vratiti (x + 1) u ovom slucaju.</span>
+  <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 
-  // sto ocekujemo od ovog poziva? ajmo probat rijecima:
-  // funkciji f dajemo pravo da dira .. ? drugu funkcjiu ? njenu povratnu
-  // vrijednost? recimo da mozemo dirati njenu povratnu vrijednost (to je u
-  // ovom slucaju broj 5), koji je efekt od toga sto smo povecali za jedan
-  // privremeni objekt? kompajler ce ovdje prepoznati nebulozu i dati gresku.
-  f(broj_pet());
+  <span class="c1">// sto ocekujemo od ovog poziva? ajmo probat rijecima:</span>
+  <span class="c1">// funkciji f dajemo pravo da dira .. ? drugu funkcjiu ? njenu povratnu</span>
+  <span class="c1">// vrijednost? recimo da mozemo dirati njenu povratnu vrijednost (to je u</span>
+  <span class="c1">// ovom slucaju broj 5), koji je efekt od toga sto smo povecali za jedan</span>
+  <span class="c1">// privremeni objekt? kompajler ce ovdje prepoznati nebulozu i dati gresku.</span>
+  <span class="n">f</span><span class="p">(</span><span class="n">broj_pet</span><span class="p">());</span>
 
-  // isto tako, &quot;5&quot; nije varijabla cije vlasnistvno mozemo predati nekoj
-  // funkciji. compile error.
-  f(5);
+  <span class="c1">// isto tako, &quot;5&quot; nije varijabla cije vlasnistvno mozemo predati nekoj</span>
+  <span class="c1">// funkciji. compile error.</span>
+  <span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 
-  return 0;
-}</pre></div>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
 
 <p>Poruka kompajlera:</p>
 
@@ -193,14 +193,14 @@ int main() {
 
 <p>Nekada je tocke potrebno sortirati po kutu u odnosu na neku ishodisnu tocku. U tom slucaju nam treba komparator koji ce imati pristup toj tocki uvijek. Osim globalne varijable preferiramo i rjesenje:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">struct cmp_fi {
-  pt origin;
-  cmp_fi(pt origin) : origin(origin) {}
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">struct</span> <span class="n">cmp_fi</span> <span class="p">{</span>
+  <span class="n">pt</span> <span class="n">origin</span><span class="p">;</span>
+  <span class="n">cmp_fi</span><span class="p">(</span><span class="n">pt</span> <span class="n">origin</span><span class="p">)</span> <span class="o">:</span> <span class="n">origin</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span> <span class="p">{}</span>
   
-  bool operator() (const pt &amp;a, const pt &amp;b) {
-    return ccw(origin, a, b) &gt; 0;
-  }
-};</pre></div>
+  <span class="kt">bool</span> <span class="n">operator</span><span class="p">()</span> <span class="p">(</span><span class="k">const</span> <span class="n">pt</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">pt</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ccw</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span></pre></div>
 
 <p>takva struktura se moze instancirana predati u <tt>sort</tt> ili instancirati cijeli <tt>set</tt> s njom:</p>
 
@@ -256,24 +256,24 @@ No, sto ako zelimo usporediti objekte <tt>a</tt> i <tt>b</tt> prema nekoj izracu
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">int dp[maxn][maxn];
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">maxn</span><span class="p">];</span>
 
-int f(int a, int b) {
-  if (a &lt; 0 || b &lt; 0 || a &gt;= maxn || b &gt;= maxn) return 0;
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">maxn</span> <span class="o">||</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">maxn</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 
-  // bind ret to a dp[a][b]. it can&#039;t be unbind.
-  int &amp;ret = dp[a][b];
-  if (ret != -1) return ret;
-  ret = 1;
+  <span class="c1">// bind ret to a dp[a][b]. it can&#39;t be unbind.</span>
+  <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ret</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
-  // do the math.
-  for (int i = 0; i &lt; a; ++i)
-    for (int j = 0; j &lt; b; ++j)
-      ret += f(i, j);
+  <span class="c1">// do the math.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+      <span class="n">ret</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
 
-  // return ret!
-  return ret;
-}</pre></div>
+  <span class="c1">// return ret!</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
 
 <p>ovakvim dizajnom rekurzije s memoizacijom uopce ne koristimo novu lokalnu varijablu <tt>ret</tt> za spremanje rjesenja vec rukujemo direktno s vrijednosti u <tt>dp[][]</tt> polju.</p>
 

@@ -17,26 +17,26 @@
 
 <p>Tipične operacije sa skupovima koje radimo lako preslikavamo u <tt>bitwise</tt> operacije. Slijedi primjer osnovnih operacija:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">// tip podataka koji koristimo je long long da mozemo cuvati 64 informacije.
-typedef unsigned long long mask_t;
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c1">// tip podataka koji koristimo je long long da mozemo cuvati 64 informacije.</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="kt">mask_t</span><span class="p">;</span>
 
-// sadrži li skup S broj x
-bool is_set(mask_t S, int x) {return S &amp; (1ll &lt;&lt; x);}
+<span class="c1">// sadrži li skup S broj x</span>
+<span class="kt">bool</span> <span class="nf">is_set</span><span class="p">(</span><span class="kt">mask_t</span> <span class="n">S</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">S</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1ll</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">);}</span>
 
-// dodaj u skup S broj x
-void set(mask_t &amp;S, int x) {S |= (1ll &lt;&lt; x);}
+<span class="c1">// dodaj u skup S broj x</span>
+<span class="kt">void</span> <span class="nf">set</span><span class="p">(</span><span class="kt">mask_t</span> <span class="o">&amp;</span><span class="n">S</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span><span class="n">S</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1ll</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">);}</span>
 
-// izbaci x iz skupa
-void unset(mask_t &amp;S, int x) {S &amp;= ~(1ll &lt;&lt; x);}
+<span class="c1">// izbaci x iz skupa</span>
+<span class="kt">void</span> <span class="nf">unset</span><span class="p">(</span><span class="kt">mask_t</span> <span class="o">&amp;</span><span class="n">S</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span><span class="n">S</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1ll</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">);}</span>
 
-// unija dvaju skupova
-mask_t together(mask_t A, mask_t B) {return A | B;}
+<span class="c1">// unija dvaju skupova</span>
+<span class="kt">mask_t</span> <span class="nf">together</span><span class="p">(</span><span class="kt">mask_t</span> <span class="n">A</span><span class="p">,</span> <span class="kt">mask_t</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span><span class="p">;}</span>
 
-// presjek dvaju skupova
-mask_t intersect(mask_t A, mask_t B) {return A &amp; B;}
+<span class="c1">// presjek dvaju skupova</span>
+<span class="kt">mask_t</span> <span class="nf">intersect</span><span class="p">(</span><span class="kt">mask_t</span> <span class="n">A</span><span class="p">,</span> <span class="kt">mask_t</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">A</span> <span class="o">&amp;</span> <span class="n">B</span><span class="p">;}</span>
 
-// prebrojavanje broja jedinica u skupu, rekurzivno radi jednostavnosti. A&amp;-A je lowbit operacija.
-size_t count(mask_t A) {return A ? count(A - (A&amp;-A)) + 1 : 0;}</pre></div>
+<span class="c1">// prebrojavanje broja jedinica u skupu, rekurzivno radi jednostavnosti. A&amp;-A je lowbit operacija.</span>
+<span class="kt">size_t</span> <span class="nf">count</span><span class="p">(</span><span class="kt">mask_t</span> <span class="n">A</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="n">A</span> <span class="o">?</span> <span class="n">count</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="p">(</span><span class="n">A</span><span class="o">&amp;-</span><span class="n">A</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;}</span></pre></div>
 
 <p>Obično ne implementiramo ove operacije pomoću funkcija već ih direktno pišemo u kodu odnosno koristimo makro-e.</p>
 
@@ -46,7 +46,7 @@ size_t count(mask_t A) {return A ? count(A - (A&amp;-A)) + 1 : 0;}</pre></div>
 
 <p>U terminima bitmaska, potrebno je iterirati po svim vrijednostima <tt>mask_t</tt> tipa za koje vrijedi.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">(it | mask) == mask;</pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="p">(</span><span class="n">it</span> <span class="o">|</span> <span class="n">mask</span><span class="p">)</span> <span class="o">==</span> <span class="n">mask</span><span class="p">;</span></pre></div>
 
 
 
@@ -54,19 +54,19 @@ size_t count(mask_t A) {return A ? count(A - (A&amp;-A)) + 1 : 0;}</pre></div>
 
 <p>Jedno od rješenja je provjeriti sve moguće vrijednosti podmaske i ispitati radi li se o podskupu. Ovo rješenje nepotrebno obilazi neka stanja:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code remarkup-counterexample">mask_t S; // zadani skup
-for (mask_t it = 0; it; ++it) {
-  if ((it | S) == S)
-    print(it);
-}</pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code remarkup-counterexample"><span class="kt">mask_t</span> <span class="n">S</span><span class="p">;</span> <span class="c1">// zadani skup</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">mask_t</span> <span class="n">it</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">it</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">((</span><span class="n">it</span> <span class="o">|</span> <span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 <p>Rješenje s manjim brojem koraka bi mogli konstruirati tako da prvo prebrojimo koliko početni skup ima elemenata, pa iteriramo unaprijed izračunati broj koraka i u tijelu petlje odlučujemo za svaki element hoće li se naći u rezultantnom skupu ili ne. Implementacija ovog pristupa je malo nezgrapna. Srećom tu je sljedeći trik:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">mask_t S, it = S; // mask je zadani_skup
-do {
-  print(it);
-  it = (it - 1) &amp; S;
-} while (it != S);</pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">mask_t</span> <span class="n">S</span><span class="p">,</span> <span class="n">it</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span> <span class="c1">// mask je zadani_skup</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+  <span class="n">it</span> <span class="o">=</span> <span class="p">(</span><span class="n">it</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">S</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">S</span><span class="p">);</span></pre></div>
 
 <p>Ovo rješenje obilazi sve podskupove originalnog skupa u leksikografski padajućem poretku.</p>
 

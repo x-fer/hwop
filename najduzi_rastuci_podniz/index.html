@@ -64,25 +64,25 @@
 
 <p>U svim implementacijama pretpostavljati ćemo da je zadnji element niza veći od svih ostalih. Pri pozivu funkcije potrebno je paziti da je ovo istina, i da će rješenje za originalne elemente biti rješenje s dodanim elementom umanjeno za <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.143ex; height: 1.714ex; vertical-align: -0.143ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -692.2581232551549 505 718.51624651031" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-31" xlink:href="#MJMAIN-31"></use></g></svg></span>.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Iterativni najduži rastući podniz</div><pre class="remarkup-code">const int maxn = 100;
-const int oo = 0x3f3f3f3f;
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Iterativni najduži rastući podniz</div><pre class="remarkup-code"><span class="k">const</span> <span class="kt">int</span> <span class="n">maxn</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">oo</span> <span class="o">=</span> <span class="mh">0x3f3f3f3f</span><span class="p">;</span>
 
-int N = 13;
-int a[maxn] = {1, 5, 4, 5, 2, 6, 3, 7, 10, 5, 8, 10, oo};
+<span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="n">maxn</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">oo</span><span class="p">};</span>
 
-int iterative_lcs() {
-  int dp[maxn];
+<span class="kt">int</span> <span class="nf">iterative_lcs</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
 
-  for (int k = 0; k &lt; N; ++k) {
-    dp[k] = 1;
-    for (int i = 0; i &lt; k; ++i) {
-      if (a[i] &gt;= a[k]) continue;
-      dp[k] = max(dp[k], dp[i] + 1);
-    }
-  }
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+      <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 
-  return dp[N - 1];
-}</pre></div>
+  <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span></pre></div>
 
 <p>Niz <tt>a[]</tt> čuva originalne brojke niza, dok niz <tt>dp[]</tt> čuva <em>stanje</em>. Na <tt>dp[i]</tt> piše duljina najdužeg rastućeg podniza koji sadrži i završava s elementom <tt>i</tt> u nizu <tt>a[]</tt>.</p>
 
@@ -90,29 +90,29 @@ int iterative_lcs() {
 
 <p>Gotovo svaki problem rješen dinamičkim programiranjem će imati dva oblika rješenja, jedno iterativno (<em>for petljom</em>), a drugo rekurzivno. Slijedi rekurzivno rješenje:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Rekurzivni pristup za najduži rastući podniz</div><pre class="remarkup-code">int dp[maxn];
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Rekurzivni pristup za najduži rastući podniz</div><pre class="remarkup-code"><span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
 
-int solve(int k) {
-  // ako na mjestu dp[k] pise nesto sto nije 0,
-  // znaci da smo vec obradili ovaj problem, informaciju
-  // za ovo stanje smo upisali upravo na mjesto dp[k]
-  // (vidi zadnju liniju u rekurziji)
-  if (dp[k] != 0) return dp[k];
+<span class="kt">int</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ako na mjestu dp[k] pise nesto sto nije 0,</span>
+  <span class="c1">// znaci da smo vec obradili ovaj problem, informaciju</span>
+  <span class="c1">// za ovo stanje smo upisali upravo na mjesto dp[k]</span>
+  <span class="c1">// (vidi zadnju liniju u rekurziji)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
 
-  int ret = 1;
-  for (int i = 0; i &lt; k; ++i) {
-    if (a[i] &gt;= a[k]) continue;
-    ret = max(ret, solve(i) + 1);
-  }
+  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">solve</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
 
-  return dp[k] = ret;
-}
+  <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
 
-// pretpostavlja da je zadnji element u nizu najveci!
-int recursive_lcs() {
-  memset(dp, 0, sizeof dp);
-  return solve(N - 1);
-}</pre></div>
+<span class="c1">// pretpostavlja da je zadnji element u nizu najveci!</span>
+<span class="kt">int</span> <span class="nf">recursive_lcs</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">dp</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">solve</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 <p>Hoće li funkcija raditi ispravno ako ne provjerimo jesmo li neki problem već rješili? Hoće, no broj koraka koje trebamo napraviti biti će mnogo mnogo veći.</p>
 
@@ -128,39 +128,39 @@ int recursive_lcs() {
 
 <p>Na svakoj smo stranici pamtili duljinu najdužeg rastućeg podniza koji završava na toj stranici. Ukoliko dodamo još i broj stranice na čiji smo se niz <em>nadovezali</em>, moći ćemo rekonstruirati rješenje u nazad krenuvši od zadnje stranice sve dok na nekoj stranici ne piše da je najduži podniz do tuda jednak <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1.143ex; height: 1.714ex; vertical-align: -0.143ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -692.2581232551549 505 718.51624651031" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-31" stroke-width="10" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-31" xlink:href="#MJMAIN-31"></use></g></svg></span>. To će značiti da je ta stranica prva u podnizu koji je rješenje.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Najduži rastući podniz s rekonstrukcijom</div><pre class="remarkup-code">int lcs_with_reconstruct() {
-  int dp[maxn], last[maxn];
-  bool flag[maxn];
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Najduži rastući podniz s rekonstrukcijom</div><pre class="remarkup-code"><span class="kt">int</span> <span class="nf">lcs_with_reconstruct</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">last</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
+  <span class="kt">bool</span> <span class="n">flag</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
 
-  for (int k = 0; k &lt; N; ++k) {
-    dp[k] = 1;
-    for (int i = 0; i &lt; k; ++i) {
-      if (a[i] &gt;= a[k]) continue;
-      // primjetite razliku od rjesenja bez rekonstrukcije
-      if (dp[i] + 1 &gt; dp[k]) {
-        last[k] = i;
-        dp[k] = dp[i] + 1;
-      }
-    }
-  }
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+      <span class="c1">// primjetite razliku od rjesenja bez rekonstrukcije</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">last</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 
-  // oznacimo stranice koje cine rjesenje koje zavrsava
-  // na zadnjem elementu (koji smo namjestili da je najveci)
-  memset(flag, false, sizeof flag);
-  int it = N - 1;
-  while (dp[it] != 1) {
-    it = last[it];
-    flag[it] = true;
-  }
+  <span class="c1">// oznacimo stranice koje cine rjesenje koje zavrsava</span>
+  <span class="c1">// na zadnjem elementu (koji smo namjestili da je najveci)</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">flag</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">it</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="n">last</span><span class="p">[</span><span class="n">it</span><span class="p">];</span>
+    <span class="n">flag</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  // ispis brojeva na svim oznacenim stranicama
-  for (int i = 0; i &lt; N; ++i)
-    if (flag[i])
-      printf(&quot;%d &quot;, a[i]);
-  printf(&quot;\n&quot;);
+  <span class="c1">// ispis brojeva na svim oznacenim stranicama</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
-  return dp[N - 1];
-}</pre></div>
+  <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span></pre></div>
 
 
 

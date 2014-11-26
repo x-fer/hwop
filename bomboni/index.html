@@ -47,24 +47,24 @@
 
 <p>Iterativno rješenje implementira gore spomenuti algoritam. Pripazili smo jedino na prvi redak i prvi stupac koji za razmatranje imaju samo jedan prošli potez (jer bi drugi bio van ploče). Relacija za te slučajeve je još jednostavnija.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Iterativno rješenje</div><pre class="remarkup-code">int a[maxn][maxn]; // kolicine originalnih bombona na polju
-int dp[maxn][maxn]; // vrijednosti zapisane informacije
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Iterativno rješenje</div><pre class="remarkup-code"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">maxn</span><span class="p">];</span> <span class="c1">// kolicine originalnih bombona na polju</span>
+<span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">maxn</span><span class="p">];</span> <span class="c1">// vrijednosti zapisane informacije</span>
 
-int iterative_dp() {
-  dp[0][0] = a[0][0];
-  for (int i = 1; i &lt; N; ++i)
-    dp[i][0] = a[i][0] + dp[i-1][0];
-  for (int j = 1; j &lt; M; ++j)
-    dp[0][j] = a[0][j] + dp[0][j-1];
+<span class="kt">int</span> <span class="nf">iterative_dp</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+    <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 
-  for (int i = 1; i &lt; N; ++i) {
-    for (int j = 1; j &lt; M; ++j) {
-      dp[i][j] = a[i][j];
-      dp[i][j] += std::max(dp[i-1][j], dp[i][j-1]);
-    }
-  }
-  return dp[N-1][M-1];
-}</pre></div>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+      <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span></pre></div>
 
 
 
@@ -76,23 +76,23 @@ int iterative_dp() {
 
 <p>U rekurzivnom rješenju nije potrebno posebno paziti o prvom retku i stupcu, već ako se dogodi da se funkcija pozove za negativnu vrijednost koordinata možemo vratiti broj koji je sigurno manji od svih ostalih i on nikada neće biti povratna vrijednost <tt>max</tt> funkcije.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Rekurzivno rješenje</div><pre class="remarkup-code">const int oo = 0x3f3f3f3f;
-int dp[maxn][maxn];
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Rekurzivno rješenje</div><pre class="remarkup-code"><span class="k">const</span> <span class="kt">int</span> <span class="n">oo</span> <span class="o">=</span> <span class="mh">0x3f3f3f3f</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">maxn</span><span class="p">];</span>
 
-int solve(int r, int s) {
-  if (r &lt; 0 || s &lt; 0) return -oo; // nitko nece htjeti uzeti -oo kao bolje rjesenje.
-  if (!r &amp;&amp; !s) return a[r][s]; // trivijalni slucaj! zaustaviti rekurziju.
-  if (dp[r][s] != oo) return dp[r][s]; // provjeriti jesmo li ovaj problem vec rjesili
+<span class="kt">int</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="n">oo</span><span class="p">;</span> <span class="c1">// nitko nece htjeti uzeti -oo kao bolje rjesenje.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">s</span><span class="p">)</span> <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">s</span><span class="p">];</span> <span class="c1">// trivijalni slucaj! zaustaviti rekurziju.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">s</span><span class="p">]</span> <span class="o">!=</span> <span class="n">oo</span><span class="p">)</span> <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">s</span><span class="p">];</span> <span class="c1">// provjeriti jesmo li ovaj problem vec rjesili</span>
 
-  int ret = a[r][s];
-  ret += std::max(solve(r-1, s), solve(r, s-1));
-  return dp[r][s] = ret; // zapisati problem u polje i vratiti vrijednost.
-}
+  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">s</span><span class="p">];</span>
+  <span class="n">ret</span> <span class="o">+=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span> <span class="n">solve</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span><span class="p">;</span> <span class="c1">// zapisati problem u polje i vratiti vrijednost.</span>
+<span class="p">}</span>
 
-int recursive_dp() {
-  memset(dp, oo, sizeof dp);
-  return solve(N - 1, M - 1);
-}</pre></div>
+<span class="kt">int</span> <span class="nf">recursive_dp</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">oo</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">dp</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">solve</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 
 

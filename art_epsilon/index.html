@@ -13,11 +13,11 @@
 
 <p>Što ispisuje slijedeći programski isječak?</p>
 
-<div class="remarkup-code-block" data-code-lang="cpp" data-sigil="remarkup-code-block"><pre class="remarkup-code">if (0.7 + 0.2 + 0.1 == 1) {
-  cout &lt;&lt; &quot;da, naravno!&quot; &lt;&lt; endl;
-} else {
-  cout &lt;&lt; &quot;wait.&quot; &lt;&lt; endl;
-}</pre></div>
+<div class="remarkup-code-block" data-code-lang="cpp" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">if</span> <span class="p">(</span><span class="mf">0.7</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;da, naravno!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;wait.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
 
 
 
@@ -49,16 +49,16 @@
 
 <p>Stoga, uvijek kada je potrebno u zadatku koristiti i uspoređivati decimalne brojeve potrebno je to raditi imajući na umu preciznost:</p>
 
-<div class="remarkup-code-block" data-code-lang="cpp" data-sigil="remarkup-code-block"><pre class="remarkup-code">typedef double lf;
+<div class="remarkup-code-block" data-code-lang="cpp" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">typedef</span> <span class="kt">double</span> <span class="n">lf</span><span class="p">;</span>
 
-const lf EPSILON = 1e-12;
+<span class="k">const</span> <span class="n">lf</span> <span class="n">EPSILON</span> <span class="o">=</span> <span class="mf">1e-12</span><span class="p">;</span>
 
-inline bool lt(const lf&amp; a, const lf&amp; b) { return b - a &gt; EPSILON; }
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">lt</span><span class="p">(</span><span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">EPSILON</span><span class="p">;</span> <span class="p">}</span>
 
-inline bool gt(const lf&amp; a, const lf&amp; b) { return lt(b, a); }
-inline bool eq(const lf&amp; a, const lf&amp; b) { return !lt(a, b) &amp;&amp; !lt(b, a); }
-inline bool le(const lf&amp; a, const lf&amp; b) { return !gt(a, b); }
-inline bool ge(const lf&amp; a, const lf&amp; b) { return !lt(a, b); }</pre></div>
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">gt</span><span class="p">(</span><span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lt</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">eq</span><span class="p">(</span><span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">lt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">lt</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">le</span><span class="p">(</span><span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">gt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">ge</span><span class="p">(</span><span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">lf</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">lt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span></pre></div>
 
 <p>Definirani operatori redom predstavljaju C operatore <tt>&lt;, &gt;, ==, &lt;=, &gt;=</tt>.</p>
 
