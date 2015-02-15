@@ -50,7 +50,7 @@ Evo primjer na kojem se vidi da to je to istina (-x je isto što i ~x + 1):
   ~x + 1 = -x = 001100
   x & -x      = 000100 
 
-Neka je p(x) roditelj čvora x, npr. p(1001) = p(1000).
+Neka je p(x) roditelj čvora x, npr. p(1001) = p(1010) = 1000.
 Roditelj se dobiva tako da broju zadnju jedinicu pretvorimo u nulu, pa je zato:
 
   p(x) = x - lobit(x).
@@ -175,6 +175,7 @@ Implementacija je analogna prvotnoj:
 [[http://www.spoj.pl/problems/INVCNT/ | Inversion Count]]
 [[http://www.spoj.pl/problems/DCEPC206/ | It's a Murder!]]
 [[http://www.spoj.pl/problems/MATSUM/ | Matrix Summation]]
+[[https://www.hackerrank.com/challenges/insertion-sort | Insertion sort advanced analysis]]
 
 
 == Linkovi ==
