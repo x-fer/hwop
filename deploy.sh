@@ -2,6 +2,10 @@
 # in ../hwop-engine/.
 # you can test your engine with ../hwop-engine/hwop test
 
+# pull and make sure on master.
+git checkout master
+git pull
+
 outdir=../__hwop_html
 
 [ -f deploy.sh ] || ( echo "must be in root hwop dir."; exit 1; )
