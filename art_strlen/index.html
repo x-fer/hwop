@@ -13,29 +13,29 @@
 
 <p>Slijedeći program prebrojava broj pojavljivanja znaka <tt>&#039;o&#039;</tt> u nizu znakova:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">test.c</div><pre class="remarkup-code"><span class="cp">#include &lt;stdio.h&gt;</span>
-<span class="cp">#include &lt;stdlib.h&gt;</span>
-<span class="cp">#include &lt;string.h&gt;</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">test.c</div><pre class="remarkup-code">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
-<span class="k">const</span> <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
+const size_t n = 100000;
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="kt">char</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-  <span class="n">memset</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="sc">&#39;o&#39;</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-  <span class="n">t</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+int main() {
+  int i, cnt = 0;
+  char *t = malloc(n);
+  memset(t, &#039;o&#039;, n - 1);
+  t[n-1] = &#039;\0&#039;;
 
-  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">cnt</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;o&#39;</span><span class="p">);</span>
+  for (i = 0; i &lt; strlen(t); ++i)
+    cnt += (t[i] == &#039;o&#039;);
 
-  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">cnt</span><span class="p">);</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></div>
+  printf(&quot;%d\n&quot;, cnt);
+  return 0;
+}</pre></div>
 
 <p>Kompajliranjem i pokretanjem ovog programa, primjećujemo da njegovo izvršavanje traje duže nego što bi na prvi pogled mislili.</p>
 
-<div class="remarkup-code-block" data-code-lang="bash" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>gcc -otest test.c
-<span class="nv">$ </span><span class="nb">time</span> ./test
+<div class="remarkup-code-block" data-code-lang="bash" data-sigil="remarkup-code-block"><pre class="remarkup-code">$ gcc -otest test.c
+$ time ./test
 99999
 
 real    0m2.185s
@@ -62,10 +62,10 @@ sys     0m0.004s</pre></div>
 
 <p>Potpnua lista optimizacija koje kompajler može napraviti nalazi se na <a href="http://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html" target="_blank">http://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html</a>. Mi ćemo pokazati osnovno korištenje optimizacija:</p>
 
-<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>gcc -otest test.c
-<span class="nv">$ </span>gcc -otest1 -O1 test.c
-<span class="nv">$ </span>gcc -otest2 -O2 test.c
-<span class="nv">$ </span>gcc -otest3 -O3 test.c</pre></div>
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code">$ gcc -otest test.c
+$ gcc -otest1 -O1 test.c
+$ gcc -otest2 -O2 test.c
+$ gcc -otest3 -O3 test.c</pre></div>
 
 <p>Pokretanjem programa dobili smo sljedeća vremena izvršavanja:</p>
 
@@ -84,9 +84,9 @@ sys     0m0.004s</pre></div>
 
 <p>Naravno, konvencijalna metoda za itereriranje niza znakova u C-u uopće ne koristi poziv funkcije <tt>strlen</tt> već iskorištava postojanje <tt>&#039;\0&#039;</tt> na kraju niza:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">char</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">it</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
-  <span class="n">cnt</span> <span class="o">+=</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span> <span class="o">==</span> <span class="sc">&#39;o&#39;</span><span class="p">);</span></pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">char *it;
+for (it = t; *it; ++it)
+  cnt += (*it == &#039;o&#039;);</pre></div>
 
 <p>No, postoji li još brži način da se prebroji pojavljivanje slova <tt>&#039;o&#039;</tt> u nizu znakova?</p>
 

@@ -1,0 +1,69 @@
+= Burnsideova lema =
+
+Često nam se u problemima prebrajanja može dogoditi da ne znamo prebrojiti objekte tako da simetrične objekte brojimo samo jednom.
+Klasičan primjer je prebrojati ogrlice koje se sastoje od $n$ perli, a svaka perla može biti u jednoj od $k$ boja. Dvije ogrlice su iste (simetrične) ako se jedna može dobiti od druge rotacijom. Kako bi si olakšali život možemo ogrlice zamisliti kao lance s tim da su posljednja i prva perla susjedne. Budući da svaka perla može biti u jednoj od $k$ boja, imamo $k^n$ različitih lanaca. No ako ih gledamo kao ogrlice, neke smo prebrojali više puta. Na primjer, recimo da je $n = 4$ i da imamo na raspolaganju dvije boje - crvenu (označimo ju slovom $r$ ) te plavu (označimo ju slovom $b$ ), lanci $rbrb$  i $brbr$ predstavljaju iste ogrlice jer prvu možemo rotirati za jedno mjesto udesno i dobit ćemo drugu. Da bi doskočili ovom problemu koristit ćemo Burnsideovu lemu.
+
+== Definicija ==
+
+Neka je $X$ skup objekata, a $T$ skup transformacija nad njima. Transformacija $t \in T$ je bijekcija iz $X$ u $X$ . Kažemo da su dva elementa iz $X$ simetrična ako se jedan može dobiti od drugoga primjenom niza transformacija. Skup transformacija mora sadržavati neutralnu transformaciju $t(x) = x$ . Dodatno, ako sadrži neku transformaciju $t$ mora sadržavati i njoj inverznu transformaciju, $t^{-1}$ .
+
+Burnsideova lema nam tada kaže da je broj elemenata iz $X$ koji su različiti s obzirom na skup transformacija $T$ jednak:
+
+$$
+\frac {1}{|T|} \sum_{t \in T}|X^t|
+$$
+
+gdje $X^t$ predstavlja skup elemenata iz $X$ koji ostaju nepromjenjeni primjenom transformacije $t$ , tj. $X^t = \{x \in X | t(x) = x \}$ .
+
+
+== Primjer ==
+
+Vratimo se prebrajanju ogrlica, skup $X$ je skup svih različitih lanaca od $n$ perli i $k$ boja. Skup transformacija je skup svih mogućih različitih rotacija:
+
+* rotacija lanca za $0$ mjesta udesno
+* rotacija lanca za $1$ mjesto udesno
+* ...
+* rotacija lanca za $n-1$ mjesta udesno
+
+Ako je $f(s)$ broj lanaca koji ostanu isti rotiramo ih li za $s$ mjesta udesno, tada prema lemi vrijedi da je broj različitih ogrlica jednak:
+
+$$
+\frac {1}{n} \sum_{s=0}^{n-1} f(s)
+$$
+
+Preostaje nam izračunati $f(s)$ . Lanac ostaje isti kad se rotira za $s$ mjesta udesno ako i samo ako za svaku perlu vrijedi da je perla koja se nalazi $s$ mjesta desno od nje iste boje.
+Te jednakosti će proizvesti klase ekvivalencije tj. skupine perli koje moraju biti iste boje. Konkretno, u ovom slučaju broj klasa ekvivalencije jednak je $gcd(s,n)$ pa vrijedi:
+
+$$
+f(s) = k^{gcd(s,n)}
+$$
+
+Provjerimo i na konkretnom primjeru za $n = 4, k = 2$ . Izračunajmo prvo bitne vrijednosti funkcije $f$ :
+
+* $f(0) = 2^{gcd(0,4)} = 16;$ Svaki lanac ostane nepromijenjen nakon rotacije za 0 mjesta.
+* $f(1) = 2^{gcd(1,4)} = 2;$ Ovo su jednobojni lanci: $rrrr$ te $bbbb$ .
+* $f(2) = 2^{gcd(2,4)} = 4;$ Ovo su lanci u kojima su prva i treća perla iste boje, te druga i četvrta: $rrrr, rbrb, bbbb, brbr$ .
+* $f(3) = 2^{gcd(3,4)} = 2;$ Ponovno jednobojni lanci.
+
+Broj različitih ogrlica je $(f(0) + f(1) + f(2) + f(3)) / 4 = 24 / 4 = 6$ . Zaista, postoji 6 različitih ogrlica:
+
+* $rrrr$
+* $rrrb$
+* $rrbb$
+* $rbbb$
+* $bbbb$
+* $rbrb$
+.
+
+== O skupu transformacija ==
+
+Pažljiv čitatelj zapitat će se može li skup transformacija $T$ biti baš bilo kakav. Odgovor je: ne može. Važno svojstvo koje mora zadovoljavati je zatvorenost tj. ako uzmemo bilo koje dvije (ne nužno različite) transformacije iz skupa $T$ tada i njihova kompozicija mora biti u $T$ .
+
+== Primjeri za vježbu ==
+
+1. Na koliko načina možemo obojati kocku, ako svaku stranu možemo obojati u jednu od tri boje. Dvije obojane kocke su iste ako se jedna od druge može dobiti rotacijama. (Rješenje: 57)
+2. Na koliko načina možemo obojati 3x3 ploču u dvije boje. Bojanja smatramo jednakima ako se jedno od drugoga može dobiti rotacijom ili refleksijom ploče. (Rješenje: 102)
+
+!!!
+2015. Ivan Katanić
+!!!

@@ -25,7 +25,8 @@
 
 <p>Dan je graf i pripadajuća matrica susjedstva:</p>
 
-<div style="text-align: center;"><svg width="260pt" height="90pt" viewBox="0.00 0.00 260.00 90.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 86)"><title>_anonymous_0</title><polygon fill="white" stroke="white" points="-4,5 -4,-86 257,-86 257,5 -4,5"/><!-- 1 --><g id="node1" class="node"><title>1</title><ellipse fill="none" stroke="black" cx="18" cy="-41" rx="18" ry="18"/><text text-anchor="middle" x="18" y="-38.8" font-family="Helvetica Neue" font-size="8.00">1</text></g><!-- 2 --><g id="node3" class="node"><title>2</title><ellipse fill="none" stroke="black" cx="90" cy="-18" rx="18" ry="18"/><text text-anchor="middle" x="90" y="-15.8" font-family="Helvetica Neue" font-size="8.00">2</text></g><!-- 1&#45;&#45;2 --><g id="edge2" class="edge"><title>1&#45;&#45;2</title><path fill="none" stroke="black" d="M35.4292,-35.4323C46.7494,-31.8162 61.4432,-27.1223 72.7313,-23.5164"/></g><!-- 3 --><g id="node5" class="node"><title>3</title><ellipse fill="none" stroke="black" cx="162" cy="-64" rx="18" ry="18"/><text text-anchor="middle" x="162" y="-61.8" font-family="Helvetica Neue" font-size="8.00">3</text></g><!-- 1&#45;&#45;3 --><g id="edge4" class="edge"><title>1&#45;&#45;3</title><path fill="none" stroke="black" d="M35.9465,-43.8665C63.5408,-48.2739 116.097,-56.6683 143.827,-61.0974"/></g><!-- 2&#45;&#45;3 --><g id="edge6" class="edge"><title>2&#45;&#45;3</title><path fill="none" stroke="black" d="M105.269,-27.7554C117.488,-35.5618 134.54,-46.456 146.753,-54.2586"/></g><!-- 4 --><g id="node8" class="node"><title>4</title><ellipse fill="none" stroke="black" cx="234" cy="-41" rx="18" ry="18"/><text text-anchor="middle" x="234" y="-38.8" font-family="Helvetica Neue" font-size="8.00">4</text></g><!-- 2&#45;&#45;4 --><g id="edge8" class="edge"><title>2&#45;&#45;4</title><path fill="none" stroke="black" d="M107.947,-20.8665C135.541,-25.2739 188.097,-33.6683 215.827,-38.0974"/></g><!-- 3&#45;&#45;4 --><g id="edge10" class="edge"><title>3&#45;&#45;4</title><path fill="none" stroke="black" d="M179.429,-58.4323C190.749,-54.8162 205.443,-50.1223 216.731,-46.5164"/></g></g></svg></div>
+<div style="text-align: center;">sh: 1: dot: not found
+</div>
 
 
 
@@ -47,17 +48,17 @@
 
 <p>Matricu susjedstva pamtimo kao polje. Ovaj isječak prikazuje učitavanje neusmjerenog grafa. Dolazi u obzir umjesto <tt>int</tt> tipa podataka koristiti <tt>bool</tt> radi uštede memorije. Isto tako, u C++ jeziku koristili bi <tt>vector</tt> i <tt>cin</tt>.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="n">graph</span><span class="p">[</span><span class="n">maxn</span><span class="p">][</span><span class="n">maxn</span><span class="p">];</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">int N, graph[maxn][maxn];
 
-<span class="kt">void</span> <span class="nf">load</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
-  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">N</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
-    <span class="o">--</span><span class="n">a</span><span class="p">;</span> <span class="o">--</span><span class="n">b</span><span class="p">;</span>
-    <span class="n">graph</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span></pre></div>
+void load() {
+  int m, a, b;
+  scanf(&quot;%d%d&quot;, &amp;N, &amp;m);
+  for (int i = 0; i &lt; m; ++i) {
+    scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+    --a; --b;
+    graph[a][b] = graph[b][a] = 1;
+  }
+}</pre></div>
 
 
 

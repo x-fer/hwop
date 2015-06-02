@@ -13,7 +13,8 @@
 Odnosno, ne postoji veza između čvorova koje smo stavili u isti skup.<br />
 To izgleda ovako nekako:</p>
 
-<div style="text-align: center;"><svg width="350pt" height="116pt" viewBox="0.00 0.00 350.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 112)"><title>G</title><polygon fill="white" stroke="white" points="-4,5 -4,-112 347,-112 347,5 -4,5"/><!-- a --><g id="node1" class="node"><title>a</title><ellipse fill="lightgray" stroke="black" cx="27" cy="-90" rx="27" ry="18"/><text text-anchor="middle" x="27" y="-87.8" font-family="Helvetica Neue" font-size="8.00">a</text></g><!-- z --><g id="node8" class="node"><title>z</title><ellipse fill="white" stroke="black" cx="99" cy="-18" rx="27" ry="18"/><text text-anchor="middle" x="99" y="-15.8" font-family="Helvetica Neue" font-size="8.00">z</text></g><!-- a&#45;&#45;z --><g id="edge4" class="edge"><title>a&#45;&#45;z</title><path fill="none" stroke="black" d="M42.2693,-74.7307C54.488,-62.512 71.5398,-45.4602 83.7527,-33.2473"/></g><!-- v --><g id="node9" class="node"><title>v</title><ellipse fill="white" stroke="black" cx="27" cy="-18" rx="27" ry="18"/><text text-anchor="middle" x="27" y="-15.8" font-family="Helvetica Neue" font-size="8.00">v</text></g><!-- a&#45;&#45;v --><g id="edge2" class="edge"><title>a&#45;&#45;v</title><path fill="none" stroke="black" d="M27,-71.8314C27,-61 27,-47.2876 27,-36.4133"/></g><!-- b --><g id="node2" class="node"><title>b</title><ellipse fill="lightgray" stroke="black" cx="171" cy="-90" rx="27" ry="18"/><text text-anchor="middle" x="171" y="-87.8" font-family="Helvetica Neue" font-size="8.00">b</text></g><!-- y --><g id="node7" class="node"><title>y</title><ellipse fill="white" stroke="black" cx="189" cy="-18" rx="27" ry="18"/><text text-anchor="middle" x="189" y="-15.8" font-family="Helvetica Neue" font-size="8.00">y</text></g><!-- b&#45;&#45;y --><g id="edge10" class="edge"><title>b&#45;&#45;y</title><path fill="none" stroke="black" d="M175.449,-72.2022C178.219,-61.1252 181.768,-46.928 184.539,-35.8425"/></g><!-- b&#45;&#45;z --><g id="edge8" class="edge"><title>b&#45;&#45;z</title><path fill="none" stroke="black" d="M155.731,-74.7307C143.512,-62.512 126.46,-45.4602 114.247,-33.2473"/></g><!-- b&#45;&#45;v --><g id="edge6" class="edge"><title>b&#45;&#45;v</title><path fill="none" stroke="black" d="M149.129,-79.0647C121.907,-65.4533 75.703,-42.3515 48.6045,-28.8022"/></g><!-- c --><g id="node3" class="node"><title>c</title><ellipse fill="lightgray" stroke="black" cx="99" cy="-90" rx="27" ry="18"/><text text-anchor="middle" x="99" y="-87.8" font-family="Helvetica Neue" font-size="8.00">c</text></g><!-- c&#45;&#45;z --><g id="edge12" class="edge"><title>c&#45;&#45;z</title><path fill="none" stroke="black" d="M99,-71.8314C99,-61 99,-47.2876 99,-36.4133"/></g><!-- d --><g id="node4" class="node"><title>d</title><ellipse fill="lightgray" stroke="black" cx="243" cy="-90" rx="27" ry="18"/><text text-anchor="middle" x="243" y="-87.8" font-family="Helvetica Neue" font-size="8.00">d</text></g><!-- x --><g id="node6" class="node"><title>x</title><ellipse fill="white" stroke="black" cx="297" cy="-18" rx="27" ry="18"/><text text-anchor="middle" x="297" y="-15.8" font-family="Helvetica Neue" font-size="8.00">x</text></g><!-- d&#45;&#45;x --><g id="edge14" class="edge"><title>d&#45;&#45;x</title><path fill="none" stroke="black" d="M255.253,-73.6621C264.091,-61.8788 275.969,-46.0416 284.795,-34.2733"/></g><!-- d&#45;&#45;z --><g id="edge16" class="edge"><title>d&#45;&#45;z</title><path fill="none" stroke="black" d="M221.129,-79.0647C193.907,-65.4533 147.703,-42.3515 120.604,-28.8022"/></g><!-- e --><g id="node5" class="node"><title>e</title><ellipse fill="lightgray" stroke="black" cx="315" cy="-90" rx="27" ry="18"/><text text-anchor="middle" x="315" y="-87.8" font-family="Helvetica Neue" font-size="8.00">e</text></g><!-- e&#45;&#45;x --><g id="edge20" class="edge"><title>e&#45;&#45;x</title><path fill="none" stroke="black" d="M310.551,-72.2022C307.781,-61.1252 304.232,-46.928 301.461,-35.8425"/></g><!-- e&#45;&#45;y --><g id="edge18" class="edge"><title>e&#45;&#45;y</title><path fill="none" stroke="black" d="M294.475,-78.2717C271.045,-64.8829 232.943,-43.11 209.516,-29.7233"/></g></g></svg></div>
+<div style="text-align: center;">sh: 1: dot: not found
+</div>
 
 
 
@@ -70,28 +71,28 @@ Ona vraća jedan ako postoji put od danog vrha do nekog nesparenog vrha iz skupa
 Ako uspijemo, sparimo tog našeg susjeda s nama i vratimo 1.<br />
 Okretanje veza se ovdje naoko nigdje ne vidi, ali se odvija odmotavanjem rekurzije.</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">int</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">bio</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">bio</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">graph</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>       
-    <span class="k">if</span> <span class="p">(</span><span class="n">matched</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">dfs</span><span class="p">(</span><span class="n">matched</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
-      <span class="n">matched</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
-      <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">int dfs(int node) {
+  if (bio[node]) return 0;
+  bio[node] = 1;  
+  for (int i = 0; i &lt; N; ++i) {
+    if (!graph[node][i]) continue;       
+    if (matched[i] == -1 || dfs(matched[i])) {
+      matched[i] = node;
+      return 1;
+    }
+  }
+  return 0;
+}
 
-<span class="kt">int</span> <span class="nf">matching</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">sol</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">memset</span><span class="p">(</span><span class="n">matched</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">matched</span><span class="p">);</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">memset</span><span class="p">(</span><span class="n">bio</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">bio</span><span class="p">);</span>
-    <span class="n">sol</span> <span class="o">+=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">sol</span><span class="p">;</span>
-<span class="p">}</span></pre></div>
+int matching() {
+  int sol = 0;
+  memset(matched, -1, sizeof matched);
+  for (int i = 0; i &lt; N; ++i) {
+    memset(bio, 0, sizeof bio);
+    sol += dfs(i);
+  }
+  return sol;
+}</pre></div>
 
 
 
