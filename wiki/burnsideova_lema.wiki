@@ -5,8 +5,7 @@ Klasičan primjer je prebrojati ogrlice koje se sastoje od $n$ perli, a svaka pe
 
 == Definicija ==
 
-Neka je $X$ skup objekata, a $T$ skup transformacija nad njima. Transformacija $t \in T$ je bijekcija iz $X$ u $X$ . Kažemo da su dva elementa iz $X$ simetrična ako se jedan može dobiti od drugoga primjenom niza transformacija. Skup transformacija mora sadržavati neutralnu transformaciju $t(x) = x$ . Dodatno, ako sadrži neku transformaciju $t$ mora sadržavati i njoj inverznu transformaciju, $t^{-1}$ .
-
+Neka je $X$ skup objekata, a $T$ skup transformacija nad njima. Transformacija $t \in T$ je bijekcija iz $X$ u $X$ . Kažemo da su dva elementa iz $X$ simetrična (ista) ako se jedan može dobiti od drugoga primjenom niza transformacija.
 Burnsideova lema nam tada kaže da je broj elemenata iz $X$ koji su različiti s obzirom na skup transformacija $T$ jednak:
 
 $$
@@ -65,5 +64,5 @@ Pažljiv čitatelj zapitat će se može li skup transformacija $T$ biti baš bil
 2. Na koliko načina možemo obojati 3x3 ploču u dvije boje. Bojanja smatramo jednakima ako se jedno od drugoga može dobiti rotacijom ili refleksijom ploče. (Rješenje: 102)
 
 !!!
-2015. Ivan Katanić
+Ivan Katanić
 !!!
