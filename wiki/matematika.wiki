@@ -1,5 +1,8 @@
 = Matematika u informatici =
 
+== 
+
+- [[burnsideova_lema|Burnsideova lema]]
 
 == Teorija brojeva ==
 
