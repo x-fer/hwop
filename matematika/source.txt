@@ -1,6 +1,6 @@
 = Matematika u informatici =
 
-== 
+== Prebrojavanja == 
 
 - [[burnsideova_lema|Burnsideova lema]]
 
