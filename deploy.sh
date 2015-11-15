@@ -6,6 +6,13 @@
 git checkout master
 git pull
 
+if which dot > /dev/null; then
+  echo -ne
+else
+  echo "Install graphviz. (which dot failed)."
+  exit 1
+fi
+
 outdir=../__hwop_html
 
 [ -f deploy.sh ] || ( echo "must be in root hwop dir."; exit 1; )
