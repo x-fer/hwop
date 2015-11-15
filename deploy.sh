@@ -9,7 +9,16 @@ git pull
 if which dot > /dev/null; then
   echo -ne
 else
-  echo "Install graphviz. (which dot failed)."
+  echo "Install graphviz. (sudo apt-get install graphviz)."
+  exit 1
+fi
+
+if which pygmentize > /dev/null; then
+  echo -ne
+else
+  echo "Install pygments."
+  echo "sudo apt-get install python-setuptools"
+  echo "sudo easy_install pygments"
   exit 1
 fi
 
