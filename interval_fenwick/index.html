@@ -94,27 +94,27 @@
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Pomocne strukture</div><pre class="remarkup-code">fenwick_tree mul; //Fenwickovo stablo za mul
-fenwick_tree add; //Fenwickovo stablo za add</pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Pomocne strukture</div><pre class="remarkup-code"><span class="n">fenwick_tree</span> <span class="n">mul</span><span class="p">;</span> <span class="c1">//Fenwickovo stablo za mul</span>
+<span class="n">fenwick_tree</span> <span class="n">add</span><span class="p">;</span> <span class="c1">//Fenwickovo stablo za add</span></pre></div>
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Operacija ubacivanja intervala</div><pre class="remarkup-code">void ubaci(int x, int a, int b) {
-  mul.ubaci(x, a);
-  mul.ubaci(-x, b);
-  add.ubaci(-x * (a - 1), a);
-  add.ubaci(x * b, b);
-}</pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Operacija ubacivanja intervala</div><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">ubaci</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mul</span><span class="p">.</span><span class="n">ubaci</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+  <span class="n">mul</span><span class="p">.</span><span class="n">ubaci</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+  <span class="n">add</span><span class="p">.</span><span class="n">ubaci</span><span class="p">(</span><span class="o">-</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">a</span><span class="p">);</span>
+  <span class="n">add</span><span class="p">.</span><span class="n">ubaci</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Operacija upita</div><pre class="remarkup-code">int upit(int x) {
-  return mul.upit(x) * x + add.upit(x);
-}
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><div class="remarkup-code-header">Operacija upita</div><pre class="remarkup-code"><span class="kt">int</span> <span class="nf">upit</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">mul</span><span class="p">.</span><span class="n">upit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">add</span><span class="p">.</span><span class="n">upit</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
 
-int upit(int a, int b) {	
-  return upit(b) - upit(a - 1);
-}</pre></div>
+<span class="kt">int</span> <span class="nf">upit</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>	
+  <span class="k">return</span> <span class="n">upit</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">upit</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 
 

@@ -21,20 +21,20 @@
 
 <p>Slijedi par primjera koji se mogu upisati direktno u &#039;konzolu&#039; odnosno u bash.</p>
 
-<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code">#pokreni program ./t nad svim test primjerima i zanemari izlaz
-for i in {1..10}; do time ./t &lt; zad.$i.in &gt; /dev/null; done</pre></div>
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c">#pokreni program ./t nad svim test primjerima i zanemari izlaz</span>
+<span class="k">for</span> i in <span class="o">{</span>1..10<span class="o">}</span><span class="p">;</span> <span class="k">do</span> <span class="nb">time</span> ./t &lt; zad.<span class="nv">$i</span>.in &gt; /dev/null<span class="p">;</span> <span class="k">done</span></pre></div>
 
 
 
-<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code">#pokreni program ./t nad svim test primjerima i provjeri jeli tocan
-#prazan ispis znaci da je sve tocno
-for i in {1..10}; do time ./t &lt; zad.$i.in | diff -wq - zad.$i.out; done</pre></div>
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c">#pokreni program ./t nad svim test primjerima i provjeri jeli tocan</span>
+<span class="c">#prazan ispis znaci da je sve tocno</span>
+<span class="k">for</span> i in <span class="o">{</span>1..10<span class="o">}</span><span class="p">;</span> <span class="k">do</span> <span class="nb">time</span> ./t &lt; zad.<span class="nv">$i</span>.in <span class="p">|</span> diff -wq - zad.<span class="nv">$i</span>.out<span class="p">;</span> <span class="k">done</span></pre></div>
 
 
 
-<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"># 100 puta pozovi generator test primjera, pokreni pravo i brute rjesenje.
-# usporedi jeli tocno.
-for i in {1..100}; do ./gen &gt; in; ./t &lt; in &gt; tout; ./brute &lt; in &gt; bout; diff bout tout; done</pre></div>
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="c"># 100 puta pozovi generator test primjera, pokreni pravo i brute rjesenje.</span>
+<span class="c"># usporedi jeli tocno.</span>
+<span class="k">for</span> i in <span class="o">{</span>1..100<span class="o">}</span><span class="p">;</span> <span class="k">do</span> ./gen &gt; in<span class="p">;</span> ./t &lt; in &gt; tout<span class="p">;</span> ./brute &lt; in &gt; bout<span class="p">;</span> diff bout tout<span class="p">;</span> <span class="k">done</span></pre></div>
 
 
 
@@ -95,13 +95,13 @@ Nakorisnija naredba u <strong>gdb</strong> je <em>help</em>. Try it yourself.</p
 
 <p>kako bi svaki puta primjeri bili drugaciji (cesce od svake sekunde) pod linux-om se moze koristiti sljedeca dosjetka:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">#include &lt;unistd.h&gt;
-#include &lt;ctime&gt;
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="cp">#include &lt;unistd.h&gt;</span>
+<span class="cp">#include &lt;ctime&gt;</span>
 
-int main() {
-   srand(getpid() * time(0));
-   return 0;
-}</pre></div>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="n">srand</span><span class="p">(</span><span class="n">getpid</span><span class="p">()</span> <span class="o">*</span> <span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
 
 <p>Napravili smo random seed od trenutnog identifikatora procesa (koji je svaki put drugaciji) i od trenutne sekunde. Taj seed ce se stalno mijenjati :)</p>
 
