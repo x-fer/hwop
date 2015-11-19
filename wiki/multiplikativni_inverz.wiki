@@ -27,7 +27,7 @@ Drugim riječima, multilikativni inverz broja $a$ računamo pomoću [[matematika
 Da skratimo priču:
 
   int M = 10007; // da, prost je
-  int inverzi[M];
+  int inverz[M];
   inverz[1] = 1;
   for (int x = 2; x < M; ++x)
     inverz[x] = (M - M/x) * inverz[M%x] % M;
