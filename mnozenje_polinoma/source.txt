@@ -165,7 +165,7 @@ $c = ab = NTT^{-1}(NTT(a).NTT(b))$
 gdje je :
 
 	* $N$ - najmanji djelitelj od $p-1$ koji nije manji od $2n+1$ ,
-	* $g$ - bilo koji primitivni korijen modulo $p$ ([[https://en.wikipedia.org/wiki/Primitive_root_modulo_n|Što je primitivni korijen i kako ga pronaći?]]) ,
+	* $g$ - bilo koji primitivni korijen modulo $p$  ([[https://en.wikipedia.org/wiki/Primitive_root_modulo_n|Što je primitivni korijen i kako ga pronaći?]]),
 	* $NTT(p) = T_{N, g^{(p-1)/N}}(p)$ ,
 	* $NTT^{-1}(p) = \frac{1}{N} T_{N, g^{-(p-1)/N}}(p)$ ,
 	* $.$ - binarna operacija nad polinomima, "množenje i-tog člana s i-tim": $(r.s)_i = r_is_i$ .
