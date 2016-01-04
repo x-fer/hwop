@@ -1,6 +1,8 @@
 hwop
 ====
 
+# The wiki pages are hosted at http://wiki.xfer.hr/
+
 Croatian programming wiki sources.
 
 These sources are in Croatian.
@@ -16,4 +18,4 @@ To see the markup results online, use
 
 http://markup.xfer.hr/rnd/
 
-Fork this repo, and when your article is ready, send a pull request!
+Fork this repo, and when your article is ready, and send a pull request!
