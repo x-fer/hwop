@@ -154,7 +154,7 @@ $e^{ix} = \cos x + i \sin x$ .
 
 Složenost ovog algoritma množenja polinoma je $O(n \log n)$ .
 
-== DFT u prostim poljima (NTT - Number theoretic transform) ==
+== Množenje polinoma nad prostim poljima koristeći NTT (Number theoretic transform) ==
 
 Nedostatak DFT-a je (barem za nas) to što koristi realne odnosno kompleksne brojeve. 
 Ako radimo s polinomima nad konačnim poljima to ponekad možemo izbjeći. Pretpostavimo da radimo s konačnim poljem $GF(p)$ tj. sve operacije nad brojevima provodimo modulo $p$ gdje je $p$ prost broj.
