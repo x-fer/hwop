@@ -35,39 +35,39 @@
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">traverse</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">it</span> <span class="o">=</span> <span class="n">lo</span><span class="p">;</span> <span class="n">it</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">);</span>
-<span class="p">}</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">void traverse(int lo, int hi) {
+  for (int it = lo; it &lt; hi; ++it);
+}
 
-<span class="kt">bool</span> <span class="nf">nonempty</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">;</span>
-<span class="p">}</span>
+bool nonempty(int lo, int hi) {
+  return lo &lt; hi;
+}
 
-<span class="kt">int</span> <span class="nf">count</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">nonempty</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span> <span class="o">?</span> <span class="n">hi</span> <span class="o">-</span> <span class="nl">lo</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+int count(int lo, int hi) {
+  return nonempty(lo, hi) ? hi - lo : 0;
+}
 
-<span class="kt">bool</span> <span class="nf">intersects</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lo2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi2</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">nonempty</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">lo1</span><span class="p">,</span> <span class="n">lo2</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">hi1</span><span class="p">,</span> <span class="n">hi2</span><span class="p">));</span>
-<span class="p">}</span>
+bool intersects(int lo1, int hi1, int lo2, int hi2) {
+  return nonempty(std::max(lo1, lo2), std::min(hi1, hi2));
+}
 
-<span class="kt">bool</span> <span class="nf">contains</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">lo</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">;</span>
-<span class="p">}</span>
+bool contains(int lo, int hi, int x) {
+  return x &gt;= lo &amp;&amp; x &lt; hi;
+}
 
-<span class="kt">bool</span> <span class="nf">contains</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lo2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi2</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">lo2</span> <span class="o">&gt;=</span> <span class="n">lo1</span> <span class="o">&amp;&amp;</span> <span class="n">hi2</span> <span class="o">&lt;=</span> <span class="n">hi1</span><span class="p">;</span>
-<span class="p">}</span>
+bool contains(int lo1, int hi1, int lo2, int hi2) {
+  return lo2 &gt;= lo1 &amp;&amp; hi2 &lt;= hi1;
+}
 
-<span class="c1">// rezultantni intervali su disjunktni, odnosno nemaju presjek</span>
-<span class="c1">// ukoliko je count(lo, hi) paran broj, tada oba intervala imaju jednaku velicinu.</span>
-<span class="c1">// u suprotnom prvi interval sadrzi jedan broj manje.</span>
-<span class="c1">// int mid = (lo + hi) / 2 je ekvivalentno, osim sto ima opasnost od overflow-a</span>
-<span class="kt">void</span> <span class="nf">split</span><span class="p">(</span><span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-  <span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
-  <span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">hi</span><span class="p">);</span>
-<span class="p">}</span></pre></div>
+// rezultantni intervali su disjunktni, odnosno nemaju presjek
+// ukoliko je count(lo, hi) paran broj, tada oba intervala imaju jednaku velicinu.
+// u suprotnom prvi interval sadrzi jedan broj manje.
+// int mid = (lo + hi) / 2 je ekvivalentno, osim sto ima opasnost od overflow-a
+void split(int lo, int hi) {
+  int mid = lo + (hi - lo) / 2;
+  (lo, mid);
+  (mid, hi);
+}</pre></div>
 
 
 

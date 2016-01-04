@@ -9,7 +9,7 @@
   <body class="markup">
     <div class="markup-container"><!--h0--><h2><a name="konstanta_inf"></a>Konstanta INF</h2>
 
-<p>Često u programskom kodu imamo potrebu koristiti neki broj koji je veći od svih ostalih brojeva koji se mogu pojaviti pri obradi. Takvu konstanu nazivamo <tt>inf</tt>, <tt>INF</tt> ili ponekad <tt>oo</tt> (zato jer <tt>oo</tt> podsjeća kao znak <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 2.286ex; height: 1.143ex; vertical-align: -0.143ex; margin-top: 1px; margin-right: 0px; margin-bottom: 1px; margin-left: 0px; position: static; " viewBox="0 -468.258123255155 1005 505.51624651031" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path id="MJMAIN-221E" stroke-width="10" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path></defs><g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-221E" xlink:href="#MJMAIN-221E"></use></g></svg></span>).</p>
+<p>Često u programskom kodu imamo potrebu koristiti neki broj koji je veći od svih ostalih brojeva koji se mogu pojaviti pri obradi. Takvu konstanu nazivamo <tt>inf</tt>, <tt>INF</tt> ili ponekad <tt>oo</tt> (zato jer <tt>oo</tt> podsjeća kao znak <span style="font-size:100%; display:inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.324ex" height="1.509ex" style="vertical-align: -0.255ex; position: static; " viewBox="0 -540.2 1000.5 649.8" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs id="MathJax_SVG_glyphs"><path stroke-width="1" id="MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-221E" x="0" y="0" xlink:href="#MJMAIN-221E"></use></g></svg></span>).</p>
 
 <p>Na koju vrijednost postaviti ovaj broj? Jedan od prijedloga je:</p>
 
@@ -27,38 +27,38 @@
 
 <p><tt>memset</tt> je funkcija koja određeni dio memorije postavlja na neku vrijednost. Njen prototip je sljedeći:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="cp">#include &lt;string.h&gt;</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">#include &lt;string.h&gt;
 
-<span class="kt">void</span> <span class="o">*</span><span class="nf">memset</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">);</span></pre></div>
+void *memset(void *s, int c, size_t n);</pre></div>
 
 <p>Njenim pozivom postavljamo <tt>n</tt> okteta počevši s adrese <tt>s</tt> na vrijednost <tt>c</tt>. Njeno ponašanje ekvivalnentno je s:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">void</span><span class="o">*</span> <span class="nf">memset</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kt">char</span> <span class="o">*</span><span class="n">byte_ptr</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
-  <span class="kt">char</span> <span class="n">byte</span> <span class="o">=</span> <span class="n">c</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">;</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">n</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">*</span><span class="p">(</span><span class="n">byte_ptr</span><span class="o">++</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
-<span class="p">}</span></pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">void* memset(void *s, int c, size_t n) {
+  char *byte_ptr = s;
+  char byte = c &amp; 0xff;
+  while (n--) {
+    *(byte_ptr++) = c;
+  }
+  return s;
+}</pre></div>
 
 <p>Primjetite da se postavlja vrijednost okteta, a ne cijelih brojeva (4 okteta). Stoga, ako koristimo funkciju <tt>memset</tt> na nizu cijelih brojeva za neke vrijednosti <tt>c</tt> možemo dobiti naizgled čudne rezultate:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">a</span><span class="p">);</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<span class="c1">// ispisuje se 16843009</span></pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">int a[10];
+memset(a, 1, sizeof a);
+printf(&quot;%d\n&quot;, a[0]);
+// ispisuje se 16843009</pre></div>
 
 <p>Razlog ovome je što smo u 4 memorijske lokacije koje čuvaju vrijednost za prvi član niza zapisali vrijednost <tt>0x01</tt> i sada taj prvi član iznosi <tt>(1 &lt;&lt; 24) + (1 &lt;&lt; 16) + (1 &lt;&lt; 8) + 1</tt>.</p>
 
 <p>No, ukoliko je cijeli broj oblika <tt>(x &lt;&lt; 24) + (x &lt;&lt; 16) + (x &lt;&lt; 8) + x</tt>, on se može <tt>memset</tt>-ati bez greške. Ovakvi brojevi kada se zapišu u memoriju imaju jednaku vrijednost svih 4 okteta. Stoga, svaki od sljedećih <tt>memset</tt> poziva radi očekivanu operaciju:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">const</span> <span class="kt">int</span> <span class="n">oo</span> <span class="o">=</span> <span class="mh">0x3f3f3f3f</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">const int oo = 0x3f3f3f3f;
+int a[10];
 
-<span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">a</span><span class="p">);</span> <span class="n">assert</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">a</span><span class="p">);</span> <span class="n">assert</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">oo</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">a</span><span class="p">);</span> <span class="n">assert</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">oo</span><span class="p">);</span></pre></div>
+memset(a, 0, sizeof a); assert(a[0] == 0);
+memset(a, -1, sizeof a); assert(a[0] == -1);
+memset(a, oo, sizeof a); assert(a[0] == oo);</pre></div>
 
 
 
@@ -66,9 +66,9 @@
 
 
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">char* str = (char*) malloc(100);
 
-<span class="n">memset</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">str</span><span class="p">);</span></pre></div>
+memset(str, &#039;a&#039;, sizeof str);</pre></div>
 
 <p>Na koliko memorijskih lokacija ovaj poziv postavlja vrijednost <tt>&#039;a&#039;</tt>? Vrijedi li da je <tt>a[9] == &#039;a&#039;</tt>?</p>
 
@@ -76,9 +76,9 @@
 
 <p>Iskoristiti ćemo priliku da još malo oblatimo jezik <tt>C</tt>, odnosno da pokažemo kako lako programera može dovesti do teško ispravljivih grešaka. Pretpostavimo da smo zaobišli ovaj debakl i ispravno postavili sve vrijednosti niza na &#039;a&#039;:</p>
 
-<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">size_t</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-<span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">);</span></pre></div>
+<div class="remarkup-code-block" data-code-lang="c" data-sigil="remarkup-code-block"><pre class="remarkup-code">size_t length = 100;
+char *str = (char*) malloc(length);
+memset(str, &#039;a&#039;, length);</pre></div>
 
 <p>Koliko je sada dug naš niz znakova, odnosno koliko iznosi <tt>strlen(a)</tt>?</p>
 
