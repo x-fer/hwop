@@ -28,7 +28,7 @@ Jednom kada budemo zadovoljni teksom članka, objavit ćemo ga na [[http://wiki.
 
 Umjesto da se radi 2. korak i šalje zahtjev za objavom članka na `phabricator` možete napraviti sljedeće.
 
-- Fork repozitorija https://github.com/agrbin/hwop.git
+- Fork repozitorija https://github.com/x-fer/hwop.git
 - Napisati članak (koristeći markup) te sadržaj članka spremiti u novu datoteku u /wiki/ direktorij
 - Napraviti pull request s vašim promjenama
     - Sva daljnja komunikacija oko teksta članka će se obavljati na github straniti dotičnog pull requesta
