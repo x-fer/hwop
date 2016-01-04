@@ -57,7 +57,7 @@ Problem rješavamo rekurzivno:
 
 Jedno množenje smo kompenzirali zbrajanjima (koja su "jeftina") te sada imamo **tri množenja** upola manjih polinoma koja rješavamo rekurzivno, a rezultate kombiniramo prema posljednjem izrazu za $c$ .
 Pažljivom analizom dolazimo do složenosti $O(n^{\log_2 3})$ ovog algoritma, što je približno $O(n^{1.58})$ .
-Ako vas zanima kako elegantno izračunati složenost ovog i sličnih algoritama pručite [[https://en.wikipedia.org/wiki/Master_theorem | Master theorem]] .
+Ako vas zanima kako elegantno izračunati složenost ovog i sličnih algoritama pručite [[https://en.wikipedia.org/wiki/Master_theorem | Master theorem]].
 
 
 == Množenje polinoma uporabom interpolacije polinoma ==
@@ -165,7 +165,7 @@ $c = ab = NTT^{-1}(NTT(a).NTT(b))$
 gdje je :
 
 	* $N$ - najmanji djelitelj od $p-1$ koji nije manji od $2n+1$ ,
-	* $g$ - bilo koji primitivni korijen modulo $p$ ([[https://en.wikipedia.org/wiki/Primitive_root_modulo_n|Što je primitivni korijen i kako ga pronaći?]]) ,
+	* $g$ - bilo koji primitivni korijen modulo $p$  ([[https://en.wikipedia.org/wiki/Primitive_root_modulo_n|Što je primitivni korijen i kako ga pronaći?]]),
 	* $NTT(p) = T_{N, g^{(p-1)/N}}(p)$ ,
 	* $NTT^{-1}(p) = \frac{1}{N} T_{N, g^{-(p-1)/N}}(p)$ ,
 	* $.$ - binarna operacija nad polinomima, "množenje i-tog člana s i-tim": $(r.s)_i = r_is_i$ .
@@ -180,7 +180,7 @@ Pošli smo od problema množenja polinoma, no treba napomenuti da se FFT koristi
 Kad govorimo o množenju polinoma, klasična primjena je množenje velikih brojeva (zapisujemo ih kao polinome u bazi 10 ili nekoj većoj/manjoj bazi).
 
 FFT je svakako bolji izbor od Karatsubinog algoritma kad govorimo o brzini, no nedostatak mu je preciznost jer smo primorani koristiti realni tip podatka pri implementaciji.
-Uz preciznost, prednost Karatsubinog algoritma je i mogućnost množenja polinoma čak i kad dijeljenje nije definirano (npr. modulo 24) .
+Uz preciznost, prednost Karatsubinog algoritma je i mogućnost množenja polinoma čak i kad dijeljenje nije definirano (npr. modulo 24).
 
 
 Trebamo napomenuti da se NTT može iskoristiti čak i kad ne želimo eksplicitno rezultat modulo prost $p$ . Dovoljno je uzeti $p$ veći od najveće vrijednosti članova rezultantnog polinoma i pokrenuti algoritam. Nekad to nije praktično jer smo obično ograničeni 32-bitnim ili 64-bitnim cjelobrojnim tipom podatka. Tada možemo nekoliko puta izvršiti množenje, svaki puta modulo različit prost broj $p$ . Odabrani prosti brojevi mogu biti proizvoljno mali ali njihov umnožak $u$ mora biti veći od najveće vrijednosti članova rezultatntnog polinoma. Vrijednost člana rezultata modulo $u$  (tj. pravu vrijednost rezultata) možemo zatim izračunati koristeći Kineski teorem o ostacima (CRT).

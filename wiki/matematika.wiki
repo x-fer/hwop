@@ -9,13 +9,12 @@
 - [[matematika/logpow|Logaritamsko potenciranje]]
 - [[matematika/teorija_brojeva/gcd/|GCD]]
 - [[Multiplikativni inverz]]
-- [[mnozenje_polinoma|Mnozenje polinoma]
+- [[Množenje polinoma]]
 
 == Numerička matematika ==
 
 - [[matematika/numerika|Numerika]], pogreške u decimalnom zapisu
 - [[matematika/racapprox/|Aproksimacije racionalnim brojevima]]
-
 
 !!!
 2016. Anton Grbin, Ivan Katanić, Alen Rakipović, Goran Žužić
