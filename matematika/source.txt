@@ -9,7 +9,7 @@
 - [[matematika/logpow|Logaritamsko potenciranje]]
 - [[matematika/teorija_brojeva/gcd/|GCD]]
 - [[Multiplikativni inverz]]
-- [[Mnozenje polinoma]
+- [[Mnozenje polinoma]]
 
 == Numerička matematika ==
 
