@@ -90,20 +90,21 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
   <span class="kt">bool</span> <span class="n">otvara</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">make_tuple</span><span class="p">(</span><span class="n">lhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">)</span> <span class="o">&lt;</span>
-         <span class="n">make_tuple</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">);</span>
-<span class="p">}</span>
-
 <span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">evt2</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>                                 
     <span class="k">return</span> <span class="n">lhs</span><span class="p">.</span><span class="n">t</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">t</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">t</span> <span class="p">:</span> 
            <span class="n">lhs</span><span class="p">.</span><span class="n">x</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">x</span> <span class="p">:</span>                                       
            <span class="n">lhs</span><span class="p">.</span><span class="n">r</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">r</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">r</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">r</span> <span class="p">:</span>                                       
            <span class="n">lhs</span><span class="p">.</span><span class="n">otvara</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">;</span>                                           
   <span class="p">}</span>
-<span class="p">};</span></pre></div>
+<span class="p">};</span>
 
-<p>I kod funkcija koje vraćaju više elemenata:</p>
+<span class="c1">// Ili lakse:</span>
+<span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">make_tuple</span><span class="p">(</span><span class="n">lhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">)</span> <span class="o">&lt;</span>
+         <span class="n">make_tuple</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
+
+<p>Tuple nam može pomoći i kod funkcija koje vraćaju više vrijednosti:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tie</div><pre class="remarkup-code"><span class="cp">#include &lt;utility&gt;</span>
 <span class="cp">#include &lt;iostream&gt;</span>
@@ -122,7 +123,7 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></pre></div>
 
-<p>... i nekada kod rekonstrukcije:</p>
+<p>... i kod rekonstrukcije:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple u rekonstrukciji</div><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">reconstruct</span><span class="p">()</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">curr_x</span><span class="p">,</span> <span class="n">curr_y</span><span class="p">;</span>
@@ -132,11 +133,11 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
   <span class="p">}</span>
 <span class="p">}</span></pre></div>
 
-<p>Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.</p>
+
 
 <!--h4--><h3><a name="auto_auto_auto"></a>Auto auto auto</h3>
 
-<p>Za čitanje ovog poglavlja nije potrebna <a href="https://www.youtube.com/watch?v=riiHyXzEjpc" target="_blank">vozačka dozvola</a>.</p>
+<p>Za čitanje ovog poglavlja nije potrebna <a href="https://www.youtube.com/watch?v=riiHyXzEjpc" target="_blank">vozačka dozvola</a>.</p>
 
 <p><a href="http://en.cppreference.com/w/cpp/language/auto" target="_blank">http://en.cppreference.com/w/cpp/language/auto</a></p>
 
@@ -165,8 +166,6 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
 <p>Treba pripaziti da prekomjerno korištenje <tt>auto</tt> pokrate može dovesti do ozbiljno nečitljivih kodova što neki natjecatelji i vole!</p>
 
 <p>Na ovaj način možemo deklarirati i <tt>const</tt> varijablu: <tt>const auto j = ...</tt>.  Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
-
-<p>Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je <tt>auto</tt>!</p>
 
 <!--h5--><h3><a name="brace_list"></a>Brace list</h3>
 
@@ -234,7 +233,7 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
 <ul>
 <li><tt>for (int&amp; x : v) { x++; }</tt></li>
 <li><tt>for (const int&amp; element : v)</tt></li>
-<li>mapa je set parova!</li>
+<li>mapa je set parova.</li>
 <li>moguće je iteriranje po C nizu poznate duljine</li>
 <li>za maksimalno nečitljiv kod: <tt>auto</tt>, <tt>auto&amp;</tt> i <tt>const auto&amp;</tt></li>
 </ul>
@@ -245,16 +244,14 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
 
 <p>Pojednostavljeno:</p>
 
-<p>Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od<br />
-prave funkcije, ovaj objekt (kao i svaki drugi) mozemo spremiti u varijablu.</p>
+<p>Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od prave funkcije, ovaj objekt (kao i svaki drugi objekt prve vrste) možemo spremiti u varijablu.</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">zbroji</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
 <span class="p">};</span>
 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">zbroji</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span></pre></div>
 
-<p>I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći<br />
-anonimnu strukturu:</p>
+<p>I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći anonimnu strukturu:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">struct</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>

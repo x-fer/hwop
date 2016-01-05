@@ -84,11 +84,6 @@ struct evt {
   bool otvara;
 };
 
-bool operator< (const evt& lhs, const evt& rhs) {
-  return make_tuple(lhs.t, lhs.x, lhs.r, lhs.otvara) <
-         make_tuple(rhs.t, rhs.x, rhs.r, rhs.otvara);
-}
-
 bool operator< (const evt& lhs, const evt2& rhs) const {                                 
     return lhs.t != rhs.t ? lhs.t < rhs.t : 
            lhs.x != rhs.x ? lhs.x < rhs.x :                                       
@@ -96,9 +91,15 @@ bool operator< (const evt& lhs, const evt2& rhs) const {
            lhs.otvara < rhs.otvara;                                           
   }
 };
+
+// Ili lakse:
+bool operator< (const evt& lhs, const evt& rhs) {
+  return make_tuple(lhs.t, lhs.x, lhs.r, lhs.otvara) <
+         make_tuple(rhs.t, rhs.x, rhs.r, rhs.otvara);
+}
 ```
 
-I kod funkcija koje vraćaju više elemenata:
+Tuple nam može pomoći i kod funkcija koje vraćaju više vrijednosti:
 
 ```lang=c++,name=tie
 #include <utility>
@@ -119,7 +120,7 @@ int main() {
 }
 ```
 
-... i nekada kod rekonstrukcije:
+... i kod rekonstrukcije:
 
 
 
@@ -133,11 +134,9 @@ void reconstruct() {
 }
 ```
 
-Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.
-
 == Auto auto auto ==
 
-Za čitanje ovog poglavlja nije potrebna [[https://www.youtube.com/watch?v=riiHyXzEjpc|vozačka dozvola]].
+Za čitanje ovog poglavlja nije potrebna [[https://www.youtube.com/watch?v=riiHyXzEjpc|vozačka dozvola]].
 
 http://en.cppreference.com/w/cpp/language/auto
 
@@ -168,8 +167,6 @@ for (auto it = v.begin(); it != v.end(); ++it);
 Treba pripaziti da prekomjerno korištenje `auto` pokrate može dovesti do ozbiljno nečitljivih kodova što neki natjecatelji i vole!
 
 Na ovaj način možemo deklarirati i `const` varijablu: `const auto j = ...`.  Isto vrijedi i za referencu: `auto& j = ...`.
-
-Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je `auto`!
 
 == Brace list ==
 
@@ -245,7 +242,7 @@ Zanimljiviji primjeri:
 
 - `for (int& x : v) { x++; }`
 - `for (const int& element : v)`
-- mapa je set parova!
+- mapa je set parova.
 - moguće je iteriranje po C nizu poznate duljine
 - za maksimalno nečitljiv kod: `auto`, `auto&` i `const auto&`
 
@@ -255,8 +252,7 @@ http://en.cppreference.com/w/cpp/language/lambda
 
 Pojednostavljeno:
 
-Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od
-prave funkcije, ovaj objekt (kao i svaki drugi) mozemo spremiti u varijablu.
+Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od prave funkcije, ovaj objekt (kao i svaki drugi objekt prve vrste) možemo spremiti u varijablu.
 
 ```lang=c++
   std::function<int(int, int)> zbroji = [] (int a, int b) {
@@ -265,8 +261,7 @@ prave funkcije, ovaj objekt (kao i svaki drugi) mozemo spremiti u varijablu.
   cout << zbroji(1, 2) << endl;
 ```
 
-I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći
-anonimnu strukturu:
+I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći anonimnu strukturu:
 
 ```lang=c++
   struct {
