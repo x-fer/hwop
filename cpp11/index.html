@@ -22,15 +22,13 @@
 <li>2017: to be determined</li>
 </ul>
 
-<p>IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te<br />
-županijsko i državno natjecanje također podržavaju C++11.</p>
+<p>IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te županijsko i državno natjecanje također podržavaju C++11.</p>
 
 <p>Ovaj članak predstavlja nekoliko značajki jezika C++11 koje mogu biti korisni u natjecateljskom programiranju.</p>
 
 <!--h1--><h3><a name="imam_li_c_kompajler"></a>Imam li C++11 kompajler?</h3>
 
-<p>Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću<br />
-zastavicu.</p>
+<p>Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću zastavicu.</p>
 
 <div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>g++ -std<span class="o">=</span>c++11</pre></div>
 
@@ -39,7 +37,7 @@ zastavicu.</p>
 <p><a href="https://gcc.gnu.org/projects/cxx0x.html" target="_blank">https://gcc.gnu.org/projects/cxx0x.html</a><br />
 <a href="http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang" target="_blank">http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang</a></p>
 
-<!--h2--><h3><a name="izdvojene_znac_ajke_c_u_ovom_clanku"></a>Izdvojene značajke C++11 u ovom članku</h3>
+<!--h2--><h3><a name="izdvojene_znacajke_c_u_ovom_clanku"></a>Izdvojene značajke C++11 u ovom članku</h3>
 
 <p>Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju najkorisniji feature-i su:</p>
 
@@ -53,8 +51,7 @@ zastavicu.</p>
 
 <p>Poredano od najjednostavnijih na gore.</p>
 
-<p>Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u<br />
-natjecateljskom programiranju:</p>
+<p>Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u natjecateljskom programiranju:</p>
 
 <ul>
 <li><a href="http://www.cplusplus.com/reference/unordered_set/unordered_set/" target="_blank">unordered_set</a>, <a href="http://www.cplusplus.com/reference/unordered_map/unordered_map/" target="_blank">unordered_map</a></li>
@@ -65,8 +62,7 @@ natjecateljskom programiranju:</p>
 
 <p><a href="http://en.cppreference.com/w/cpp/utility/tuple" target="_blank">http://en.cppreference.com/w/cpp/utility/tuple</a></p>
 
-<p>Pair je struktura koja pohranjuje dva elementa dok <tt>tuple</tt> može sadržavati<br />
-proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani <tt>pair</tt>!</p>
+<p>Pair je struktura koja pohranjuje dva elementa dok <tt>tuple</tt> može sadržavati proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani <tt>pair</tt>!</p>
 
 <p>Prisjetimo se kako se koristi <tt>pair</tt>.</p>
 
@@ -107,7 +103,7 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
   <span class="p">}</span>
 <span class="p">};</span></pre></div>
 
-<p>I kod funkcija koje vracaju vise elemenata:</p>
+<p>I kod funkcija koje vraćaju više elemenata:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tie</div><pre class="remarkup-code"><span class="cp">#include &lt;utility&gt;</span>
 <span class="cp">#include &lt;iostream&gt;</span>
@@ -126,15 +122,25 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></pre></div>
 
+<p>... i nekada kod rekonstrukcije:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple u rekonstrukciji</div><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">reconstruct</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">curr_x</span><span class="p">,</span> <span class="n">curr_y</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">curr_x</span> <span class="o">!=</span> <span class="n">start_x</span> <span class="o">||</span> <span class="n">curr_y</span> <span class="o">!=</span> <span class="n">start_y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tie</span><span class="p">(</span><span class="n">curr_x</span><span class="p">,</span> <span class="n">curr_y</span><span class="p">)</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">curr_x</span><span class="p">][</span><span class="n">curr_y</span><span class="p">];</span>
+    <span class="n">polje</span><span class="p">[</span><span class="n">curr_x</span><span class="p">][</span><span class="n">curr_y</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;*&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></pre></div>
+
 <p>Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.</p>
 
 <!--h4--><h3><a name="auto_auto_auto"></a>Auto auto auto</h3>
 
-<p>Za čitanje ovog poglavlja nije potrebna <a href="https://www.youtube.com/watch?v=riiHyXzEjpc" target="_blank">vozačka dozvola</a>.</p>
+<p>Za čitanje ovog poglavlja nije potrebna <a href="https://www.youtube.com/watch?v=riiHyXzEjpc" target="_blank">vozačka dozvola</a>.</p>
 
 <p><a href="http://en.cppreference.com/w/cpp/language/auto" target="_blank">http://en.cppreference.com/w/cpp/language/auto</a></p>
 
-<p>Ključna riječ <tt>auto</tt> zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:</p>
+<p>Ključna riječ <tt>auto</tt> zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">auto</span> <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span> <span class="c1">// kompajler zna da ovdje &#39;auto&#39; znaci &#39;int&#39;</span>
@@ -154,13 +160,11 @@ elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
 <span class="k">auto</span> <span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="n">kMaxN</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">double</span><span class="p">));</span> <span class="c1">// &#39;auto&#39; znaci &#39;double*&#39;</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">);</span>
-<span class="c1">// (ova for petlja moze i jednostavnije u C++11, sljedece poglavlje..)</span></pre></div>
+<span class="c1">// (ova for petlja moze i jednostavnije u C++11, pogledaj sljedece poglavlje..)</span></pre></div>
 
-<p>Treba pripaziti da prekomjerno korištenje <tt>auto</tt> pokrate može dovesti do<br />
-ozbiljno nečitljivih kodova što neki natjecatelji i vole!</p>
+<p>Treba pripaziti da prekomjerno korištenje <tt>auto</tt> pokrate može dovesti do ozbiljno nečitljivih kodova što neki natjecatelji i vole!</p>
 
-<p>Na ovaj način možemo deklarirati i <tt>const</tt> varijablu: <tt>const auto j = ...</tt>.<br />
-Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
+<p>Na ovaj način možemo deklarirati i <tt>const</tt> varijablu: <tt>const auto j = ...</tt>.  Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
 
 <p>Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je <tt>auto</tt>!</p>
 
@@ -169,7 +173,7 @@ Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
 <p><a href="http://en.cppreference.com/w/cpp/language/list_initialization" target="_blank">http://en.cppreference.com/w/cpp/language/list_initialization</a><br />
 <a href="http://en.cppreference.com/w/cpp/utility/initializer_list" target="_blank">http://en.cppreference.com/w/cpp/utility/initializer_list</a></p>
 
-<p>Brace list je bomba. Pokazujem primjere:</p>
+<p>Objašnjavamo brace list inicijalizaciju kroz primjere:</p>
 
 <div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod STL containera</div><pre class="remarkup-code"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">daj_vektor</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
@@ -259,13 +263,15 @@ anonimnu strukturu:</p>
 <span class="p">}</span> <span class="n">zbroji</span><span class="p">;</span>
 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">zbroji</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span></pre></div>
 
-<p>Primjene:</p>
+<p>Neke primjene:</p>
 
-<ul>
-<li>komparator za sort se moze napisati kod sort poziva</li>
-<li>mozemo pisati generičke strukture (npr merge_fn kod tournamenta)</li>
-</ul>
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">inline komparator za sort</div><pre class="remarkup-code"><span class="n">sort</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="p">[]</span> <span class="p">(</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">a</span><span class="p">,</span>
+                             <span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="p">});</span></pre></div>
 
-<p>Zainteresirani čitatelj neka prouči i <tt>capture-list</tt> (dio deklaracije u uglatim zagradama).</p>    </div>
+<p>Pomoću lambda izraza možemo pisati i generičke strukture (npr merge_fn kod tournamenta).</p>
+
+<p>Zainteresirani čitatelj neka prouči i <tt>capture-list</tt> (dio deklaracije u uglatim zagradama).</p>    </div>
   </body>
 </html>

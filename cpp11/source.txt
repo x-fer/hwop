@@ -11,16 +11,13 @@ Jezik C++ ima verzije koje se zovu po godini izdanja nove revizije standarda.
 - 2014: C++14
 - 2017: to be determined
 
-IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te
-županijsko i državno natjecanje također podržavaju C++11.
+IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te županijsko i državno natjecanje također podržavaju C++11.
 
 Ovaj članak predstavlja nekoliko značajki jezika C++11 koje mogu biti korisni u natjecateljskom programiranju.
 
-
 == Imam li C++11 kompajler? ==
 
-Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću
-zastavicu.
+Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću zastavicu.
 
 ```lang=sh
 $ g++ -std=c++11
@@ -31,7 +28,7 @@ g++ podržava C++11 od verzije 4.7, a clang od verzije 3.3.
 https://gcc.gnu.org/projects/cxx0x.html
 http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang
 
-== Izdvojene značajke C++11 u ovom članku ==
+== Izdvojene značajke C++11 u ovom članku ==
 
 Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju najkorisniji feature-i su:
 
@@ -43,8 +40,7 @@ Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju na
 
 Poredano od najjednostavnijih na gore.
 
-Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u
-natjecateljskom programiranju:
+Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u natjecateljskom programiranju:
 
 - [[http://www.cplusplus.com/reference/unordered_set/unordered_set/|unordered_set]], [[http://www.cplusplus.com/reference/unordered_map/unordered_map/|unordered_map]]
 - [[http://en.cppreference.com/w/cpp/container/vector/emplace_back|emplace_back]], i emplace u drugim kontenjerima
@@ -53,8 +49,7 @@ natjecateljskom programiranju:
 
 http://en.cppreference.com/w/cpp/utility/tuple
 
-Pair je struktura koja pohranjuje dva elementa dok `tuple` može sadržavati
-proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani `pair`!
+Pair je struktura koja pohranjuje dva elementa dok `tuple` može sadržavati proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani `pair`!
 
 Prisjetimo se kako se koristi `pair`.
 
@@ -103,7 +98,7 @@ bool operator< (const evt& lhs, const evt2& rhs) const {
 };
 ```
 
-I kod funkcija koje vracaju vise elemenata:
+I kod funkcija koje vraćaju više elemenata:
 
 ```lang=c++,name=tie
 #include <utility>
@@ -124,15 +119,29 @@ int main() {
 }
 ```
 
+... i nekada kod rekonstrukcije:
+
+
+
+```lang=c++,name=tuple u rekonstrukciji
+void reconstruct() {
+  int curr_x, curr_y;
+  while (curr_x != start_x || curr_y != start_y) {
+    tie(curr_x, curr_y) = parent[curr_x][curr_y];
+    polje[curr_x][curr_y] = '*';
+  }
+}
+```
+
 Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.
 
 == Auto auto auto ==
 
-Za čitanje ovog poglavlja nije potrebna [[https://www.youtube.com/watch?v=riiHyXzEjpc|vozačka dozvola]].
+Za čitanje ovog poglavlja nije potrebna [[https://www.youtube.com/watch?v=riiHyXzEjpc|vozačka dozvola]].
 
 http://en.cppreference.com/w/cpp/language/auto
 
-Ključna riječ `auto` zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:
+Ključna riječ `auto` zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:
 
 ```lang=c++
 void swap(int *a, int *b) {
@@ -153,14 +162,12 @@ void bfs() {
 auto ptr = (double*) malloc(kMaxN * sizeof (double)); // 'auto' znaci 'double*'
 
 for (auto it = v.begin(); it != v.end(); ++it);
-// (ova for petlja moze i jednostavnije u C++11, sljedece poglavlje..)
+// (ova for petlja moze i jednostavnije u C++11, pogledaj sljedece poglavlje..)
 ```
 
-Treba pripaziti da prekomjerno korištenje `auto` pokrate može dovesti do
-ozbiljno nečitljivih kodova što neki natjecatelji i vole!
+Treba pripaziti da prekomjerno korištenje `auto` pokrate može dovesti do ozbiljno nečitljivih kodova što neki natjecatelji i vole!
 
-Na ovaj način možemo deklarirati i `const` varijablu: `const auto j = ...`.
-Isto vrijedi i za referencu: `auto& j = ...`.
+Na ovaj način možemo deklarirati i `const` varijablu: `const auto j = ...`.  Isto vrijedi i za referencu: `auto& j = ...`.
 
 Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je `auto`!
 
@@ -169,7 +176,7 @@ Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je `auto`!
 http://en.cppreference.com/w/cpp/language/list_initialization
 http://en.cppreference.com/w/cpp/utility/initializer_list
 
-Brace list je bomba. Pokazujem primjere:
+Objašnjavamo brace list inicijalizaciju kroz primjere:
 
 ```lang=c++,name=brace list kod STL containera
 vector<int> daj_vektor() {
@@ -270,9 +277,15 @@ anonimnu strukturu:
   cout << zbroji(1, 2) << endl;
 ```
 
-Primjene:
+Neke primjene:
 
-- komparator za sort se moze napisati kod sort poziva
-- mozemo pisati generičke strukture (npr merge_fn kod tournamenta)
+```lang=c++,name=inline komparator za sort
+sort(v.begin(), v.end(), [] (const pair<int, string>& a,
+                             const pair<int, string>& b) {
+  return a.second.size() < b.second.size();
+});
+```
 
-Zainteresirani čitatelj neka prouči i `capture-list` (dio deklaracije u uglatim zagradama).
+Pomoću lambda izraza možemo pisati i generičke strukture (npr merge_fn kod tournamenta).
+
+Zainteresirani čitatelj neka prouči i `capture-list` (dio deklaracije u uglatim zagradama).
