@@ -1,0 +1,286 @@
+= C++ verzije =
+
+https://en.wikipedia.org/wiki/C%2B%2B
+
+Jezik C++ ima verzije koje se zovu po godini izdanja nove revizije standarda.
+
+- 1998: C++98
+- 2003: C++03
+- 2007: C++07/TR1
+- 2011: C++11
+- 2014: C++14
+- 2017: to be determined
+
+IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te županijsko i državno natjecanje također podržavaju C++11.
+
+Ovaj članak predstavlja nekoliko značajki jezika C++11 koje mogu biti korisni u natjecateljskom programiranju.
+
+== Imam li C++11 kompajler? ==
+
+Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću zastavicu.
+
+```lang=sh
+$ g++ -std=c++11
+```
+
+g++ podržava C++11 od verzije 4.7, a clang od verzije 3.3.
+
+https://gcc.gnu.org/projects/cxx0x.html
+http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang
+
+== Izdvojene značajke C++11 u ovom članku ==
+
+Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju najkorisniji feature-i su:
+
+- [[http://en.cppreference.com/w/cpp/utility/tuple|tuple]]
+- [[http://en.cppreference.com/w/cpp/language/auto|auto]]
+- [[http://en.cppreference.com/w/cpp/language/list_initialization|brace list]]
+- [[http://en.cppreference.com/w/cpp/language/range-for|range for]]
+- [[http://en.cppreference.com/w/cpp/language/lambda|lambda funkcije]]
+
+Poredano od najjednostavnijih na gore.
+
+Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u natjecateljskom programiranju:
+
+- [[http://www.cplusplus.com/reference/unordered_set/unordered_set/|unordered_set]], [[http://www.cplusplus.com/reference/unordered_map/unordered_map/|unordered_map]]
+- [[http://en.cppreference.com/w/cpp/container/vector/emplace_back|emplace_back]], i emplace u drugim kontenjerima
+
+== Pair -> Tuple! ==
+
+http://en.cppreference.com/w/cpp/utility/tuple
+
+Pair je struktura koja pohranjuje dva elementa dok `tuple` može sadržavati proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani `pair`!
+
+Prisjetimo se kako se koristi `pair`.
+
+```lang=c++,name=pair
+#include <utility>
+
+pair<int, double> par;
+pair.first = 5;
+par.second = 5.0;
+```
+
+Pogledajmo sada tuple:
+
+
+
+```lang=c++,name=tuple
+#include <utility>
+#include <tuple>
+
+tuple<int, int, double> sample;
+get<0>(sample) = 0;
+cout << get<2>(sample) << endl;
+```
+
+Za sada se `tuple` ne čini kao neki pobjednik zbog nespretnog nacina na koji se
+elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:
+
+```lang=c++,name=tuple usporedba je leksikografska
+struct evt {
+  double t;
+  int x, r;
+  bool otvara;
+};
+
+bool operator< (const evt& lhs, const evt2& rhs) const {                                 
+    return lhs.t != rhs.t ? lhs.t < rhs.t : 
+           lhs.x != rhs.x ? lhs.x < rhs.x :                                       
+           lhs.r != rhs.r ? lhs.r < rhs.r :                                       
+           lhs.otvara < rhs.otvara;                                           
+  }
+};
+
+// Ili lakse:
+bool operator< (const evt& lhs, const evt& rhs) {
+  return make_tuple(lhs.t, lhs.x, lhs.r, lhs.otvara) <
+         make_tuple(rhs.t, rhs.x, rhs.r, rhs.otvara);
+}
+```
+
+Tuple nam može pomoći i kod funkcija koje vraćaju više vrijednosti:
+
+```lang=c++,name=tie
+#include <utility>
+#include <iostream>
+#include <tuple>
+using namespace std;
+
+tuple<int, string> nadji_najbolje() {
+  return make_tuple(2, "primjer");
+}
+
+int main() {
+  int naj_score;
+  string naj_vrijednost;
+  tie(naj_score, naj_vrijednost) = nadji_najbolje(); // < --- !!!
+  cout << naj_score << " " << naj_vrijednost << endl;
+  return 0;
+}
+```
+
+... i kod rekonstrukcije:
+
+
+
+```lang=c++,name=tuple u rekonstrukciji
+void reconstruct() {
+  int curr_x, curr_y;
+  while (curr_x != start_x || curr_y != start_y) {
+    tie(curr_x, curr_y) = parent[curr_x][curr_y];
+    polje[curr_x][curr_y] = '*';
+  }
+}
+```
+
+== Auto auto auto ==
+
+Za čitanje ovog poglavlja nije potrebna [[https://www.youtube.com/watch?v=riiHyXzEjpc|vozačka dozvola]].
+
+http://en.cppreference.com/w/cpp/language/auto
+
+Ključna riječ `auto` zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:
+
+```lang=c++
+void swap(int *a, int *b) {
+  auto tmp = *a; // kompajler zna da ovdje 'auto' znaci 'int'
+  *a = *b;
+  *b = tmp;
+}
+
+void bfs() {
+  queue<pair<int, double>> q;
+  q.push(make_pair(1, 1.0));
+  while (q.size()) {
+    auto t = q.front(); // 'auto' ovdje znaci 'pair<int, double>'.
+    q.pop();
+  }
+}
+
+auto ptr = (double*) malloc(kMaxN * sizeof (double)); // 'auto' znaci 'double*'
+
+for (auto it = v.begin(); it != v.end(); ++it);
+// (ova for petlja moze i jednostavnije u C++11, pogledaj sljedece poglavlje..)
+```
+
+Treba pripaziti da prekomjerno korištenje `auto` pokrate može dovesti do ozbiljno nečitljivih kodova što neki natjecatelji i vole!
+
+Na ovaj način možemo deklarirati i `const` varijablu: `const auto j = ...`.  Isto vrijedi i za referencu: `auto& j = ...`.
+
+== Brace list ==
+
+http://en.cppreference.com/w/cpp/language/list_initialization
+http://en.cppreference.com/w/cpp/utility/initializer_list
+
+Objašnjavamo brace list inicijalizaciju kroz primjere:
+
+```lang=c++,name=brace list kod STL containera
+vector<int> daj_vektor() {
+  return {1, 2, 3};
+}
+
+void f() {
+  vector<int> v1{1, 2, 3};
+  vector<int> v2 = {1, 2, 3};
+  vector<int> v3;
+  v3 = {1, 2, 3};
+
+  pair<int, int> p = {3, 3};
+  tuple<int, int, int> t{3, 3, 3};
+
+  map<string, int> mp{ {"key1", 1}, {"key2", 2}, {"key3", 3} };
+
+  vector< vector<int> > matrica{
+     {1, 2, 3},
+     {4, 5, 6},
+     {7, 8, 9}};
+}
+```
+
+Al to nije sve ..
+
+
+
+```lang=c++,name=brace list kod user struktura
+struct event {
+  string ime;
+  int visina;
+  double r;
+};
+
+void f() {
+  event x{"ime", 100, 4.3};
+}
+```
+
+
+== Pokrata za for petlju u kontenjeru ==
+
+http://en.cppreference.com/w/cpp/language/range-for
+
+Pojednostavljeno:
+
+For petlja oblika:
+
+```lang=c++
+vector<int> niz;
+for (int i = 0; i < niz.size(); ++i) {
+  int element = niz[i];
+  { ... }
+}
+```
+
+može se pokratiti u sljedeći oblik ako nam indeks nije bitan:
+
+```lang=c++
+vector<int> niz;
+for (int element : v) { ... }
+```
+
+Zanimljiviji primjeri:
+
+- `for (int& x : v) { x++; }`
+- `for (const int& element : v)`
+- mapa je set parova.
+- moguće je iteriranje po C nizu poznate duljine
+- za maksimalno nečitljiv kod: `auto`, `auto&` i `const auto&`
+
+== Anonimne funkcije ==
+
+http://en.cppreference.com/w/cpp/language/lambda
+
+Pojednostavljeno:
+
+Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od prave funkcije, ovaj objekt (kao i svaki drugi objekt prve vrste) možemo spremiti u varijablu.
+
+```lang=c++
+  std::function<int(int, int)> zbroji = [] (int a, int b) {
+    return a + b;
+  };
+  cout << zbroji(1, 2) << endl;
+```
+
+I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći anonimnu strukturu:
+
+```lang=c++
+  struct {
+    int operator() (int a, int b) {
+      return a + b;
+    }
+  } zbroji;
+  cout << zbroji(1, 2) << endl;
+```
+
+Neke primjene:
+
+```lang=c++,name=inline komparator za sort
+sort(v.begin(), v.end(), [] (const pair<int, string>& a,
+                             const pair<int, string>& b) {
+  return a.second.size() < b.second.size();
+});
+```
+
+Pomoću lambda izraza možemo pisati i generičke strukture (npr merge_fn kod tournamenta).
+
+Zainteresirani čitatelj neka prouči i `capture-list` (dio deklaracije u uglatim zagradama).
