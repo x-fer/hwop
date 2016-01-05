@@ -14,8 +14,7 @@ Jezik C++ ima verzije koje se zovu po godini izdanja nove revizije standarda.
 IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te
 županijsko i državno natjecanje također podržavaju C++11.
 
-Ovaj članak predstavlja nekoliko značajki jezika C++11 koji mogu biti korisni u
-natjecateljskom programiranju.
+Ovaj članak predstavlja nekoliko značajki jezika C++11 koje mogu biti korisni u natjecateljskom programiranju.
 
 
 == Imam li C++11 kompajler? ==
