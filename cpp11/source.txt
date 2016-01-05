@@ -17,6 +17,7 @@ IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te
 Ovaj članak predstavlja nekoliko značajki jezika C++11 koji mogu biti korisni u
 natjecateljskom programiranju.
 
+
 == Imam li C++11 kompajler? ==
 
 Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću

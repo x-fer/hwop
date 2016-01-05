@@ -33,7 +33,7 @@ natjecateljskom programiranju.</p>
 <p>Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću<br />
 zastavicu.</p>
 
-<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code">$ g++ -std=c++11</pre></div>
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="nv">$ </span>g++ -std<span class="o">=</span>c++11</pre></div>
 
 <p>g++ podržava C++11 od verzije 4.7, a clang od verzije 3.3.</p>
 
@@ -71,61 +71,61 @@ proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple j
 
 <p>Prisjetimo se kako se koristi <tt>pair</tt>.</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">pair</div><pre class="remarkup-code">#include &lt;utility&gt;
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">pair</div><pre class="remarkup-code"><span class="cp">#include &lt;utility&gt;</span>
 
-pair&lt;int, double&gt; par;
-pair.first = 5;
-par.second = 5.0;</pre></div>
+<span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">par</span><span class="p">;</span>
+<span class="n">pair</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">par</span><span class="p">.</span><span class="n">second</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span></pre></div>
 
 <p>Pogledajmo sada tuple:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple</div><pre class="remarkup-code">#include &lt;utility&gt;
-#include &lt;tuple&gt;
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple</div><pre class="remarkup-code"><span class="cp">#include &lt;utility&gt;</span>
+<span class="cp">#include &lt;tuple&gt;</span>
 
-tuple&lt;int, int, double&gt; sample;
-get&lt;0&gt;(sample) = 0;
-cout &lt;&lt; get&lt;2&gt;(sample) &lt;&lt; endl;</pre></div>
+<span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">sample</span><span class="p">;</span>
+<span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span></pre></div>
 
 <p>Za sada se <tt>tuple</tt> ne čini kao neki pobjednik zbog nespretnog nacina na koji se<br />
 elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple usporedba je leksikografska</div><pre class="remarkup-code">struct evt {
-  double t;
-  int x, r;
-  bool otvara;
-};
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple usporedba je leksikografska</div><pre class="remarkup-code"><span class="k">struct</span> <span class="n">evt</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">t</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">otvara</span><span class="p">;</span>
+<span class="p">};</span>
 
-bool operator&lt; (const evt&amp; lhs, const evt&amp; rhs) {
-  return make_tuple(lhs.t, lhs.x, lhs.r, lhs.otvara) &lt;
-         make_tuple(rhs.t, rhs.x, rhs.r, rhs.otvara);
-}
+<span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">make_tuple</span><span class="p">(</span><span class="n">lhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">lhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">)</span> <span class="o">&lt;</span>
+         <span class="n">make_tuple</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">);</span>
+<span class="p">}</span>
 
-bool operator&lt; (const evt&amp; lhs, const evt2&amp; rhs) const {                                 
-    return lhs.t != rhs.t ? lhs.t &lt; rhs.t : 
-           lhs.x != rhs.x ? lhs.x &lt; rhs.x :                                       
-           lhs.r != rhs.r ? lhs.r &lt; rhs.r :                                       
-           lhs.otvara &lt; rhs.otvara;                                           
-  }
-};</pre></div>
+<span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span> <span class="p">(</span><span class="k">const</span> <span class="n">evt</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">evt2</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>                                 
+    <span class="k">return</span> <span class="n">lhs</span><span class="p">.</span><span class="n">t</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">t</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">t</span> <span class="p">:</span> 
+           <span class="n">lhs</span><span class="p">.</span><span class="n">x</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">x</span> <span class="p">:</span>                                       
+           <span class="n">lhs</span><span class="p">.</span><span class="n">r</span> <span class="o">!=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">r</span> <span class="o">?</span> <span class="n">lhs</span><span class="p">.</span><span class="n">r</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="nl">r</span> <span class="p">:</span>                                       
+           <span class="n">lhs</span><span class="p">.</span><span class="n">otvara</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">otvara</span><span class="p">;</span>                                           
+  <span class="p">}</span>
+<span class="p">};</span></pre></div>
 
 <p>I kod funkcija koje vracaju vise elemenata:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tie</div><pre class="remarkup-code">#include &lt;utility&gt;
-#include &lt;iostream&gt;
-#include &lt;tuple&gt;
-using namespace std;
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tie</div><pre class="remarkup-code"><span class="cp">#include &lt;utility&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;tuple&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-tuple&lt;int, string&gt; nadji_najbolje() {
-  return make_tuple(2, &quot;primjer&quot;);
-}
+<span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">nadji_najbolje</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;primjer&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 
-int main() {
-  int naj_score;
-  string naj_vrijednost;
-  tie(naj_score, naj_vrijednost) = nadji_najbolje(); // &lt; --- !!!
-  cout &lt;&lt; naj_score &lt;&lt; &lt;&lt; naj_vrijednost &lt;&lt; endl;
-  return 0;
-}</pre></div>
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">naj_score</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">naj_vrijednost</span><span class="p">;</span>
+  <span class="n">tie</span><span class="p">(</span><span class="n">naj_score</span><span class="p">,</span> <span class="n">naj_vrijednost</span><span class="p">)</span> <span class="o">=</span> <span class="n">nadji_najbolje</span><span class="p">();</span> <span class="c1">// &lt; --- !!!</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">naj_score</span> <span class="o">&lt;&lt;</span> <span class="o">&lt;&lt;</span> <span class="n">naj_vrijednost</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></div>
 
 <p>Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.</p>
 
@@ -137,25 +137,25 @@ int main() {
 
 <p>Ključna riječ <tt>auto</tt> zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">void swap(int *a, int *b) {
-  auto tmp = *a; // kompajler zna da ovdje &#039;auto&#039; znaci &#039;int&#039;
-  *a = *b;
-  *b = tmp;
-}
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span> <span class="c1">// kompajler zna da ovdje &#39;auto&#39; znaci &#39;int&#39;</span>
+  <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+<span class="p">}</span>
 
-void bfs() {
-  queue&lt;pair&lt;int, double&gt;&gt; q;
-  q.push(make_pair(1, 1.0));
-  while (q.size()) {
-    auto t = q.front(); // &#039;auto&#039; ovdje znaci &#039;pair&lt;int, double&gt;&#039;.
-    q.pop();
-  }
-}
+<span class="kt">void</span> <span class="nf">bfs</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">queue</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">q</span><span class="p">;</span>
+  <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">));</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="c1">// &#39;auto&#39; ovdje znaci &#39;pair&lt;int, double&gt;&#39;.</span>
+    <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-auto ptr = (double*) malloc(kMaxN * sizeof (double)); // &#039;auto&#039; znaci &#039;double*&#039;
+<span class="k">auto</span> <span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="n">kMaxN</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">double</span><span class="p">));</span> <span class="c1">// &#39;auto&#39; znaci &#39;double*&#39;</span>
 
-for (auto it = v.begin(); it != v.end(); ++it);
-// (ova for petlja moze i jednostavnije u C++11, sljedece poglavlje..)</pre></div>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">);</span>
+<span class="c1">// (ova for petlja moze i jednostavnije u C++11, sljedece poglavlje..)</span></pre></div>
 
 <p>Treba pripaziti da prekomjerno korištenje <tt>auto</tt> pokrate može dovesti do<br />
 ozbiljno nečitljivih kodova što neki natjecatelji i vole!</p>
@@ -172,38 +172,38 @@ Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
 
 <p>Brace list je bomba. Pokazujem primjere:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod STL containera</div><pre class="remarkup-code">vector&lt;int&gt; daj_vektor() {
-  return {1, 2, 3};
-}
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod STL containera</div><pre class="remarkup-code"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">daj_vektor</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+<span class="p">}</span>
 
-void f() {
-  vector&lt;int&gt; v1{1, 2, 3};
-  vector&lt;int&gt; v2 = {1, 2, 3};
-  vector&lt;int&gt; v3;
-  v3 = {1, 2, 3};
+<span class="kt">void</span> <span class="n">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">;</span>
+  <span class="n">v3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
 
-  pair&lt;int, int&gt; p = {3, 3};
-  tuple&lt;int, int, int&gt; t{3, 3, 3};
+  <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+  <span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">t</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
 
-  map&lt;string, int&gt; mp{ {&quot;key1&quot;, 1}, {&quot;key2&quot;, 2}, {&quot;key3&quot;, 3} };
+  <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mp</span><span class="p">{</span> <span class="p">{</span><span class="s">&quot;key1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;key2&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;key3&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="p">};</span>
 
-  vector&lt; vector&lt;int&gt; &gt; matrica{
-     {1, 2, 3},
-     {4, 5, 6},
-     {7, 8, 9}};
-}</pre></div>
+  <span class="n">vector</span><span class="o">&lt;</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">matrica</span><span class="p">{</span>
+     <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span>
+     <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span>
+     <span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}};</span>
+<span class="p">}</span></pre></div>
 
 <p>Al to nije sve ..</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod user struktura</div><pre class="remarkup-code">struct event {
-  string ime;
-  int visina;
-  double r;
-};
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod user struktura</div><pre class="remarkup-code"><span class="k">struct</span> <span class="n">event</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">ime</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">visina</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">};</span>
 
-void f() {
-  event x{&quot;ime&quot;, 100, 4.3);
-}</pre></div>
+<span class="kt">void</span> <span class="nf">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">event</span> <span class="n">x</span><span class="p">{</span><span class="s">&quot;ime&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">);</span>
+<span class="p">}</span></pre></div>
 
 
 
@@ -215,16 +215,16 @@ void f() {
 
 <p>For petlja oblika:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">vector&lt;int&gt; niz;
-for (int i = 0; i &lt; niz.size(); ++i) {
-  int element = niz[i];
-  { ... }
-}</pre></div>
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">niz</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">niz</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">element</span> <span class="o">=</span> <span class="n">niz</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="p">}</span></pre></div>
 
 <p>može se pokratiti u sljedeći oblik ako nam indeks nije bitan:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">vector&lt;int&gt; niz;
-for (int element : v) { ... }</pre></div>
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">niz</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span></pre></div>
 
 <p>Zanimljiviji primjeri:</p>
 
@@ -245,20 +245,20 @@ for (int element : v) { ... }</pre></div>
 <p>Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od<br />
 prave funkcije, ovaj objekt (kao i svaki drugi) mozemo spremiti u varijablu.</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">std::function&lt;int(int, int)&gt; zbroji = [] (int a, int b) {
-  return a + b;
-};
-cout &lt;&lt; zbroji(1, 2) &lt;&lt; endl;</pre></div>
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">zbroji</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">zbroji</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span></pre></div>
 
 <p>I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći<br />
 anonimnu strukturu:</p>
 
-<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">struct {
-  int operator() (int a, int b) {
-    return a + b;
-  }
-} zbroji;
-cout &lt;&lt; zbroji(1, 2) &lt;&lt; endl;</pre></div>
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code"><span class="k">struct</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="n">zbroji</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">zbroji</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span></pre></div>
 
 <p>Primjene:</p>
 
