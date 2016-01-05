@@ -210,7 +210,7 @@ struct event {
 };
 
 void f() {
-  event x{"ime", 100, 4.3);
+  event x{"ime", 100, 4.3};
 }
 ```
 
