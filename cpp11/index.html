@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>C++ verzije</title>
+  </head>
+  <body class="markup">
+    <div class="markup-container"><!--h0--><h2><a name="c_verzije"></a>C++ verzije</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank">https://en.wikipedia.org/wiki/C%2B%2B</a></p>
+
+<p>Jezik C++ ima verzije koje se zovu po godini izdanja nove revizije standarda.</p>
+
+<ul>
+<li>1998: C++98</li>
+<li>2003: C++03</li>
+<li>2007: C++07/TR1</li>
+<li>2011: C++11</li>
+<li>2014: C++14</li>
+<li>2017: to be determined</li>
+</ul>
+
+<p>IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te<br />
+županijsko i državno natjecanje također podržavaju C++11.</p>
+
+<p>Ovaj članak predstavlja nekoliko značajki jezika C++11 koji mogu biti korisni u<br />
+natjecateljskom programiranju.</p>
+
+<!--h1--><h3><a name="imam_li_c_kompajler"></a>Imam li C++11 kompajler?</h3>
+
+<p>Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću<br />
+zastavicu.</p>
+
+<div class="remarkup-code-block" data-code-lang="sh" data-sigil="remarkup-code-block"><pre class="remarkup-code">$ g++ -std=c++11</pre></div>
+
+<p>g++ podržava C++11 od verzije 4.7, a clang od verzije 3.3.</p>
+
+<p><a href="https://gcc.gnu.org/projects/cxx0x.html" target="_blank">https://gcc.gnu.org/projects/cxx0x.html</a><br />
+<a href="http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang" target="_blank">http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang</a></p>
+
+<!--h2--><h3><a name="izdvojene_znac_ajke_c_u_ovom_clanku"></a>Izdvojene značajke C++11 u ovom članku</h3>
+
+<p>Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju najkorisniji feature-i su:</p>
+
+<ul>
+<li><a href="http://en.cppreference.com/w/cpp/utility/tuple" target="_blank">tuple</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/auto" target="_blank">auto</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/list_initialization" target="_blank">brace list</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/range-for" target="_blank">range for</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/lambda" target="_blank">lambda funkcije</a></li>
+</ul>
+
+<p>Poredano od najjednostavnijih na gore.</p>
+
+<p>Čitatelja pozivamo da pogleda i ostale značajke koje bi mogle biti korisne u<br />
+natjecateljskom programiranju:</p>
+
+<ul>
+<li><a href="http://www.cplusplus.com/reference/unordered_set/unordered_set/" target="_blank">unordered_set</a>, <a href="http://www.cplusplus.com/reference/unordered_map/unordered_map/" target="_blank">unordered_map</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/container/vector/emplace_back" target="_blank">emplace_back</a>, i emplace u drugim kontenjerima</li>
+</ul>
+
+<!--h3--><h3><a name="pair_-_tuple"></a>Pair -&gt; Tuple!</h3>
+
+<p><a href="http://en.cppreference.com/w/cpp/utility/tuple" target="_blank">http://en.cppreference.com/w/cpp/utility/tuple</a></p>
+
+<p>Pair je struktura koja pohranjuje dva elementa dok <tt>tuple</tt> može sadržavati<br />
+proizvoljno mnogo elemenata čiji su tipovi specificirani u deklaraciji. Tuple je level-upani <tt>pair</tt>!</p>
+
+<p>Prisjetimo se kako se koristi <tt>pair</tt>.</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">pair</div><pre class="remarkup-code">#include &lt;utility&gt;
+
+pair&lt;int, double&gt; par;
+pair.first = 5;
+par.second = 5.0;</pre></div>
+
+<p>Pogledajmo sada tuple:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple</div><pre class="remarkup-code">#include &lt;utility&gt;
+#include &lt;tuple&gt;
+
+tuple&lt;int, int, double&gt; sample;
+get&lt;0&gt;(sample) = 0;
+cout &lt;&lt; get&lt;2&gt;(sample) &lt;&lt; endl;</pre></div>
+
+<p>Za sada se <tt>tuple</tt> ne čini kao neki pobjednik zbog nespretnog nacina na koji se<br />
+elementi čitaju i pišu. No tuple nam može pomoći u dvije situacije:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tuple usporedba je leksikografska</div><pre class="remarkup-code">struct evt {
+  double t;
+  int x, r;
+  bool otvara;
+};
+
+bool operator&lt; (const evt&amp; lhs, const evt&amp; rhs) {
+  return make_tuple(lhs.t, lhs.x, lhs.r, lhs.otvara) &lt;
+         make_tuple(rhs.t, rhs.x, rhs.r, rhs.otvara);
+}
+
+bool operator&lt; (const evt&amp; lhs, const evt2&amp; rhs) const {                                 
+    return lhs.t != rhs.t ? lhs.t &lt; rhs.t : 
+           lhs.x != rhs.x ? lhs.x &lt; rhs.x :                                       
+           lhs.r != rhs.r ? lhs.r &lt; rhs.r :                                       
+           lhs.otvara &lt; rhs.otvara;                                           
+  }
+};</pre></div>
+
+<p>I kod funkcija koje vracaju vise elemenata:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">tie</div><pre class="remarkup-code">#include &lt;utility&gt;
+#include &lt;iostream&gt;
+#include &lt;tuple&gt;
+using namespace std;
+
+tuple&lt;int, string&gt; nadji_najbolje() {
+  return make_tuple(2, &quot;primjer&quot;);
+}
+
+int main() {
+  int naj_score;
+  string naj_vrijednost;
+  tie(naj_score, naj_vrijednost) = nadji_najbolje(); // &lt; --- !!!
+  cout &lt;&lt; naj_score &lt;&lt; &lt;&lt; naj_vrijednost &lt;&lt; endl;
+  return 0;
+}</pre></div>
+
+<p>Na HONI-ju 2015/2016 do četvrtog kola nitko još nije iskoristio tuple.</p>
+
+<!--h4--><h3><a name="auto_auto_auto"></a>Auto auto auto</h3>
+
+<p>Za čitanje ovog poglavlja nije potrebna <a href="https://www.youtube.com/watch?v=riiHyXzEjpc" target="_blank">vozačka dozvola</a>.</p>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/auto" target="_blank">http://en.cppreference.com/w/cpp/language/auto</a></p>
+
+<p>Ključna riječ <tt>auto</tt> zamjena je za tip podatka kojeg kompajler može zaključiti iz konteksta. Na primjer:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">void swap(int *a, int *b) {
+  auto tmp = *a; // kompajler zna da ovdje &#039;auto&#039; znaci &#039;int&#039;
+  *a = *b;
+  *b = tmp;
+}
+
+void bfs() {
+  queue&lt;pair&lt;int, double&gt;&gt; q;
+  q.push(make_pair(1, 1.0));
+  while (q.size()) {
+    auto t = q.front(); // &#039;auto&#039; ovdje znaci &#039;pair&lt;int, double&gt;&#039;.
+    q.pop();
+  }
+}
+
+auto ptr = (double*) malloc(kMaxN * sizeof (double)); // &#039;auto&#039; znaci &#039;double*&#039;
+
+for (auto it = v.begin(); it != v.end(); ++it);
+// (ova for petlja moze i jednostavnije u C++11, sljedece poglavlje..)</pre></div>
+
+<p>Treba pripaziti da prekomjerno korištenje <tt>auto</tt> pokrate može dovesti do<br />
+ozbiljno nečitljivih kodova što neki natjecatelji i vole!</p>
+
+<p>Na ovaj način možemo deklarirati i <tt>const</tt> varijablu: <tt>const auto j = ...</tt>.<br />
+Isto vrijedi i za referencu: <tt>auto&amp; j = ...</tt>.</p>
+
+<p>Na HONI-ju 2015/2016 do četvrtog kola 7/300 natjecatelja koristilo je <tt>auto</tt>!</p>
+
+<!--h5--><h3><a name="brace_list"></a>Brace list</h3>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/list_initialization" target="_blank">http://en.cppreference.com/w/cpp/language/list_initialization</a><br />
+<a href="http://en.cppreference.com/w/cpp/utility/initializer_list" target="_blank">http://en.cppreference.com/w/cpp/utility/initializer_list</a></p>
+
+<p>Brace list je bomba. Pokazujem primjere:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod STL containera</div><pre class="remarkup-code">vector&lt;int&gt; daj_vektor() {
+  return {1, 2, 3};
+}
+
+void f() {
+  vector&lt;int&gt; v1{1, 2, 3};
+  vector&lt;int&gt; v2 = {1, 2, 3};
+  vector&lt;int&gt; v3;
+  v3 = {1, 2, 3};
+
+  pair&lt;int, int&gt; p = {3, 3};
+  tuple&lt;int, int, int&gt; t{3, 3, 3};
+
+  map&lt;string, int&gt; mp{ {&quot;key1&quot;, 1}, {&quot;key2&quot;, 2}, {&quot;key3&quot;, 3} };
+
+  vector&lt; vector&lt;int&gt; &gt; matrica{
+     {1, 2, 3},
+     {4, 5, 6},
+     {7, 8, 9}};
+}</pre></div>
+
+<p>Al to nije sve ..</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><div class="remarkup-code-header">brace list kod user struktura</div><pre class="remarkup-code">struct event {
+  string ime;
+  int visina;
+  double r;
+};
+
+void f() {
+  event x{&quot;ime&quot;, 100, 4.3);
+}</pre></div>
+
+
+
+<!--h6--><h3><a name="pokrata_za_for_petlju_u_kontenjeru"></a>Pokrata za for petlju u kontenjeru</h3>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/range-for" target="_blank">http://en.cppreference.com/w/cpp/language/range-for</a></p>
+
+<p>Pojednostavljeno:</p>
+
+<p>For petlja oblika:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">vector&lt;int&gt; niz;
+for (int i = 0; i &lt; niz.size(); ++i) {
+  int element = niz[i];
+  { ... }
+}</pre></div>
+
+<p>može se pokratiti u sljedeći oblik ako nam indeks nije bitan:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">vector&lt;int&gt; niz;
+for (int element : v) { ... }</pre></div>
+
+<p>Zanimljiviji primjeri:</p>
+
+<ul>
+<li><tt>for (int&amp; x : v) { x++; }</tt></li>
+<li><tt>for (const int&amp; element : v)</tt></li>
+<li>mapa je set parova!</li>
+<li>moguće je iteriranje po C nizu poznate duljine</li>
+<li>za maksimalno nečitljiv kod: <tt>auto</tt>, <tt>auto&amp;</tt> i <tt>const auto&amp;</tt></li>
+</ul>
+
+<!--h7--><h3><a name="anonimne_funkcije"></a>Anonimne funkcije</h3>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/lambda" target="_blank">http://en.cppreference.com/w/cpp/language/lambda</a></p>
+
+<p>Pojednostavljeno:</p>
+
+<p>Anonimna funkcija je objekt koji se moze pozvati poput funkcije. Za razliku od<br />
+prave funkcije, ovaj objekt (kao i svaki drugi) mozemo spremiti u varijablu.</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">std::function&lt;int(int, int)&gt; zbroji = [] (int a, int b) {
+  return a + b;
+};
+cout &lt;&lt; zbroji(1, 2) &lt;&lt; endl;</pre></div>
+
+<p>I u verzijama prije C++11 bilo je moguće napisati nešto slično koristeći<br />
+anonimnu strukturu:</p>
+
+<div class="remarkup-code-block" data-code-lang="c++" data-sigil="remarkup-code-block"><pre class="remarkup-code">struct {
+  int operator() (int a, int b) {
+    return a + b;
+  }
+} zbroji;
+cout &lt;&lt; zbroji(1, 2) &lt;&lt; endl;</pre></div>
+
+<p>Primjene:</p>
+
+<ul>
+<li>komparator za sort se moze napisati kod sort poziva</li>
+<li>mozemo pisati generičke strukture (npr merge_fn kod tournamenta)</li>
+</ul>
+
+<p>Zainteresirani čitatelj neka prouči i <tt>capture-list</tt> (dio deklaracije u uglatim zagradama).</p>    </div>
+  </body>
+</html>

@@ -17,7 +17,7 @@ IOI podržava C++11 od 2014. godine. Natjecanja u organizaciji HSIN-a te
 Ovaj članak predstavlja nekoliko značajki jezika C++11 koji mogu biti korisni u
 natjecateljskom programiranju.
 
-= Imam li C++11 kompajler? =
+== Imam li C++11 kompajler? ==
 
 Vjerojatno da. Kako bi kompilirali kod sa C++11 značajkama koristimo sljedeću
 zastavicu.
@@ -31,7 +31,7 @@ g++ podržava C++11 od verzije 4.7, a clang od verzije 3.3.
 https://gcc.gnu.org/projects/cxx0x.html
 http://stackoverflow.com/questions/10408849/how-can-i-use-c-11-features-in-clang
 
-= Izdvojene značajke C++11 u ovom članku =
+== Izdvojene značajke C++11 u ovom članku ==
 
 Ovaj članak koncentrira se na natjecateljsko programiranje. U tom okruženju najkorisniji feature-i su:
 
