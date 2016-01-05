@@ -115,7 +115,7 @@ int main() {
   int naj_score;
   string naj_vrijednost;
   tie(naj_score, naj_vrijednost) = nadji_najbolje(); // < --- !!!
-  cout << naj_score << << naj_vrijednost << endl;
+  cout << naj_score << " " << naj_vrijednost << endl;
   return 0;
 }
 ```
