@@ -139,6 +139,10 @@ struct tournament_tree {
 };
 ```
 
+
+Pogledajte i genericku implementaciju ove strukture na
+https://github.com/lukakalinovcic/kodiranje/blob/master/lib/range_statistic/
+
 !!!
 2006. Luka Kalinovčić
 2014. Anton Grbin
